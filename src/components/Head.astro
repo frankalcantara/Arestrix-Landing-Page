@@ -1,7 +1,8 @@
 ---
-import fontUrl from "@fontsource/questrial/files/questrial-latin-400-normal.woff2?url";
+import fontUrl from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url";
+import fontBoldUrl from "@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2?url";
 import { SITE } from "../config";
-import { businessJsonLd, jsonLdString } from "../lib/schema";
+import { softwareJsonLd, jsonLdString } from "../lib/schema";
 
 export interface Props {
   /** Page title without the site name. Leave out on the home page. */
@@ -26,11 +27,14 @@ const ogImage = new URL(image, site).href;
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex" />}
 <meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content="#040319" />
+<meta name="theme-color" content="#14151a" />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={fontBoldUrl} as="font" type="font/woff2" crossorigin />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={SITE.name} />
@@ -43,8 +47,10 @@ const ogImage = new URL(image, site).href;
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={`${SITE.name}: ${SITE.tagline}`} />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@frankalcantara" />
+<meta name="twitter:creator" content="@frankalcantara" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
 
-<script type="application/ld+json" set:html={jsonLdString(businessJsonLd(site))} />
+<script type="application/ld+json" set:html={jsonLdString(softwareJsonLd(site))} />

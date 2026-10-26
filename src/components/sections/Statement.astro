@@ -1,23 +1,25 @@
 ---
 /**
- * 5. Statement that fills line by line on scroll, and 6. the turning orbits beside a paragraph.
+ * 5. Statement that fills line by line on scroll, and 6. the 3D graph beside a paragraph.
  * On wide screens this block slides up over the sticky hero (see .hero-wrap in index.astro).
  */
 import FillLines from "../FillLines.astro";
-import Orbits from "../Orbits.astro";
+import Graph3D from "../Graph3D.astro";
 ---
 
-<section class="statement" aria-label="What we do">
+<section class="statement" aria-label="What Arestrix does">
   <div class="container-x statement-col">
     <FillLines
       class="h-statement statement-text"
-      lines={["We turn your own *records*", "into *forecasts* and *prices*", "your team can *check*."]}
+      lines={["Draw the graph.", "Compile it to *C++20*.", "Ship a *native runner*."]}
     />
-    <Orbits class="statement-orbits" follow={100} />
-    <p class="t-big statement-para">
-      Most clients already have the data: sales exports, a CRM, a stock system and some spreadsheets. We clean it once, model it in
-      SQL and Python, and hand the code to your team.
-    </p>
+    <div class="statement-body">
+      <Graph3D class="statement-graph" />
+      <p class="t-big statement-para">
+        Arestrix validates the graph, generates C++20 source and compiles it with Taskflow into parallel task DAGs.
+        Projects, memory and logs stay on your machine; only model and MCP calls leave it.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -36,14 +38,17 @@ import Orbits from "../Orbits.astro";
   .statement-col :global(.statement-text .fl + .fl) {
     margin-top: 0.037em;
   }
+  .statement-body {
+    display: block;
+  }
   .statement-para {
     margin-top: 47.3px;
     line-height: 1.3;
   }
-  .statement :global(.statement-orbits) {
+  .statement :global(.statement-graph) {
     display: none;
   }
-  /* Desktop (the reference at 1440 × 727): a 1089px block; orbits left, paragraph in the right half. */
+  /* Desktop (the reference at 1440 × 727): a 1089px block; graph left, paragraph in the right half. */
   @media (min-width: 1001px) {
     .statement {
       height: 1089px;
@@ -58,19 +63,25 @@ import Orbits from "../Orbits.astro";
     .statement-col :global(.statement-text .fl + .fl) {
       margin-top: 0;
     }
-    .statement :global(.statement-orbits) {
-      display: block;
+    /* One grid row for the graph and the paragraph: align-items:center keeps their
+       centres on the same line at every desktop width. The 567px offset puts the
+       paragraph back at its original 630px when the 471px graph is the taller item. */
+    .statement-body {
       position: absolute;
-      top: 534px;
-      left: -90px;
+      top: 567px;
+      left: 0;
+      right: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .statement :global(.statement-graph) {
+      display: block;
       width: 480px;
       height: 471px;
+      margin-left: -90px;
     }
     .statement-para {
-      position: absolute;
-      top: 630px;
-      left: 50%;
-      right: 0;
       margin: 0;
     }
   }

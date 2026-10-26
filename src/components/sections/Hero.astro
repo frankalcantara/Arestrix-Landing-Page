@@ -1,14 +1,15 @@
 ---
 /**
- * 2. Hero: two-line heading, lead, accent rule, counters (3), and the moving network on the right
- * (canvas). On wide screens the hero stays put (sticky) while the next block slides up over it,
- * which is what clips the network away as you scroll (4). Entrance on load: line 1 tilts in,
- * line 2 is wiped in from the left, then the lead and counters fade in and count up.
- * The heading is SITE.tagline-free on purpose: edit the two lines below.
+ * 2. Hero: two-line heading, lead, accent rule, counters (3), and a recorded Arestrix graph run
+ * behind them. The video is black-on-black (no UI chrome) and blends with `screen`, so only the
+ * agents, edges and pulses remain. On wide screens the hero stays put (sticky) while the next
+ * block slides up over it. Entrance on load: line 1 tilts in, line 2 is wiped in from the left,
+ * then the lead and counters fade in and count up.
+ * The heading is edited in the two lines below; keep each line short enough for 72px type.
  */
 import { SITE } from "../../config";
 
-const lines = ["Answers from", "your own data"];
+const lines = ["Agent pipelines,", "compiled to C++20"];
 
 /** Counters step up like the reference: about one tick every 100 ms (400 ms for tiny numbers). */
 const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 } : { n: Math.ceil(n / (n <= 100 ? 5 : 10)), ms: 100 });
@@ -16,15 +17,37 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-net" aria-hidden="true">
-    <canvas class="net-in" data-scene="plexus"></canvas>
+    <img
+      class="hero-poster"
+      src="/media/hero-graph-poster.webp"
+      alt=""
+      width="1260"
+      height="654"
+      decoding="async"
+      fetchpriority="high"
+    />
+    <video
+      class="hero-graph"
+      data-hero-video
+      data-webm="/media/hero-graph.webm"
+      data-mp4="/media/hero-graph.mp4"
+      poster="/media/hero-graph-poster.webp"
+      muted
+      loop
+      playsinline
+      preload="none"
+      tabindex="-1"
+      disablepictureinpicture
+    ></video>
   </div>
+  <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-col">
     <h1 id="hero-title" class="h-display hero-title">
       <span class="h1-line tilt-in">{lines[0]}</span>
       <span class="h1-line wipe-in">{lines[1]}<span class="hl">.</span></span>
     </h1>
     <div class="hero-lead fade-in">
-      <p class="lead">The record so far, in four numbers:</p>
+      <p class="lead">An open-source studio and native compiler for AI agent workflows. Draw the graph, then ship a runner.</p>
       <span class="rule" aria-hidden="true"></span>
       <ul class="stats">
         {
@@ -52,32 +75,123 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
   </div>
 </section>
 
+<script>
+  // Load the recorded graph only on the wide layout (where the right-half screen exists) and
+  // never for reduced-motion visitors. The poster is the same frame, so it remains as the
+  // fallback while the video loads or if playback is refused.
+  const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
+  if (video) {
+    const net = video.closest<HTMLElement>(".hero-net");
+    const wide = matchMedia("(min-width: 751px)");
+    const still = matchMedia("(prefers-reduced-motion: reduce)");
+    let loaded = false;
+
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      for (const [src, type] of [
+        [video.dataset.webm, "video/webm"],
+        [video.dataset.mp4, "video/mp4"],
+      ] as const) {
+        if (!src) continue;
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = type;
+        video.append(source);
+      }
+      video.load();
+    };
+
+    const hidePoster = () => net?.classList.add("is-video-ready");
+    const showPoster = () => net?.classList.remove("is-video-ready");
+
+    const sync = () => {
+      if (wide.matches && !still.matches) {
+        load();
+        video.muted = true;
+        void video.play().catch(showPoster);
+      } else {
+        video.pause();
+        showPoster();
+      }
+    };
+
+    video.addEventListener("playing", hidePoster);
+    video.addEventListener("error", showPoster);
+    wide.addEventListener("change", sync);
+    still.addEventListener("change", sync);
+    sync();
+  }
+</script>
+
 <style>
   /* Phone layout (the reference at 375px): sizes scale with the screen width. */
   .hero {
     position: relative;
     height: 100vh;
     overflow-x: clip;
+    /* The video's black pixels are removed with `screen`. That only works when the blend has a
+       real Grafite backdrop, so the hero owns its background and its own stacking group. */
+    background: var(--c-bg);
+    isolation: isolate;
   }
-  /* The network is the background of the whole hero (owner's call, 2026-10-08): edge to edge,
-     full height, faded under the heading and lead on the left and towards the bottom edge. */
+  /* The graph occupies the right half of the hero. There is no frame: `screen` turns the
+     video's black background back into Grafite, leaving only the running graph. */
   .hero-net {
     position: absolute;
-    inset: 0;
-    -webkit-mask-image:
-      linear-gradient(90deg, rgb(0 0 0 / 0.18) 0%, rgb(0 0 0 / 0.18) 22%, #000 58%),
-      linear-gradient(180deg, #000 72%, transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(90deg, rgb(0 0 0 / 0.18) 0%, rgb(0 0 0 / 0.18) 22%, #000 58%),
-      linear-gradient(180deg, #000 72%, transparent 100%);
-    mask-composite: intersect;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 50%;
+    mix-blend-mode: screen;
   }
-  .hero-net canvas {
+  /* Grafite fades over the left side of the video, so the right-half screen never reaches the
+     heading or the lead. The fade is smooth: no border, edge or vignette. */
+  .hero-shade {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--c-bg) 0%,
+      var(--c-bg) 20%,
+      rgb(20 21 26 / 0.7) 28%,
+      transparent 40%
+    );
+  }
+  /* Phones keep the clean text-only hero; the video is a wide-screen element. */
+  @media (max-width: 750px) {
+    .hero-net,
+    .hero-shade {
+      display: none;
+    }
+  }
+  .hero-poster,
+  .hero-graph {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
-    color: #ffffff;
+    object-fit: contain;
+    object-position: center;
+  }
+  .hero-poster {
+    opacity: 1;
+  }
+  .hero-graph {
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out);
+  }
+  .hero-net.is-video-ready .hero-graph {
+    opacity: 1;
+  }
+  .hero-net.is-video-ready .hero-poster {
+    opacity: 0;
   }
   .hero-col {
     position: relative;
@@ -93,6 +207,9 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
     position: absolute;
     top: 147px;
     left: 0;
+    /* Space Grotesk Bold is wider than the theme's original face: cap the width so
+       "compiled to C++20" still fits on a 375–390px phone. 10vw reaches 72px at 720px. */
+    font-size: min(10vw, 72px);
     color: var(--c-white);
   }
   .h1-line {
@@ -106,14 +223,14 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
   .hero-lead {
     position: absolute;
     left: 2.4vw;
-    top: calc(100% - 238px);
+    top: calc(100% - 288px);
   }
   .rule {
     margin-top: 24.5px;
   }
   .stats {
     display: flex;
-    gap: 6.4vw;
+    gap: 4.4vw;
     margin-top: 24px;
   }
   .stat-num {
@@ -147,9 +264,12 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
       top: 172px;
       left: -12px;
     }
+    /* On narrower wide screens the heading is long enough to reach the right half, so the
+       video starts below it. From 1400px it can use the full height of the right half. */
     .hero-lead {
       left: -12px;
       top: calc(100% - 307px);
+      max-width: min(720px, 54vw);
     }
     .rule {
       margin-top: 48px;
@@ -165,6 +285,16 @@ const ticks = (n: number) => (n <= 5 ? { n, ms: 400 } : n <= 25 ? { n, ms: 100 }
     .stats-note {
       margin-top: 4px;
       font-size: 12px;
+    }
+  }
+
+  /* The heading is wider than the right half below 1400px; put the screen under it. */
+  @media (min-width: 751px) and (max-width: 1399px) {
+    .hero-net {
+      top: 360px;
+      bottom: auto;
+      height: auto;
+      aspect-ratio: 1260 / 654;
     }
   }
 </style>

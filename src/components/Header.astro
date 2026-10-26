@@ -1,7 +1,7 @@
 ---
 /**
- * 1. Fixed header: logo, three links in the middle, the accent button on the right and a 1px
- * divider that runs from the content edge to the right edge of the screen.
+ * 1. Fixed header: logo, three links in the middle, the GitHub/release button on the right and
+ * a 1px divider that runs from the content edge to the right edge of the screen.
  */
 import { SITE } from "../config";
 import Icon from "./Icon.astro";
@@ -31,7 +31,12 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
       </ul>
     </nav>
 
-    <a href={SITE.cta.href} class="btn btn-primary header-cta">{SITE.cta.label}</a>
+    <a
+      href={SITE.cta.href}
+      class="btn btn-primary header-cta"
+      target={SITE.cta.href.startsWith("http") ? "_blank" : undefined}
+      rel={SITE.cta.href.startsWith("http") ? "noopener" : undefined}
+    >{SITE.cta.label}</a>
     <button type="button" popovertarget="mobile-nav" class="menu-btn" aria-label="Open menu">
       <Icon name="menu" />
     </button>
@@ -47,7 +52,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     </div>
     <nav aria-label="Mobile" class="container-x pt-6">
       <ul class="border-t border-line">
-        <li><a href="/" class="mobile-link" aria-current={path === "/" ? "page" : undefined}>Home</a></li>
+        <li><a href="/" class="mobile-link" aria-current={path === "/" ? "page" : undefined}>home</a></li>
         {
           SITE.nav.map((item) => (
             <li>
@@ -58,9 +63,21 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
           ))
         }
       </ul>
-      <a href={SITE.cta.href} class="btn btn-primary btn-lg mt-10 w-full">{SITE.cta.label}</a>
-      <p class="mt-6 text-sm text-muted">
-        <a href={`mailto:${SITE.email}`} class="underline underline-offset-4">{SITE.email}</a> · {SITE.phone.display}
+      <a
+        href={SITE.cta.href}
+        class="btn btn-primary btn-lg mt-10 w-full"
+        target={SITE.cta.href.startsWith("http") ? "_blank" : undefined}
+        rel={SITE.cta.href.startsWith("http") ? "noopener" : undefined}
+      >{SITE.cta.label}</a>
+      <p class="mt-6 flex flex-wrap gap-5 text-sm text-muted">
+        {
+          SITE.social.map((s) => (
+            <a href={s.href} class="inline-flex items-center gap-2 underline-offset-4 hover:text-accent hover:underline" rel="noopener" target="_blank">
+              <Icon name={s.icon} size={16} />
+              {s.label}
+            </a>
+          ))
+        }
       </p>
     </nav>
   </div>
@@ -133,7 +150,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     width: 150px;
     height: 60px;
   }
-  /* Phones: a lime round menu button, as on the reference. */
+  /* Phones: a Brasa round menu button, per the brand accent. */
   .menu-btn {
     display: grid;
     place-items: center;

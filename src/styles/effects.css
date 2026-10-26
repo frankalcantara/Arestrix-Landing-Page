@@ -226,20 +226,93 @@
 }
 
 /* ------------------------------------------------------------------
-   6, 11. Orbits turn slowly, each ring at its own speed (time-based).
+   6, 11. The stylised graph turns in 3D under the pointer (the small
+   script in Graph3D.astro); nodes pulse and flow dashes move on their
+   own. Edges never move, so the flow dashes stay connected.
 ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {
-  .orbit-ring {
-    animation: spin var(--dur, 60s) linear infinite;
-    animation-direction: var(--dir, normal);
+  .graph3d-node {
+    animation: graph3d-node 4.2s var(--ease-in-out) infinite;
+    animation-delay: var(--d);
   }
-  .orbits-turn {
-    animation: spin 140s linear infinite;
+  .graph3d-flow {
+    animation: graph3d-flow 3.2s linear infinite;
+  }
+  .graph3d-flow-late {
+    animation-delay: 0.8s;
   }
 }
-@keyframes spin {
+@keyframes graph3d-node {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes graph3d-flow {
   to {
-    rotate: 360deg;
+    stroke-dashoffset: -32;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Memory ledger scan and gateway health ring. Both are decorative and
+   disappear entirely under reduced motion.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .memory-stack::after {
+    animation: memory-scan 5.6s var(--ease-in-out) infinite;
+  }
+  .gateway-dot::after {
+    animation: gateway-pulse 2.6s ease-out infinite;
+  }
+}
+@keyframes memory-scan {
+  0%,
+  8% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  16% {
+    opacity: 1;
+  }
+  72% {
+    transform: translateY(190px);
+    opacity: 1;
+  }
+  84%,
+  100% {
+    transform: translateY(190px);
+    opacity: 0;
+  }
+}
+@keyframes gateway-pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .gateway-bar span {
+      animation-name: gateway-fill;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(0px);
+      animation-range: entry 0% entry 30%;
+    }
+  }
+}
+@keyframes gateway-fill {
+  from {
+    transform: scaleX(0);
   }
 }
 

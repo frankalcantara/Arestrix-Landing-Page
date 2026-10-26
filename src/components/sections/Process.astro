@@ -1,35 +1,35 @@
 ---
 /**
- * 11. Process: an accent panel that slides in from the left edge of the screen as it scrolls in,
- * next to turning orbits that stay in place (sticky). Each step = dot + title + paragraph; when a
+ * 11. Process: a near-black panel that slides in from the left edge of the screen as it scrolls in,
+ * next to a 3D graph that stays in place (sticky). Each step = dot + title + paragraph; when a
  * step reaches the screen its dot opens, its title tilts in and its paragraph is wiped up into
  * view ([data-enter] in effects.css). Edit the steps below.
  */
-import Orbits from "../Orbits.astro";
+import Graph3D from "../Graph3D.astro";
 
 const steps = [
   {
-    title: "Diagnosis first",
-    body: "Two weeks with your data and the people who use the numbers every week. You get a ten-page memo: what the data can answer, what it cannot, and three options, each with a price.",
+    title: "Draw the graph",
+    body: "Start from a template or an empty canvas. The Office-inspired ribbon gives you agents, tools, decisions and feedback loops; validation catches an incomplete graph before a model call.",
   },
   {
-    title: "A single owner",
-    body: "Each project answers one business question, agreed in writing, with one named person on your side who decides. Any change of scope goes through that person and gets a new price before work goes on.",
+    title: "Inspect the code",
+    body: "Arestrix translates the graph into C++20 and opens it in Monaco. Parallel branches become Taskflow tasks, with no hidden interpreter between the canvas and the binary.",
   },
   {
-    title: "Your own tools",
-    body: "Models run in your own warehouse, or as a plain Python script on a server you already own. There is no platform to license, no fee per seat, and no login that stops working on the day our contract with you comes to an end, or after.",
+    title: "Run with telemetry",
+    body: "Press F5 to compile and run. Watch node latency, token throughput, live reasoning streams and tool arguments, then resume a batch without starting over.",
   },
   {
-    title: "Handover & review",
-    body: "In the last week your analyst reruns everything while we watch and answer questions. Ninety days later we come back for a full day, at no charge, to check that the numbers still hold up in your hands and in your tools.",
+    title: "Export and package",
+    body: "Ship a standalone runner with an HMAC integrity manifest, or package it as MSI/MSIX for managed Windows deployment. Credentials resolve at runtime through DPAPI or Azure Key Vault.",
   },
 ];
 ---
 
 <section class="process" aria-labelledby="process-title">
   <div class="process-panel">
-    <h2 id="process-title" class="sr-only">How a project runs</h2>
+    <h2 id="process-title" class="sr-only">How Arestrix works</h2>
     <ol class="steps">
       {
         steps.map((step) => (
@@ -47,8 +47,8 @@ const steps = [
     </ol>
   </div>
   <div class="process-side" aria-hidden="true">
-    <div class="process-orbits" data-follow="500">
-      <Orbits variant="rings" class="process-rings" />
+    <div class="process-graph-wrap">
+      <Graph3D class="process-graph" />
     </div>
   </div>
 </section>
@@ -63,9 +63,11 @@ const steps = [
     flex: none;
     width: 65%;
     padding: 48px 24px;
+    border: 1px solid var(--cap-card-border);
+    border-left: 0;
     border-radius: 0 var(--radius) var(--radius) 0;
-    background: var(--accent);
-    color: var(--accent-text);
+    background: var(--cap-card);
+    color: var(--cap-card-text);
   }
   .steps {
     display: grid;
@@ -76,30 +78,32 @@ const steps = [
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: currentColor;
+    background: var(--accent);
   }
   .step-title {
     margin-top: 12px;
     font-size: 5.94728vw;
     font-weight: 700;
     line-height: 1.3;
+    color: var(--accent);
   }
   .step-body {
     margin-top: 12px;
     font-size: 18px;
     line-height: 1.6;
+    color: var(--cap-card-text);
   }
   .process-side {
     flex: 1;
     min-width: 0;
   }
-  .process-orbits {
+  .process-graph-wrap {
     position: sticky;
     top: 144px;
     margin-top: 98px;
     height: 133px;
   }
-  .process-orbits :global(.process-rings) {
+  .process-graph-wrap :global(.process-graph) {
     width: 100%;
     height: 100%;
   }
@@ -125,8 +129,8 @@ const steps = [
       margin-top: 24.6px;
       font-size: 24px;
     }
-    .process-orbits {
-      top: 20vh;
+    .process-graph-wrap {
+      top: 34vh;
       margin-block: 20vh;
       height: 60vh;
     }

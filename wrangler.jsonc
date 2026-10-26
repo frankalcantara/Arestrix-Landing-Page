@@ -1,8 +1,11 @@
 {
-  // For the "Deploy to Cloudflare" button: serves dist/ and puts the access key into the form (see worker.js).
-  // Only pages run the Worker; CSS, JS and images are served as free static assets.
-  "name": "orrery",
-  "main": "worker.js",
+  // Cloudflare Workers static assets: `npm run deploy` uploads ./dist.
+  // There is no Worker script and no form backend; every page is static.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arestrix",
   "compatibility_date": "2026-09-01",
-  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": ["/*", "!/_astro/*", "!/favicon.svg", "!/apple-touch-icon.png", "!/og.png", "!/robots.txt", "!/sitemap-index.xml", "!/sitemap-0.xml"], "not_found_handling": "404-page" }
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
 }

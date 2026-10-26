@@ -1,23 +1,23 @@
 ---
-/** 12. Final call to action: a small line, a heading that fills on scroll, and the accent button (it opens the contact form). */
+/** 12. Final call to action: a small line, a heading that fills on scroll, and the GitHub button. */
 import FillLines from "../FillLines.astro";
 import { SITE } from "../../config";
 ---
 
 <section class="final-cta" aria-labelledby="cta-title">
   <div class="container-x cta-col">
-    <p class="cta-kicker">Have a decision coming up?</p>
+    <p class="cta-kicker">Open source. Local-first. MIT licensed.</p>
     <FillLines
       as="h2"
       id="cta-title"
       class="cta-title"
-      lines={["Tell us the *decision* you are stuck on.", "We will say on one call if *data can help*."]}
+      lines={["Start with one *example*.", "Compile your first *pipeline* today."]}
       ranges={[
         [20, 50],
         [30, 60],
       ]}
     />
-    <a href={SITE.cta.href} class="btn btn-primary cta-btn">Get started</a>
+    <a href={SITE.repo} class="btn btn-primary cta-btn" target="_blank" rel="noopener">Explore on GitHub</a>
   </div>
 </section>
 
@@ -31,8 +31,12 @@ import { SITE } from "../../config";
     color: var(--c-ink);
   }
   .cta-col :global(.cta-title) {
+    margin-top: 16px;
     font-size: min(7.739547vw, 52px);
-    line-height: 1.3;
+    line-height: 1.35;
+  }
+  .cta-col :global(.cta-title .fl + .fl) {
+    margin-top: 0.06em;
   }
   .cta-btn {
     margin-top: 51px;

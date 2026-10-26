@@ -2,23 +2,34 @@
 @import "./effects.css";
 
 /* ------------------------------------------------------------------
-   Design tokens. Navy-black ground, near-white type, a mid grey for text
-   that has not "filled" yet, and one accent (from src/config.ts, set on
-   <html> by the layout). Every text pair below is at least 4.5:1.
+   Arestrix design tokens, from Manual de Marca v1.0.
+
+   Grafite is the ground, Papel the type and strokes, Brasa the single
+   accent for highlights (large/bold text only, as the manual asks) and
+   Ardosia the neutral for secondary details.
+
+   Large surfaces use a near-black background with a dark grey outline and
+   Papel type/art (`--cap-card`). Papel (`--card`) remains only for the small
+   contact-channel icon fills.
 ------------------------------------------------------------------ */
 :root {
-  --accent: #dcfd35;
-  --accent-text: #040319;
-  --c-bg: #040319; /* ground */
-  --c-surface: #0d0c26; /* cards, fields */
-  --c-white: #ffffff; /* hero heading, stat labels */
-  --c-ink: #eeeeee; /* text, 17:1 on the ground */
-  --c-muted: #949494; /* secondary and unfilled text, 6.7:1 */
-  --c-dim: #949494;
-  --c-line: rgb(255 255 255 / 0.5); /* 1px dividers */
-  --c-art: #5c5b7f; /* decorative line art (orbits) */
+  --accent: #e8590c;
+  --accent-text: #14151a;
+  --card: #f4f2ee;
+  --card-text: #14151a;
+  --cap-card: #0b0c0f;
+  --cap-card-text: #f4f2ee;
+  --cap-card-border: rgb(244 242 238 / 0.18);
+  --c-bg: #14151a; /* Grafite: ground */
+  --c-surface: #1c1e25; /* cards, fields (a lifted Grafite) */
+  --c-white: #f4f2ee; /* Papel: hero heading, stat labels */
+  --c-ink: #f4f2ee; /* Papel: body text, 15.9:1 on the ground */
+  --c-muted: #b9b7b2; /* secondary text, 8.9:1 on the ground */
+  --c-dim: #8f9097; /* unfilled text, 5.4:1 on the ground */
+  --c-line: rgb(244 242 238 / 0.22); /* 1px dividers */
+  --c-art: #6b6f7a; /* decorative line art (ridgelines) */
   --c-danger: #ff9a8a;
-  --c-success: #dcfd35;
+  --c-success: #8ad7a5;
   --radius: 12px; /* cards, buttons, panels */
   --radius-media: 24px; /* pictures */
   --header-h: 90px;
@@ -28,7 +39,8 @@
 }
 
 @theme {
-  --font-sans: "Questrial", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 @theme inline {
@@ -40,6 +52,11 @@
   --color-line: var(--c-line);
   --color-accent: var(--accent);
   --color-accent-text: var(--accent-text);
+  --color-card: var(--card);
+  --color-card-text: var(--card-text);
+  --color-cap-card: var(--cap-card);
+  --color-cap-card-text: var(--cap-card-text);
+  --color-cap-card-border: var(--cap-card-border);
   --color-danger: var(--c-danger);
 }
 
@@ -56,14 +73,17 @@
   }
   body {
     min-height: 100dvh;
+    font-family: var(--font-sans);
     font-size: 16px;
+    font-weight: 500;
     line-height: 1.6;
   }
   h1,
   h2,
   h3,
   h4 {
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.035em;
   }
   ::selection {
     background: var(--accent);
@@ -92,9 +112,7 @@
   .section {
     @apply py-24 sm:py-28 lg:py-36;
   }
-  /* Type scale, measured on the reference at 1440px and at 375px (the small sizes scale with the
-     screen width up to the large ones, as on the reference). Questrial has one weight: "bold" is
-     the browser's synthetic bold. */
+  /* Type scale: 72px heading, 62px statements, 38px paragraphs, 22px leads. */
   .h-display {
     font-size: min(12.223253vw, 72px);
     line-height: 1;
@@ -122,15 +140,25 @@
   .dim {
     color: var(--c-dim);
   }
+  /* Small technical labels use the mono face, from the brand manual. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
   /* Short thin accent rule under leads. */
   .rule {
     display: block;
     width: 128px;
     height: 1px;
-    background: var(--accent-half, rgba(220, 253, 53, 0.5));
+    background: var(--accent-half, rgba(232, 89, 12, 0.5));
   }
 
-  /* Buttons: lime block, 150 × 70, bold dark label. */
+  /* Buttons: Brasa block, 150 × 70, bold Grafite label. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -173,12 +201,33 @@
   }
   .btn-secondary {
     color: var(--c-ink);
-    border: 1px solid rgb(255 255 255 / 0.3);
+    border: 1px solid rgb(244 242 238 / 0.3);
   }
   .btn-secondary:hover {
-    border-color: rgb(255 255 255 / 0.6);
+    border-color: rgb(244 242 238 / 0.6);
   }
-  /* Dark button on accent fills. */
+  /* Text link that closes a feature section. */
+  .feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 2px;
+    border-bottom: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .feature-link:hover {
+    color: var(--c-ink);
+    border-color: var(--c-ink);
+  }
+
+  /* Grafite button on Brasa or Papel fills. */
   .btn-dark {
     background: var(--accent-text);
     color: var(--c-ink);
@@ -190,7 +239,7 @@
   .card {
     position: relative;
     background: var(--c-surface);
-    border: 1px solid rgb(255 255 255 / 0.16);
+    border: 1px solid rgb(244 242 238 / 0.14);
     border-radius: var(--radius);
   }
 
@@ -203,7 +252,7 @@
   }
   .field {
     @apply block w-full rounded-xl border bg-bg px-4 py-3 text-base text-ink;
-    border-color: rgb(255 255 255 / 0.2);
+    border-color: rgb(244 242 238 / 0.2);
     min-height: 3.25rem;
     transition: border-color 0.2s;
   }
@@ -211,7 +260,7 @@
     color: var(--c-dim);
   }
   .field:hover {
-    border-color: rgb(255 255 255 / 0.4);
+    border-color: rgb(244 242 238 / 0.4);
   }
   .field:focus-visible {
     outline: 2px solid color-mix(in oklab, var(--accent) 45%, transparent);
@@ -226,27 +275,27 @@
     padding-right: 2.75rem;
   }
 
-  /* Markdown body of the services page */
-  .prose-orrery {
+  /* Markdown body of the capabilities page */
+  .prose-arestrix {
     @apply text-lg leading-relaxed text-ink;
   }
-  .prose-orrery > * + * {
+  .prose-arestrix > * + * {
     margin-top: 1.1rem;
   }
-  .prose-orrery h2 {
+  .prose-arestrix h2 {
     @apply mt-10 text-2xl tracking-tight text-white;
   }
-  .prose-orrery ul {
+  .prose-arestrix ul {
     @apply space-y-2;
   }
-  .prose-orrery li {
+  .prose-arestrix li {
     @apply relative pl-6;
   }
-  .prose-orrery li::before {
+  .prose-arestrix li::before {
     content: "";
     @apply absolute top-[0.72em] left-0.5 size-1.5 rounded-full bg-accent;
   }
-  .prose-orrery strong {
+  .prose-arestrix strong {
     @apply text-white;
   }
 }

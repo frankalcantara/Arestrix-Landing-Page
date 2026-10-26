@@ -24,3 +24,9 @@ pnpm-debug.log*
 .idea/
 .env.local
 .env.*.local
+
+# Cloudflare local state
+.wrangler/
+
+# raw recordings (public/media holds the encoded versions)
+assets/

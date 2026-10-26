@@ -1,5 +1,7 @@
 ---
-import "@fontsource/questrial/400.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
 import { SITE } from "../config";
 import Head, { type Props as HeadProps } from "../components/Head.astro";
@@ -13,7 +15,7 @@ const accentHalf = `rgba(${[0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16
 ---
 
 <!doctype html>
-<html lang={SITE.lang} style={`--accent:${SITE.theme.accent};--accent-half:${accentHalf};--accent-text:${SITE.theme.accentText}`}>
+<html lang={SITE.lang} style={`--accent:${SITE.theme.accent};--accent-half:${accentHalf};--accent-text:${SITE.theme.accentText};--card:${SITE.theme.card};--card-text:${SITE.theme.cardText};--cap-card:${SITE.theme.capCard};--cap-card-text:${SITE.theme.capCardText};--cap-card-border:${SITE.theme.capCardBorder}`}>
   <head>
     <Head {...props} />
   </head>
@@ -27,7 +29,6 @@ const accentHalf = `rgba(${[0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16
     <script>
       import "../scripts/scenes";
       import "../scripts/enter";
-      import "../scripts/follow";
     </script>
   </body>
 </html>

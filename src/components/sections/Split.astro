@@ -1,9 +1,10 @@
 ---
 /** 10. Split section: a large paragraph and the accent button, next to a rounded picture that scales up as it scrolls in. */
 import Ridgelines from "../Ridgelines.astro";
+import { SITE } from "../../config";
 ---
 
-<section class="split" aria-label="When we say no">
+<section class="split" aria-label="Own your pipeline">
   <div class="container-x split-col">
     <div class="split-pic">
       <div class="split-frame">
@@ -11,11 +12,16 @@ import Ridgelines from "../Ridgelines.astro";
       </div>
     </div>
     <p class="t-big split-text">
-      Two of our last five projects ended with a spreadsheet, not a model. If a pivot table answers your question, we say so in
-      week one and bill for week one. The rest of the budget stays with you, and so does the spreadsheet. We would rather lose a
-      project than sell you a model you do not need, and we put that promise in writing.
+      Most agent tools hand you a runtime you cannot inspect. Arestrix hands you the artifact: the graph, the generated
+      C++20, the build metadata and a standalone runner. If a model provider changes tomorrow, the pipeline still belongs
+      to you.
     </p>
-    <a href="/contact/#enquiry" class="btn btn-primary split-btn">Book a call</a>
+    <a
+      href={SITE.docs}
+      class="btn btn-primary split-btn"
+      target="_blank"
+      rel="noopener"
+    >Read the docs</a>
   </div>
 </section>
 

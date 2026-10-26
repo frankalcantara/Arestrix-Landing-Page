@@ -1,0 +1,302 @@
+---
+/**
+ * Enterprise AI Gateway: one on-prem endpoint for every model provider, with
+ * virtual keys and budgets. The panel is decorative; the copy carries the meaning.
+ */
+import SectionHeading from "../SectionHeading.astro";
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const points = [
+  "Virtual keys by key, project, user, provider and model",
+  "Monthly budgets, rate limits and a usage ledger",
+  "Fail-closed routing; local models stay exempt",
+  "/v1/usage, /health and Prometheus /metrics",
+];
+
+const keys = [
+  { name: "runner-a", meta: "project demo · user ana", amount: "$32 / $50", value: 0.64 },
+  { name: "runner-ci", meta: "project docs · batch", amount: "$8 / $20", value: 0.4 },
+  { name: "local", meta: "llama.cpp · 127.0.0.1", amount: "exempt", value: 0 },
+];
+---
+
+<section id="gateway" class="gateway scroll-mt-28" aria-labelledby="gateway-title">
+  <div class="container-x gateway-grid">
+    <div class="gateway-visual reveal" aria-hidden="true">
+      <div class="gateway-panel">
+        <div class="gateway-head">
+          <span class="gateway-status"><span class="gateway-dot" /> healthy</span>
+          <span class="gateway-name">arestrix-gateway</span>
+          <span class="gateway-chip">on-prem</span>
+        </div>
+
+        <div class="gateway-endpoint">
+          <span class="gateway-label">single endpoint</span>
+          <p>gateway.company.com/v1</p>
+        </div>
+
+        <div class="gateway-providers">
+          <span>OpenAI</span>
+          <span>Anthropic</span>
+          <span>Local</span>
+        </div>
+
+        <div class="gateway-keys">
+          {
+            keys.map((key) => (
+              <div class="gateway-key">
+                <span class="gateway-key-name">{key.name}</span>
+                <span class="gateway-key-meta">{key.meta}</span>
+                <span class:list={["gateway-amount", key.value === 0 && "text-muted"]}>{key.amount}</span>
+                {key.value > 0 && (
+                  <span class="gateway-bar">
+                    <span style={`--v:${key.value}`} />
+                  </span>
+                )}
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="gateway-foot">
+          <span class="gateway-foot-dot" />
+          provider keys stay on the server · local models exempt
+        </div>
+      </div>
+    </div>
+
+    <div class="gateway-copy">
+      <p class="eyebrow">Enterprise AI Gateway</p>
+      <SectionHeading
+        id="gateway-title"
+        class="mt-3"
+        title="One gateway for *every model API*"
+        lead="An on-prem OpenAI and Anthropic-compatible proxy. Provider keys stay on the server; every runner gets a virtual key with a budget, a rate limit and a usage record."
+      />
+
+      <ul class="stagger mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          points.map((point, i) => (
+            <li class="flex gap-3 text-ink" style={`--i:${i}`}>
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        href={SITE.gatewayDocs}
+        class="feature-link mt-8"
+        target="_blank"
+        rel="noopener"
+      >Read the gateway guide <Icon name="arrow-up-right" size={18} /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gateway {
+    padding-block: 48px;
+  }
+  .gateway-grid {
+    display: grid;
+    gap: 48px;
+  }
+  .gateway-copy {
+    order: 1;
+  }
+  .gateway-visual {
+    order: 2;
+  }
+  .gateway-copy :global(.rule) {
+    margin-top: 32px;
+  }
+  .gateway-panel {
+    padding: 24px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: var(--radius-media);
+    background: var(--cap-card);
+  }
+  .gateway-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .gateway-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    white-space: nowrap;
+  }
+  .gateway-dot {
+    position: relative;
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .gateway-dot::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    opacity: 0.35;
+  }
+  .gateway-name {
+    margin-left: auto;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: var(--c-muted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .gateway-chip,
+  .gateway-providers span {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    white-space: nowrap;
+  }
+  .gateway-chip {
+    color: var(--accent);
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  .gateway-endpoint {
+    margin-top: 24px;
+    padding: 15px 16px;
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    background: rgb(244 242 238 / 0.035);
+  }
+  .gateway-label,
+  .gateway-key-meta,
+  .gateway-amount,
+  .gateway-foot {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .gateway-endpoint p {
+    margin-top: 4px;
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--c-ink);
+  }
+  .gateway-providers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  .gateway-keys {
+    display: grid;
+    margin-top: 18px;
+    border-top: 1px solid var(--c-line);
+  }
+  .gateway-key {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .gateway-key-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--c-ink);
+  }
+  .gateway-key-meta {
+    grid-column: 1;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .gateway-amount {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--c-ink);
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .gateway-bar {
+    grid-column: 1 / -1;
+    height: 4px;
+    margin-top: 5px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgb(244 242 238 / 0.1);
+  }
+  .gateway-bar span {
+    display: block;
+    width: calc(var(--v) * 100%);
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+    transform-origin: left center;
+  }
+  .gateway-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+  .gateway-foot-dot {
+    width: 5px;
+    height: 5px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  @media (min-width: 751px) {
+    .gateway {
+      padding-block: 96px;
+    }
+    .gateway-panel {
+      padding: 28px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .gateway {
+      padding-block: 120px;
+    }
+    .gateway-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      gap: 80px;
+    }
+    .gateway-copy,
+    .gateway-visual {
+      order: 0;
+    }
+  }
+</style>

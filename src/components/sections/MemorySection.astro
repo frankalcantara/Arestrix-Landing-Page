@@ -1,0 +1,266 @@
+---
+/**
+ * Project memory (AMG): a split section with the product claims on the left and a
+ * small memory-ledger panel on the right. The ledger is decorative; the copy carries
+ * the meaning for screen readers.
+ */
+import SectionHeading from "../SectionHeading.astro";
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const points = [
+  "A local SQLite temporal multigraph, not a cloud memory service",
+  "memory_search and memory_record_lesson as first-class tools",
+  "Evidence-backed promotion and deterministic consolidation",
+  "A token-budgeted brief at the start of every run",
+];
+
+const rows = [
+  {
+    type: "Episode · failure",
+    text: "remote MCP call timed out after 30 s",
+    chip: "recorded",
+  },
+  {
+    type: "Lesson",
+    text: "retry with backoff before the second tool",
+    chip: "promoted",
+  },
+  {
+    type: "Playbook",
+    text: "remote MCP recovery, now reusable",
+    chip: "procedural",
+  },
+  {
+    type: "Blackboard",
+    text: "shared by three agents in the same run",
+    chip: "1 run",
+  },
+];
+---
+
+<section id="memory" class="memory scroll-mt-28" aria-labelledby="memory-title">
+  <div class="container-x memory-grid">
+    <div class="memory-copy">
+      <p class="eyebrow">Project memory · AMG</p>
+      <SectionHeading
+        id="memory-title"
+        class="mt-3"
+        title="Memory that stays *with the project*"
+        lead="Arestrix keeps what a run learned: episodes, lessons, playbooks and the shared Blackboard. Agents search it before they act and record it when they finish."
+      />
+
+      <ul class="stagger mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          points.map((point, i) => (
+            <li class="flex gap-3 text-ink" style={`--i:${i}`}>
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span>{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        href={SITE.memoryDocs}
+        class="feature-link mt-8"
+        target="_blank"
+        rel="noopener"
+      >How memory works <Icon name="arrow-up-right" size={18} /></a>
+    </div>
+
+    <div class="memory-visual reveal" aria-hidden="true">
+      <div class="memory-panel">
+        <div class="memory-panel-head">
+          <span class="font-mono text-xs tracking-[0.08em] text-muted">memory_search</span>
+          <span class="memory-badge">hybrid retrieval</span>
+        </div>
+
+        <p class="memory-query">
+          <span class="text-accent">›</span>
+          <span>memory_search(&#123; query: "retry policy" &#125;)</span>
+        </p>
+
+        <ol class="memory-stack">
+          {
+            rows.map((row, i) => (
+              <li class="memory-row" style={`--i:${i}`}>
+                <span class="memory-node" />
+                <span class="memory-row-copy">
+                  <span class="memory-type">{row.type}</span>
+                  <span class="memory-text">{row.text}</span>
+                </span>
+                <span class="memory-chip">{row.chip}</span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="memory-brief">
+          <span class="memory-brief-label">token-budgeted brief</span>
+          <p>3 lessons · 1 playbook · 1.2k tokens</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .memory {
+    padding-block: 48px;
+  }
+  .memory-grid {
+    display: grid;
+    gap: 48px;
+  }
+  .memory-copy :global(.rule) {
+    margin-top: 32px;
+  }
+  .memory-panel {
+    position: relative;
+    overflow: clip;
+    padding: 24px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: var(--radius-media);
+    background: var(--cap-card);
+  }
+  .memory-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .memory-badge,
+  .memory-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    white-space: nowrap;
+  }
+  .memory-query {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 13px 14px;
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    background: rgb(244 242 238 / 0.035);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--c-ink);
+    overflow: hidden;
+  }
+  .memory-stack {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .memory-stack::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    width: 1px;
+    background: var(--c-line);
+  }
+  .memory-stack::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 3px;
+    width: 5px;
+    height: 30px;
+    border-radius: 4px;
+    background: var(--accent);
+    opacity: 0;
+  }
+  .memory-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    padding: 11px 0 11px 26px;
+  }
+  .memory-node {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--cap-card);
+  }
+  .memory-row-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .memory-type {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .memory-text {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--c-ink);
+  }
+  .memory-chip {
+    align-self: start;
+    margin-top: 17px;
+  }
+  .memory-brief {
+    margin-top: 22px;
+    padding: 13px 14px;
+    border-left: 2px solid var(--accent);
+    background: rgb(244 242 238 / 0.035);
+  }
+  .memory-brief-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .memory-brief p {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--c-ink);
+  }
+  @media (min-width: 751px) {
+    .memory {
+      padding-block: 96px;
+    }
+    .memory-panel {
+      padding: 28px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .memory {
+      padding-block: 120px;
+    }
+    .memory-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: center;
+      gap: 80px;
+    }
+  }
+</style>

@@ -1,20 +1,9 @@
 /**
- * Orrery: the one file to edit when you rebrand the theme.
+ * Arestrix: the one file to edit when the site changes.
  *
- * Everything here is sample data for a fictional consultancy. Phone numbers use the
- * 555-01xx range reserved for fiction, and every email and URL uses example.com.
+ * Contact channels are intentionally limited to GitHub and X. The project is
+ * open source, so releases, discussions and issues all live on GitHub.
  */
-
-export type Day = "Mo" | "Tu" | "We" | "Th" | "Fr" | "Sa" | "Su";
-
-export interface OpeningHours {
-  /** Shown on the page, e.g. "Mon – Fri". */
-  label: string;
-  days: Day[];
-  /** 24h "HH:MM". Leave both out for a closed day. */
-  opens?: string;
-  closes?: string;
-}
 
 export interface Stat {
   value: number;
@@ -24,80 +13,75 @@ export interface Stat {
 }
 
 export const SITE = {
-  name: "Quillmoor Analytics",
-  /** Short name for the logo on small screens. */
-  shortName: "Quillmoor",
-  tagline: "Forecasting, pricing and reporting for firms without a data team",
+  name: "Arestrix",
+  tagline: "Visual orchestration and native C++20 compilation for AI agent pipelines",
   description:
-    "A five-person data and strategy consultancy in Port Alder. Demand forecasts, pricing, experiments and reporting for companies of 20 to 500 people, each scoped to a fixed price before work starts.",
-  /** Your production URL. Used for canonical links, Open Graph, the sitemap and the form redirect. */
-  url: "https://example.com",
+    "Arestrix is an open-source desktop studio and native compiler for AI agent pipelines. Draw the graph, compile it to C++20 with Taskflow, and ship a standalone runner.",
+  /** Your production URL. Used for canonical links, Open Graph, the sitemap and robots.txt. */
+  url: "https://arestrix.com",
   lang: "en",
   locale: "en_US",
-  /** schema.org type for the JSON-LD block, e.g. "ProfessionalService", "AccountingService", "LegalService" or "LocalBusiness". */
-  schemaType: "ProfessionalService",
-  priceRange: "$$$",
 
-  phone: { display: "(555) 555-0167", tel: "+15555550167" },
-  email: "hello@example.com",
+  /** The only contact channels used by the site. */
+  repo: "https://github.com/frankalcantara/Arestrix",
+  docs: "https://github.com/frankalcantara/Arestrix/tree/main/docs",
+  memoryDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/how-memory-works.md",
+  gatewayDocs: "https://github.com/frankalcantara/Arestrix/blob/main/CppCore/gateway/README.md",
+  releases: "https://github.com/frankalcantara/Arestrix/releases/tag/latest",
+  discussions: "https://github.com/frankalcantara/Arestrix/discussions",
+  issues: "https://github.com/frankalcantara/Arestrix/issues",
+  contributing: "https://github.com/frankalcantara/Arestrix/blob/main/CONTRIBUTING.md",
+  security: "https://github.com/frankalcantara/Arestrix/security/advisories/new",
+  x: "https://x.com/frankalcantara",
 
-  address: {
-    street: "18 Wharf Lane, Suite 4",
-    city: "Port Alder",
-    region: "WA",
-    postalCode: "98000",
-    country: "US",
+  beta: {
+    label: "Beta 2",
+    version: "2.0.0-beta.1",
+    platforms: "Windows and Linux",
   },
-  /** Where you work. Shown on the contact page and in JSON-LD `areaServed`. */
-  areaServed: "United States and Canada, remote first",
 
-  hours: [
-    { label: "Mon – Fri", days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "17:30" },
-    { label: "Sat – Sun", days: ["Sa", "Su"] },
-  ] as OpeningHours[],
-  /** One line under the hours. Set to "" to hide. */
-  hoursNote: "We answer every enquiry within one working day.",
-
-  /** Root domains only: replace them with your own profile URLs. */
+  /** Root profile URLs only: these are the two contact channels. */
   social: [
-    { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
-    { label: "GitHub", href: "https://github.com", icon: "github" },
+    { label: "GitHub", href: "https://github.com/frankalcantara/Arestrix", icon: "github" },
+    { label: "X", href: "https://x.com/frankalcantara", icon: "x-social" },
   ],
 
-  /** The counters in the hero. These are SAMPLE figures: replace them with your real ones. A "|" in a label is where its line breaks. */
+  /** The counters in the hero. A "|" in a label is where its line breaks. */
   stats: [
-    { value: 14, label: "years of|experience" },
-    { value: 86, label: "projects|delivered" },
-    { value: 112, label: "models now|in use" },
-    { value: 5, label: "consultants|on staff" },
+    { value: 20, label: "C++|standard" },
+    { value: 12, label: "runnable|examples" },
+    { value: 2, label: "interface|languages" },
+    { value: 100, suffix: "%", label: "MIT licensed|source" },
   ] as Stat[],
-  /** Small caption under the counters. Set to "" once the figures are real. */
-  statsNote: "Sample figures for the Orrery demo.",
+  /** Small caption under the counters. */
+  statsNote: "Beta 2 · 2.0.0-beta.1 · Windows and Linux",
 
   /**
-   * One accent for highlighted words, buttons, the service cards and the process panel.
-   * `accentText` is the text color on accent fills: keep a contrast ratio of at least 4.5:1
-   * (the default near-black on lime is about 17:1).
+   * One accent for highlighted words, buttons and rules. `accentText` is the text
+   * colour on accent fills: Grafite on Brasa is above 4.5:1 for large/bold text.
+   *
+   * Large surfaces (capability cards, the process panel and the about panel) use a
+   * near-black surface with a dark grey outline, Papel type and Papel line art.
+   * Papel (`card`) remains only for the small contact-channel icon fills. There is
+   * no blue in the brand manual; the outline does the work that the colour used to do.
    */
-  theme: { accent: "#dcfd35", accentText: "#040319" },
-
-  /**
-   * Contact form. PUBLIC_FORMGONG_ACCESS_KEY in .env wins over `accessKey`.
-   * The key (fk_…) is public by design: it only lets visitors send submissions to your form.
-   */
-  formgong: {
-    accessKey: "fk_your_access_key",
-    endpoint: "https://formgong.com/submit",
-    subject: "New enquiry from the website",
+  theme: {
+    accent: "#e8590c",
+    accentText: "#14151a",
+    card: "#f4f2ee",
+    cardText: "#14151a",
+    capCard: "#0b0c0f",
+    capCardText: "#f4f2ee",
+    capCardBorder: "rgb(244 242 238 / 0.18)",
   },
 
   nav: [
-    { label: "services", href: "/services/" },
-    { label: "about", href: "/about/" },
-    { label: "contact", href: "/contact/" },
+    { label: "capabilities", href: "/services/" },
+    { label: "project", href: "/about/" },
+    { label: "community", href: "/contact/" },
   ],
-  /** The lime button in the header and footer. */
-  cta: { label: "Book a call", href: "/contact/#enquiry" },
+  /** The accent button in the header and footer. */
+  cta: { label: "Get the beta", href: "https://github.com/frankalcantara/Arestrix/releases/tag/latest" },
 } as const;
 
 export type SiteConfig = typeof SITE;

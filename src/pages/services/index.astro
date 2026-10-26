@@ -4,19 +4,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import ServiceArt from "../../components/ServiceArt.astro";
 import Icon from "../../components/Icon.astro";
+import { SITE } from "../../config";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 const rendered = await Promise.all(services.map(async (s) => ({ s, Content: (await render(s)).Content })));
 ---
 
 <BaseLayout
-  title="Services"
-  description="Data audits, reporting, demand forecasting, pricing, experiments and customer analysis, each with a written scope and a fixed price."
+  title="Capabilities"
+  description="The six building blocks of Arestrix: a visual graph editor, a native C++20 compiler, an agent runtime, local models, project memory and an enterprise AI gateway."
 >
-  <PageHeader title="Six kinds of *work*" lead="Each project starts with a written scope and a fixed price. The prices below are where most projects start; the scope sets the final figure." />
+  <PageHeader
+    title="Six *building blocks*"
+    lead="Design, compile, run and ship. Each block is part of the same pipeline, not a separate product tier."
+  />
 
   <div class="container-x pb-24 lg:pb-36">
-    <nav aria-label="Services on this page" class="mt-10">
+    <nav aria-label="Capabilities on this page" class="mt-10">
       <ul class="flex flex-wrap gap-2">
         {
           services.map((s) => (
@@ -35,23 +39,13 @@ const rendered = await Promise.all(services.map(async (s) => ({ s, Content: (awa
         rendered.map(({ s, Content }) => (
           <section id={s.id} class="reveal grid scroll-mt-28 gap-10 py-16 lg:grid-cols-12 lg:gap-12 lg:py-20" aria-labelledby={`${s.id}-title`}>
             <div class="lg:col-span-4">
-              <div class="rounded-2xl bg-accent p-6 text-accent-text">
-                <ServiceArt kind={s.data.art} />
+              <div class="rounded-2xl border border-cap-card-border bg-cap-card p-6 text-cap-card-text">
+                {s.data.label && <p class="eyebrow text-cap-card-text">{s.data.label}</p>}
+                <ServiceArt kind={s.data.art} class="mt-6" />
               </div>
-              <dl class="mt-8 grid grid-cols-2 gap-6">
-                {s.data.priceFrom && (
-                  <div>
-                    <dt class="text-sm text-muted">From</dt>
-                    <dd class="mt-1 text-2xl font-light text-accent">{s.data.priceFrom}</dd>
-                  </div>
-                )}
-                {s.data.duration && (
-                  <div>
-                    <dt class="text-sm text-muted">Typical length</dt>
-                    <dd class="mt-1 text-2xl font-light">{s.data.duration}</dd>
-                  </div>
-                )}
-              </dl>
+              <p class="mt-8 text-sm text-muted">
+                Part of Arestrix {SITE.beta.label} · {SITE.beta.platforms}
+              </p>
             </div>
             <div class="lg:col-span-8">
               <h2 id={`${s.id}-title`} class="h-section">
@@ -59,12 +53,12 @@ const rendered = await Promise.all(services.map(async (s) => ({ s, Content: (awa
               </h2>
               <p class="mt-4 text-lg text-muted">{s.data.tags}</p>
               <p class="mt-8 text-xl leading-relaxed">{s.data.summary}</p>
-              <div class="prose-orrery mt-8">
+              <div class="prose-arestrix mt-8">
                 <Content />
               </div>
               {s.data.deliverables.length > 0 && (
                 <div class="mt-10 rounded-2xl border border-line p-6 sm:p-8">
-                  <h3 class="text-lg">What you keep</h3>
+                  <h3 class="text-lg">What's inside</h3>
                   <ul class="mt-5 grid gap-3 sm:grid-cols-2">
                     {s.data.deliverables.map((d) => (
                       <li class="flex gap-3 text-muted">
@@ -75,8 +69,8 @@ const rendered = await Promise.all(services.map(async (s) => ({ s, Content: (awa
                   </ul>
                 </div>
               )}
-              <a href="/contact/#enquiry" class="btn btn-secondary mt-10">
-                Ask about {s.data.title.toLowerCase()} <Icon name="arrow-right" class="icon-shift" />
+              <a href={SITE.docs} class="btn btn-secondary mt-10" target="_blank" rel="noopener">
+                Read the docs <Icon name="arrow-up-right" class="icon-shift" />
               </a>
             </div>
           </section>

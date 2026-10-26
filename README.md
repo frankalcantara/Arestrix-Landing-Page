@@ -1,159 +1,169 @@
-# Orrery
+# Arestrix landing page
 
-A free Astro theme for consultants and small B2B service firms: a dark site with large light type, one lime accent and a home page that moves as you scroll.
+The public landing page for **Arestrix**, a desktop studio and native C++20 compiler for AI agent
+pipelines. Built as a static Astro 7 site with Tailwind CSS 4 and TypeScript.
 
-**Live demo:** https://orrery.formgong.com · **No build step?** Download `orrery-html.zip` from the [latest release](https://github.com/formgong/orrery-astro-theme/releases/latest): plain HTML files, replace `fk_your_access_key` and `https://example.com` with your own and upload them anywhere.
-
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/formgong/orrery-astro-theme) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fformgong%2Forrery-astro-theme&project-name=orrery&repository-name=orrery&env=PUBLIC_FORMGONG_ACCESS_KEY&envDescription=Your%20Formgong%20access%20key%20%28fk_...%29.%20Create%20a%20free%20form%20to%20get%20one.&envLink=https%3A%2F%2Fformgong.com%2Fnew%3Fname%3Dorrery)
-
-Each button copies the theme to your GitHub, builds it and asks for one value: your Formgong access key (`fk_…`), free at https://formgong.com/new. The form works from the first deploy. Then set `url` in `src/config.ts` to your domain.
-
-The demo business is **Quillmoor Analytics**, a fictional five-person data and strategy consultancy in the fictional town of Port Alder. Everything on the site is sample content: phone numbers use the 555-01xx range reserved for fiction, every email and link uses `example.com`, and the team is described by role, not by name.
-
-- **One file to rebrand.** Name, contact details, hours, the hero counters, the accent color and the form key live in `src/config.ts`. Services are Markdown files.
-- **Thirteen scroll and load effects, no animation library.** Service cards that start as a staircase and pull up into a grid as you scroll, flipping in from flat; statements that fill line by line; a panel that slides in from the screen edge; titles that tilt into place. Timings, easings and scroll ranges were measured on the reference design with Playwright. All of it is CSS plus three tiny scripts, and all of it stops for visitors who prefer reduced motion.
-- **A contact form that never fakes success.** It shows "Message received" only when the form backend answers `success: true`. Errors and lost connections show an error. Without JavaScript it still works as a plain HTML form.
-- **Fast and accessible.** Static pages, one self-hosted font (Questrial), a few small scripts (the canvas scenes, the entrance trigger, the orbit lean, the form, closing the mobile menu). Labels on every field, visible focus, AA contrast for every text colour in its final state. Lighthouse mobile: 99–100 / 100 / 100 / 100.
-
-Built with Astro 7, Tailwind CSS 4 and TypeScript.
+The page is derived from the MIT-licensed [Orrery](https://github.com/formgong/orrery-astro-theme)
+theme. The scroll choreography, canvas scenes and motion rules are described in `src/styles/effects.css`
+and in the comments of each component.
 
 ## Quick start
 
 ```sh
-npm create astro@latest -- --template formgong/orrery-astro-theme
-cd your-project
+npm install
 npm run dev
 ```
 
-Or clone the repository and run `npm install`, then `npm run dev`. Node 22.12 or newer is required.
+Open <http://localhost:4321>.
 
-| Command           | What it does                                   |
-| ----------------- | ---------------------------------------------- |
-| `npm run dev`     | Local dev server at `http://localhost:4321`    |
-| `npm run build`   | Static site in `dist/`                         |
-| `npm run preview` | Serve the built site locally                   |
-| `npm run check`   | Type-check `.astro` and `.ts` files            |
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Dev server with hot reload |
+| `npm run build` | Static site in `dist/` |
+| `npm run preview` | Serve the built site locally |
+| `npm run check` | Type-check `.astro` and `.ts` files |
+| `npm run test:local` | Build, serve, and smoke-test every route |
+| `npm run test:cf` | Build, serve with `wrangler dev`, and smoke-test every route |
+| `npm run preview:cf` | Serve the built site through the Cloudflare config |
+| `npm run deploy` | Build and upload `dist/` to Cloudflare Workers |
 
-## Rebrand it
+`npm run build` and `npm run check` must both pass with 0 errors and 0 warnings.
 
-Open `src/config.ts`. The main fields:
+## Content map
 
-| Field                                     | Used for                                                                                   |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `name`, `shortName`, `tagline`, `description` | Logo (two-line wordmark: `shortName`, then the rest of `name`), page titles, meta description, JSON-LD |
-| `url`                                     | Canonical URLs, Open Graph, sitemap, robots.txt and the form's redirect                    |
-| `schemaType`                              | schema.org type, e.g. `ProfessionalService`, `AccountingService`, `LegalService`           |
-| `phone`, `email`, `address`, `areaServed` | Header menu, footer, contact page, JSON-LD                                                 |
-| `hours`, `hoursNote`                      | Contact page, JSON-LD opening hours                                                        |
-| `social`                                  | Footer icons. Real profile URLs are also added to JSON-LD `sameAs`                         |
-| `stats`, `statsNote`                      | The four counters in the hero. Sample values: replace them, then clear `statsNote`         |
-| `theme.accent`, `theme.accentText`        | The one accent (key words, buttons, cards, the process panel) and the text color on it (keep 4.5:1) |
-| `formgong`                                | Fallback access key, endpoint and email subject for the contact form                      |
-| `nav`, `cta`                              | Header links and the accent button in the header and footer                               |
+| Where | What |
+| --- | --- |
+| `src/config.ts` | Name, tagline, canonical URL, GitHub/X links, counters, accent and card colours, nav and CTA |
+| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Memory, Gateway, Split, Process, FinalCta |
+| `public/media/` | The hero graph loop: WebM, MP4 and a WebP poster |
+| `src/content/services/*.md` | The six capability cards and their detail pages |
+| `src/pages/about.astro` | Project positioning, audience, principles and deliberate scope |
+| `src/pages/contact.astro` | Community page: GitHub and X only |
+| `src/styles/global.css` | Brand tokens and shared components |
+| `src/styles/effects.css` | Every animation and scroll-linked effect |
 
-Replace the logo mark in `src/components/Logo.astro` and `public/favicon.svg`, and regenerate `public/og.png` (1200×630) and `public/apple-touch-icon.png` (180×180).
+## Brand
 
-The JSON-LD block has no star rating on purpose: search engines ignore ratings a business publishes about itself.
+The palette and fonts come from `C:\Projetos\Arestrix\Manual_de_Marca`:
 
-## Set up the form
+| Token | Value | Use |
+| --- | --- | --- |
+| Grafite | `#14151A` | Page ground |
+| Papel | `#F4F2EE` | Text, strokes and the logo |
+| Brasa | `#E8590C` | Highlights, buttons and rules |
+| Ardósia | `#4B4F5C` | Decorative neutrals |
+| Large surfaces | `#0B0C0F` | Cards, process and about panels: Papel type/art, dark grey outline |
+| Icon fills | `#F4F2EE` | Small contact-channel circles |
 
-The contact form posts to [Formgong](https://formgong.com), a hosted form backend, so you don't need a server. It appears on the contact page; the buttons on the home page lead to it.
+Type is **Space Grotesk** (500/700) and **IBM Plex Mono** (500), both self-hosted from Fontsource.
+The negative logo, favicon, web manifest and Open Graph image are copied from the brand manual into
+`public/` and `public/brand/`.
 
-1. Create a free form at [formgong.com/new](https://formgong.com/new?name=Website%20contact%20form) (or from the dashboard if you already have an account).
-2. Copy the form's access key. It starts with `fk_` and is public by design: it only lets visitors send submissions to that one form.
-3. Add it to a `.env` file in the project root:
+## Contact channels
 
-   ```sh
-   PUBLIC_FORMGONG_ACCESS_KEY=fk_your_access_key
-   ```
+The site only contacts through **GitHub** and **X**:
 
-   or set `formgong.accessKey` in `src/config.ts`. While the placeholder key is in use, the dev server shows a reminder above the form.
-4. Set `url` in `src/config.ts` to your real domain. Visitors without JavaScript are redirected to `/thanks/` on that domain. Formgong only follows a redirect on the site that sent the form, so on `localhost` you land on Formgong's own thank-you page instead.
+- GitHub: <https://github.com/frankalcantara/Arestrix>
+- X: <https://x.com/frankalcantara>
 
-Submissions arrive by email and, if you connect it, in Telegram. The free plan covers 300 submissions a month.
+There is no contact form, no email address and no phone number. The community page links to the
+repository, discussions, issues, releases and documentation. Change the URLs in `src/config.ts`.
 
-**How the form behaves**
+## Hero video
 
-- Without JavaScript: a normal `POST` to `https://formgong.com/submit`. The hidden `_redirect` field sends the visitor to `/thanks/` afterwards.
-- With JavaScript: the same fields are sent with `fetch` and `Accept: application/json`. The button is disabled while sending. The success state, with its checkmark animation, appears only when the JSON response has `success === true`. Any other response shows the server's `message`. A network failure shows an error and your email address.
-- The hidden `botcheck` field is a spam honeypot. Keep it empty and keep it in the markup.
+The hero uses a short screen recording of an Arestrix run: agents, edges and pulses on a pure black
+background, with no Studio chrome. It is a 19-second seamless loop (a one-second crossfade joins the
+end back to the start), 1260×654, no audio.
 
-**Using another form backend.** Any service that accepts a standard form `POST` works. Set `PUBLIC_FORMGONG_ENDPOINT` (or `formgong.endpoint`) to its URL and rename the hidden fields to what that service expects. If its JSON response is shaped differently, change the single `reply?.success === true` check in `src/components/ContactForm.astro`.
+- `public/media/hero-graph.webm` (VP9) is served first; `hero-graph.mp4` (H.264) is the Safari
+  fallback. Both are about 700 KB.
+- `public/media/hero-graph-poster.webp` is the same frame used before playback and for
+  `prefers-reduced-motion`.
+- The video occupies the right half of the hero. A Grafite gradient (`.hero-shade`) covers its
+  left side, so it never runs under the heading or the lead. `mix-blend-mode: screen` removes the
+  black background, so there is no frame, border or mask around it.
+- Below 751 px the hero is text-only; the video is not loaded on phones.
+- It is loaded and played by the small script in `Hero.astro`; if playback is refused, the poster
+  stays visible.
+- The raw recording is kept in `assets/` locally and is not part of the deployed site.
 
-## Edit the content
+## Motion rules
 
-- **Services:** one Markdown file per service in `src/content/services/`. Frontmatter: `title`, `tags` (the short line on the card), `summary`, `order`, `priceFrom`, `duration`, `deliverables` (list) and `art`, the card's line animation: `grid`, `bars`, `forecast`, `curve`, `bells` or `clusters` (see `src/components/ServiceArt.astro`). The body is shown on the services page.
-- **Key words in the accent:** wrap them in asterisks, for example `lines={["Our *services*"]}`. This works in section headings, page headers and the lines that fill on scroll (`FillLines.astro`: one string per line).
-- **Home page copy:** one file per section in `src/components/sections/`. The process steps are at the top of `Process.astro`.
-- **About page:** roles and terms at the top of `src/pages/about.astro`.
+- Every animated element's default style is its final state. Motion sits inside
+  `@supports (animation-timeline: …)` and
+  `@media (prefers-reduced-motion: no-preference) and (min-width: 751px)`.
+- Scroll-driven rules use longhands (`animation-name`, `animation-timeline`, …). A minifier can merge
+  a shorthand plus `animation-timeline` into a declaration Chrome rejects.
+- Use `overflow: clip`, not `hidden`, around animated content. `hidden` creates a scroll container
+  and view timelines then track that box.
+- Write `view(0px)`, not `view()`. The default inset is the page's `scroll-padding`.
+- Entrances (`[data-enter]`) stay paused until `src/scripts/enter.ts` adds `.is-in` at 15% visible.
+- No animation libraries. The canvas scenes in `src/scripts/scenes.ts` are dependency-free.
 
-## The effects
+## Local testing before deploy
 
-Numbers match the comments in the code.
+Fast path:
 
-| #  | Effect | Where |
-| -- | ------ | ----- |
-| 1  | Fixed 90px header: logo, three links, accent button, a 1px divider from the content edge to the screen edge | `Header.astro` |
-| 2  | On load the first heading line tilts in, the second is wiped in from the left, the lead fades in; a 3D particle network fills the whole hero behind the text, pushed aside by the pointer | `sections/Hero.astro`, `scripts/scenes.ts` (`plexus`) |
-| 3  | Counters count up from 0 in steps, in the accent color | `.count` in `effects.css` |
-| 4  | The hero stays put (sticky) while the next block slides up over it | `.hero-wrap` in `pages/index.astro` |
-| 5  | A statement fills line by line: the key words turn from grey to the accent behind a front that sweeps left to right | `FillLines.astro`, `.fl-top` |
-| 6  | Line-art orbits turn slowly and lean towards the pointer | `Orbits.astro`, `.orbit-ring`, `scripts/follow.ts` |
-| 7  | A large rounded panel of drifting lines grows from 90% as it scrolls in; its quote flips in | `sections/MediaPanel.astro`, `.media`, `scenes.ts` (`flow`) |
-| 8  | Two-tone section heading that fills like 5, a lead and a short accent rule | `sections/Services.astro` |
-| 9  | Service cards start as a staircase, each 300px below the last, and pull up into a 3-column grid (2 columns on tablets) as you scroll; each flips in from flat when it reaches the screen; the finished grid scrolls away as one block | `sections/Services.astro`, `ServiceCard.astro`, `ServiceArt.astro`, `[data-enter="flip"]` |
-| 10 | Split section: the picture grows from 90% as it scrolls in | `sections/Split.astro`, `Ridgelines.astro`, `.split-pic` |
-| 11 | An accent panel slides in from the left edge of the screen next to sticky turning orbits; each step's dot opens, its title tilts in and its paragraph is wiped up | `sections/Process.astro`, `[data-enter]` |
-| 12 | The closing heading fills like 5 | `sections/FinalCta.astro` |
-| 13 | Footer over a rolling 3D field of dots | `Footer.astro`, `scenes.ts` (`wave`) |
+```sh
+npm run test:local
+```
 
-How it is built:
+This builds the site, starts `astro preview` on `http://127.0.0.1:4322`, fetches every route and
+checks the rebrand: Arestrix copy is present and the old sample business, email, phone and Formgong
+references are gone. It exits non-zero on failure.
 
-- **Scroll-linked effects are CSS** (`animation-timeline: view(0px)`, one view timeline per element), so the browser runs them off the scroll position with no scroll listeners. They are all in `src/styles/effects.css`. `view(0px)` rather than `view()`: the default inset is the page's `scroll-padding`, which would shorten every range by the header height.
-- **Entrances are CSS animations started by a 20-line script** (`src/scripts/enter.ts`): when 15% of an element is on screen it gets `.is-in` and its animation plays once. The card staircase is plain `position: sticky`: every card sits in its own track, and all tracks end together.
-- **One canvas script** (`src/scripts/scenes.ts`, under 6 KB minified with the other two, no dependencies) draws the particle network, the drifting lines and the dot wave. It caps the device pixel ratio at 2, draws only while a canvas is on screen and the tab is visible, and draws one still frame for reduced motion.
-- **The counters are CSS too:** a registered integer property stepped from 0 and printed with `counter()`. The real numbers are in the HTML for screen readers and search engines.
+Cloudflare path:
 
-Phones (under 751px) get no entrances and no scroll effects, like the reference design. Browsers without scroll-driven animations, pages without JavaScript and visitors who prefer reduced motion see every section in its final state: text filled, cards flat and lit, the panel in place, titles straight. Nothing is hidden.
+```sh
+npm run test:cf
+```
 
-Three CSS details that keep it working:
+This does the same checks through `wrangler dev` on `http://127.0.0.1:8788`, using the same
+`wrangler.jsonc` that production uses. To inspect it by hand, run `npm run preview:cf` and open that
+URL.
 
-- Scroll-driven rules use longhand properties (`animation-name`, `animation-timeline`, …). A minifier can merge a shorthand and `animation-timeline` into one declaration that Chrome rejects.
-- Wrappers around animated content use `overflow: clip`, not `overflow: hidden`. `overflow: hidden` creates a scroll container, and a view timeline inside it would track that box instead of the page.
-- Entrances keep `transform: none` in their first keyframe, so the observer measures the element's real box before it starts. The cards and the media quote fade in over 1.2 s while they flip (as on the reference); every text colour passes AA once settled.
+## Deploy to Cloudflare
 
-## Look
+`wrangler.jsonc` deploys `dist/` as static assets only (no Worker script, no bindings). Set the real
+domain before building so canonical URLs, Open Graph, the sitemap and robots.txt point at it:
 
-Navy-black ground (`--c-bg`, #040319), #EEEEEE type (white for the hero heading), a grey (`--c-dim`, #949494, 6.7:1) for text that has not filled yet, and one accent from `theme.accent` (#DCFD35) with navy text on it. Type is Questrial (one weight; bold is synthesized), sized to the reference: 72px heading, 62px statements, 38px paragraphs, 22px leads. Cards and buttons have a 12px radius, pictures 24px.
+```sh
+SITE_URL=https://arestrix.com npm run build
+npx wrangler login
+npm run deploy
+```
+
+PowerShell uses `$env:SITE_URL="https://arestrix.com"; npm run build` for the first line.
+
+The first deploy creates the `arestrix` Worker; connect the custom domain in the Cloudflare dashboard.
+If the domain changes, update `url` in `src/config.ts` or pass `SITE_URL` at build time.
 
 ## Project structure
 
 ```text
 src/
 ├── components/
-│   ├── sections/       Hero, Statement, MediaPanel, Services, Split, Process, FinalCta (the home page, in order)
-│   ├── ContactForm.astro   The form and its script
-│   ├── FillLines.astro     Line-by-line fill (5, 8, 12)
-│   ├── Orbits.astro        Line-art orbits (6, 11)
-│   ├── Ridgelines.astro    Build-time ridgeline chart (10)
-│   ├── ServiceCard.astro, ServiceArt.astro   Service cards and their line drawings (9)
-│   ├── Head.astro          Meta tags, Open Graph, JSON-LD
+│   ├── sections/       Home page sections
+│   ├── FillLines.astro Line-by-line fill
+│   ├── Graph3D.astro   Stylised graph with pointer-driven 3D turn
+│   ├── Ridgelines.astro Build-time chart
+│   ├── ServiceCard.astro, ServiceArt.astro
+│   ├── Head.astro      Meta, Open Graph, JSON-LD
 │   └── Header, Footer, Logo, Icon, PageHeader, SectionHeading, Highlight
-├── content/services/   One Markdown file per service
+├── content/services/   Six capability Markdown files
 ├── layouts/            BaseLayout.astro
-├── lib/                schema.ts (JSON-LD), highlight.ts
-├── pages/              index, services/, about, contact, thanks, 404, robots.txt.ts
-├── scripts/            scenes.ts (canvas scenes), enter.ts (entrance trigger), follow.ts (orbit lean)
-├── styles/             global.css (tokens, components), effects.css (all motion)
-├── config.ts           Everything you rebrand
+├── lib/                schema.ts (SoftwareApplication JSON-LD), highlight.ts
+├── pages/              index, services/, about, contact, 404, robots.txt.ts
+├── scripts/            scenes.ts (flow/wave), enter.ts
+├── styles/             global.css, effects.css
+├── config.ts           Everything rebrandable
 └── content.config.ts   Collection schema
-public/                 favicon.svg, og.png, apple-touch-icon.png
+public/                 Brand icons, logos, favicon, manifest, og.png
+public/media/           Hero graph loop (WebM, MP4, poster)
+scripts/test-local.mjs  Local and Cloudflare smoke tests
 ```
-
-## Deploy
-
-`npm run build` produces a static site in `dist/` that any static host can serve. On Vercel or Netlify, set `PUBLIC_FORMGONG_ACCESS_KEY` in the project's build environment variables: the key is read at build time. The Deploy to Cloudflare button stores it as a Worker secret instead, and `worker.js` puts it into the form as each page is served. Set `url` in `src/config.ts` first so canonical links, the sitemap and the form redirect point at your domain.
 
 ## License
 
-MIT, see `LICENSE`. The illustrations, line drawings and icons were drawn for this theme and are covered by the same license. The font is Questrial, licensed under the SIL Open Font License 1.1 and installed from `@fontsource/questrial`.
+MIT. The original theme copyright notice remains in `LICENSE`; the Arestrix rebrand is released
+under the same license. The bundled fonts are under the SIL Open Font License 1.1.

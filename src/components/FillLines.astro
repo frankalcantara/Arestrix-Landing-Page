@@ -39,16 +39,16 @@ const range = (i: number) => ranges?.[i] ?? [10 + i * 10, 40 + i * 10];
 </Tag>
 
 <style>
+  /* Stack the two copies in the same grid cell. The cell grows to the taller copy, so a
+     highlighted line that wraps differently can never escape its line and overlap the next
+     element. (The old absolute overlay assumed both copies always wrapped identically.) */
   .fl {
-    position: relative;
-    display: block;
+    display: grid;
   }
-  .fl-base {
-    color: var(--c-dim);
-  }
+  .fl-base,
   .fl-top {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
     color: var(--c-dim);
+    text-wrap: balance;
   }
 </style>

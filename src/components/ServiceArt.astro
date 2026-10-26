@@ -1,50 +1,23 @@
 ---
 /**
- * 9. The small looping line drawing on each service card. Each one shows what the service does:
- *   grid      data audit: a scanner passes over a table and flags the bad cells
- *   bars      reporting: a handful of numbers rising and falling against a target line
- *   forecast  forecasting: history is drawn, then the forecast and its range
- *   curve     pricing: a price slides along the profit curve to its peak
- *   bells     experiments: variant B's distribution separates from A's
- *   clusters  customer analysis: scattered customers settle into segments
- * Strokes use currentColor (the dark text on the accent card). Static under reduced motion.
+ * The looping line art on each capability card. Each one is a small, abstract piece of
+ * Arestrix: the graph mark, generated C++20, a running pipeline, a local model chip,
+ * project memory and the gateway shield. Strokes and moving highlights are Papel on
+ * the near-black capability card.
+ *
+ * All motion is opacity/transform only, and it stops for `prefers-reduced-motion`.
  */
+type ArtKind = "graph" | "code" | "runner" | "chip" | "layers" | "shield";
+
 interface Props {
-  kind: "grid" | "bars" | "forecast" | "curve" | "bells" | "clusters";
+  kind: ArtKind;
   class?: string;
 }
 const { kind, class: className } = Astro.props;
-
-const gauss = (c: number, h: number) =>
-  Array.from({ length: 45 }, (_, k) => {
-    const x = 10 + k * 5;
-    return `${k ? "L" : "M"}${x},${(96 - h * Math.exp(-(((x - c) / 26) ** 2))).toFixed(1)}`;
-  }).join("");
-
-let seed = 5;
-const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-const centers = [
-  [52, 40],
-  [122, 74],
-  [194, 38],
-];
-const dots = Array.from({ length: 18 }, (_, i) => {
-  const [cx, cy] = centers[i % 3];
-  const x = cx + (rnd() - 0.5) * 26;
-  const y = cy + (rnd() - 0.5) * 22;
-  return { x, y, dx: 14 + rnd() * 212 - x, dy: 12 + rnd() * 84 - y, d: (rnd() * 0.6).toFixed(2) };
-});
-const bars = [0.55, 0.8, 0.4, 0.95, 0.65, 0.75, 0.5, 0.85];
-const flags = [
-  [2, 1],
-  [5, 3],
-  [8, 0],
-  [10, 2],
-];
 ---
 
 <svg
-  viewBox="0 0 240 110"
+  viewBox="0 0 240 100"
   fill="none"
   stroke="currentColor"
   stroke-width="1.5"
@@ -54,91 +27,85 @@ const flags = [
   class:list={["art", `art-${kind}`, className]}
 >
   {
-    kind === "grid" && (
+    kind === "graph" && (
       <g>
-        {Array.from({ length: 48 }, (_, k) => (
-          <rect x={6 + (k % 12) * 19} y={14 + Math.floor(k / 12) * 19} width="19" height="19" stroke-width="1" />
-        ))}
-        {flags.map(([c, r]) => (
-          <rect class="flag" x={6 + c * 19} y={14 + r * 19} width="19" height="19" fill="currentColor" style={`--d:${(c / 12) * 4}s`} />
-        ))}
-        <line class="scan" x1="6" y1="6" x2="6" y2="98" stroke-width="2" />
+        <path class="edge" d="M120 20 58 80M120 20l62 60" />
+        <path class="flow" d="M120 20 58 80M120 20l62 60" />
+        <path class="bar-accent" d="M80 64h80" />
+        <rect class="select" x="102" y="2" width="36" height="36" rx="8" />
+        <circle class="node" cx="120" cy="20" r="9" style="--d:0s" />
+        <circle class="node" cx="58" cy="80" r="9" style="--d:0.45s" />
+        <circle class="node" cx="182" cy="80" r="9" style="--d:0.9s" />
       </g>
     )
   }
   {
-    kind === "bars" && (
+    kind === "code" && (
       <g>
-        <line x1="6" y1="98" x2="234" y2="98" />
-        <line x1="6" y1="34" x2="234" y2="34" stroke-width="1" stroke-dasharray="3 5" />
-        {bars.map((h, i) => (
-          <rect
-            class="bar"
-            x={14 + i * 28}
-            y={98 - 80}
-            width="16"
-            height="80"
-            stroke-width="1.5"
-            vector-effect="non-scaling-stroke"
-            style={`--a:${h};--b:${(1.35 - h).toFixed(2)};--d:${(i * -0.37).toFixed(2)}s`}
-          />
-        ))}
+        <rect class="panel" x="20" y="8" width="200" height="84" rx="8" />
+        <line class="divider" x1="20" y1="26" x2="220" y2="26" />
+        <circle class="window-dot" cx="31" cy="17" r="2" />
+        <circle class="window-dot" cx="40" cy="17" r="2" />
+        <circle class="window-dot window-dot-accent" cx="49" cy="17" r="2" />
+        <path class="bracket" d="M70 39 52 52 70 65M170 39l18 13-18 13" />
+        <line class="code-line" pathLength="1" x1="84" y1="39" x2="145" y2="39" style="--d:0s" />
+        <line class="code-line" pathLength="1" x1="84" y1="52" x2="158" y2="52" style="--d:0.18s" />
+        <line class="code-line" pathLength="1" x1="84" y1="65" x2="136" y2="65" style="--d:0.36s" />
+        <line class="code-line" pathLength="1" x1="84" y1="78" x2="150" y2="78" style="--d:0.54s" />
+        <rect class="cursor" x="156" y="72" width="2" height="12" rx="1" />
       </g>
     )
   }
   {
-    kind === "forecast" && (
+    kind === "runner" && (
       <g>
-        <line x1="6" y1="100" x2="234" y2="100" stroke-width="1" />
-        <path class="history" pathLength="1" d="M8 78L24 70 38 76 54 58 68 64 84 50 98 56 114 42 128 48" />
-        <path class="band" d="M128 48L234 10M128 48L234 70" stroke-width="1" />
-        <path class="ahead" d="M128 48L150 42 172 44 194 34 216 36 234 28" stroke-dasharray="4 5" />
-        <circle class="now" cx="128" cy="48" r="3.5" fill="currentColor" />
+        <rect class="panel" x="20" y="8" width="200" height="84" rx="8" />
+        <line class="divider" x1="20" y1="26" x2="220" y2="26" />
+        <circle class="window-dot" cx="31" cy="17" r="2" />
+        <circle class="window-dot" cx="40" cy="17" r="2" />
+        <circle class="window-dot window-dot-accent" cx="49" cy="17" r="2" />
+        <path class="timeline" d="M48 52h144" />
+        <circle class="step" cx="56" cy="52" r="7" />
+        <circle class="step step-active" cx="120" cy="52" r="7" />
+        <circle class="step" cx="184" cy="52" r="7" />
+        <circle class="step-pulse" cx="120" cy="52" r="13" />
+        <rect class="progress-track" x="40" y="77" width="160" height="4" rx="2" />
+        <rect class="progress-fill" x="40" y="77" width="160" height="4" rx="2" />
       </g>
     )
   }
   {
-    kind === "curve" && (
+    kind === "chip" && (
       <g>
-        <line x1="6" y1="100" x2="234" y2="100" stroke-width="1" />
-        <path d="M10 96Q120 -52 230 96" />
-        <line x1="120" y1="22" x2="120" y2="100" stroke-width="1" stroke-dasharray="3 5" />
-        <g class="slide-x">
-          <circle class="slide-y" cx="10" cy="96" r="5" fill="currentColor" />
-        </g>
+        <rect class="chip" x="72" y="22" width="96" height="56" rx="8" />
+        <rect class="core" x="94" y="38" width="52" height="24" rx="3" />
+        <circle class="core-dot" cx="120" cy="50" r="5" />
+        <path
+          class="pins"
+          d="M88 22V12M104 22V12M120 22V12M136 22V12M152 22V12M88 78v10M104 78v10M120 78v10M136 78v10M152 78v10M72 36H62M72 50H62M72 64H62M168 36h10M168 50h10M168 64h10"
+        />
       </g>
     )
   }
   {
-    kind === "bells" && (
+    kind === "layers" && (
       <g>
-        <line x1="6" y1="98" x2="234" y2="98" stroke-width="1" />
-        <path d={gauss(92, 70)} />
-        <line x1="92" y1="26" x2="92" y2="98" stroke-width="1" stroke-dasharray="3 5" />
-        <g class="shift">
-          <path d={gauss(128, 62)} stroke-width="2" />
-          <line x1="128" y1="34" x2="128" y2="98" stroke-width="1" stroke-dasharray="3 5" />
-        </g>
+        <rect class="layer" x="46" y="18" width="148" height="18" rx="5" style="--d:0s" />
+        <rect class="layer" x="54" y="40" width="132" height="18" rx="5" style="--d:0.35s" />
+        <rect class="layer" x="62" y="62" width="116" height="18" rx="5" style="--d:0.7s" />
+        <line class="layer-line" x1="58" y1="27" x2="182" y2="27" />
+        <line class="layer-line" x1="66" y1="49" x2="174" y2="49" />
+        <line class="layer-line" x1="74" y1="71" x2="166" y2="71" />
+        <line class="layer-accent" x1="154" y1="49" x2="178" y2="49" />
       </g>
     )
   }
   {
-    kind === "clusters" && (
+    kind === "shield" && (
       <g>
-        {centers.map(([x, y]) => (
-          <circle class="ring" cx={x} cy={y} r="22" stroke-width="1" stroke-dasharray="3 4" />
-        ))}
-        {dots.map((p) => (
-          <circle
-            class="dot"
-            cx={p.x.toFixed(1)}
-            cy={p.y.toFixed(1)}
-            r="3"
-            fill="currentColor"
-            stroke="none"
-            style={`--dx:${p.dx.toFixed(1)}px;--dy:${p.dy.toFixed(1)}px;--d:${p.d}s`}
-          />
-        ))}
+        <path class="shield" d="M120 10l48 17v22c0 20-21 36-48 44-27-8-48-24-48-44V27z" />
+        <circle class="shield-ring" cx="120" cy="50" r="35" />
+        <path class="shield-check" pathLength="1" d="M99 50l14 14 28-30" />
       </g>
     )
   }
@@ -148,185 +115,352 @@ const flags = [
   .art {
     display: block;
     width: 100%;
-    max-width: 15rem;
+    max-width: 14rem;
     height: auto;
+    margin-inline: auto;
     overflow: visible;
   }
-  .bar,
-  .slide-x,
-  .slide-y,
-  .shift,
-  .dot,
-  .scan {
+  .panel,
+  .chip,
+  .layer,
+  .shield,
+  .node,
+  .step,
+  .core,
+  .core-dot,
+  .step-pulse,
+  .shield-ring,
+  .progress-fill {
     transform-box: fill-box;
+    transform-origin: center;
   }
-  .bar {
-    transform-origin: 50% 100%;
-    transform: scaleY(var(--a));
+
+  /* Shared surfaces and strokes: Grafite on Papel. */
+  .panel {
+    fill: currentColor;
+    fill-opacity: 0.055;
+    stroke: currentColor;
+    stroke-opacity: 0.28;
+    stroke-width: 1.2;
+  }
+  .divider {
+    stroke: currentColor;
+    stroke-opacity: 0.18;
+  }
+  .window-dot {
+    fill: currentColor;
+    stroke: none;
+    opacity: 0.35;
+  }
+  .window-dot-accent {
+    fill: currentColor;
+    opacity: 0.9;
+  }
+  .edge {
+    stroke: currentColor;
+    stroke-opacity: 0.5;
+    stroke-width: 1.5;
+  }
+  .flow {
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-dasharray: 2 14;
+    opacity: 0.9;
+  }
+  .node {
+    fill: currentColor;
+    fill-opacity: 0.08;
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .select {
+    stroke: currentColor;
+    stroke-width: 1.2;
+    stroke-dasharray: 3 4;
+    opacity: 0.55;
+  }
+  .bar-accent {
+    stroke: currentColor;
+    stroke-width: 5;
+    opacity: 0.85;
+  }
+  .bracket {
+    stroke: currentColor;
+    stroke-opacity: 0.55;
+  }
+  .code-line {
+    stroke: currentColor;
+    stroke-opacity: 0.5;
+  }
+  .cursor {
+    fill: currentColor;
+    stroke: none;
+  }
+  .timeline {
+    stroke: currentColor;
+    stroke-opacity: 0.22;
+  }
+  .step {
+    fill: currentColor;
+    fill-opacity: 0.06;
+    stroke: currentColor;
+    stroke-opacity: 0.55;
+  }
+  .step-active {
+    fill: currentColor;
+    fill-opacity: 0.14;
+    stroke: currentColor;
+  }
+  .step-pulse {
+    stroke: currentColor;
+    opacity: 0.35;
+  }
+  .progress-track {
+    fill: currentColor;
+    stroke: none;
+    opacity: 0.12;
+  }
+  .progress-fill {
+    fill: currentColor;
+    stroke: none;
+    transform-origin: left center;
+  }
+  .chip {
+    fill: currentColor;
+    fill-opacity: 0.045;
+    stroke: currentColor;
+    stroke-opacity: 0.45;
+    stroke-width: 1.3;
+  }
+  .core {
+    fill: currentColor;
+    fill-opacity: 0.03;
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+  }
+  .core-dot {
+    fill: currentColor;
+    stroke: none;
+  }
+  .pins {
+    stroke: currentColor;
+    stroke-opacity: 0.5;
+  }
+  .layer {
+    fill: currentColor;
+    fill-opacity: 0.05;
+    stroke: currentColor;
+    stroke-opacity: 0.4;
+  }
+  .layer-line {
+    stroke: currentColor;
+    stroke-opacity: 0.28;
+  }
+  .layer-accent {
+    stroke: currentColor;
+    stroke-width: 2.4;
+    opacity: 0.7;
+  }
+  .shield {
+    fill: currentColor;
+    fill-opacity: 0.04;
+    stroke: currentColor;
+    stroke-opacity: 0.55;
+  }
+  .shield-ring {
+    stroke: currentColor;
+    opacity: 0.28;
+  }
+  .shield-check {
+    stroke: currentColor;
+    stroke-width: 2.4;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .scan {
-      animation: scan 4s linear infinite;
+    .flow {
+      animation: dash 3s linear infinite;
     }
-    .flag {
-      animation: flag 4s linear infinite;
+    .node {
+      animation: node-pulse 3.2s var(--ease-in-out) infinite;
       animation-delay: var(--d);
     }
-    .bar {
-      animation: bar 2.6s var(--ease-in-out) infinite alternate;
-      animation-delay: var(--d);
+    .select {
+      animation: select-pulse 3.2s var(--ease-in-out) infinite;
     }
-    .history {
+    .bar-accent {
+      animation: bar-pulse 3.2s var(--ease-in-out) infinite;
+    }
+    .code-line {
       stroke-dasharray: 1 1;
-      animation: history 6s var(--ease-out) infinite;
-    }
-    .ahead,
-    .band,
-    .now {
-      animation: ahead 6s ease infinite;
-    }
-    .band {
-      animation-name: band;
-    }
-    .slide-x {
-      animation: slide-x 3.2s linear infinite alternate;
-    }
-    .slide-y {
-      animation: slide-y 3.2s linear infinite alternate;
-    }
-    .shift {
-      animation: shift 3s var(--ease-in-out) infinite alternate;
-    }
-    .dot {
-      animation: clump 6s var(--ease-in-out) infinite;
+      animation: draw 3.4s var(--ease-in-out) infinite;
       animation-delay: var(--d);
     }
-    .ring {
-      animation: ring 6s ease infinite;
+    .cursor {
+      animation: blink 1.1s steps(1, end) infinite;
+    }
+    .progress-fill {
+      animation: progress 3.4s var(--ease-in-out) infinite;
+    }
+    .step-pulse {
+      animation: step-pulse 2.8s ease-out infinite;
+    }
+    .step-active {
+      animation: step-active 3.4s ease-in-out infinite;
+    }
+    .pins {
+      animation: pins 2.6s ease-in-out infinite;
+    }
+    .core-dot {
+      animation: core 2.4s var(--ease-in-out) infinite;
+    }
+    .layer {
+      animation: layer 3.6s var(--ease-in-out) infinite;
+      animation-delay: var(--d);
+    }
+    .layer-accent {
+      animation: layer-accent 3.6s var(--ease-in-out) infinite;
+    }
+    .shield-check {
+      stroke-dasharray: 1 1;
+      animation: draw 3.6s var(--ease-in-out) infinite;
+    }
+    .shield-ring {
+      animation: shield-ring 3.6s ease-out infinite;
     }
   }
 
-  @keyframes scan {
-    from {
-      transform: translateX(0);
-    }
+  @keyframes dash {
     to {
-      transform: translateX(228px);
+      stroke-dashoffset: -32;
     }
   }
-  @keyframes flag {
+  @keyframes node-pulse {
     0%,
-    6% {
-      fill-opacity: 0;
-    }
-    8%,
-    70% {
-      fill-opacity: 1;
-    }
-    80%,
     100% {
-      fill-opacity: 0;
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.12);
     }
   }
-  @keyframes bar {
-    from {
-      transform: scaleY(var(--a));
+  @keyframes select-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
     }
-    to {
-      transform: scaleY(var(--b));
+    50% {
+      opacity: 0.9;
     }
   }
-  @keyframes history {
+  @keyframes bar-pulse {
+    0%,
+    100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes draw {
     0% {
       stroke-dashoffset: 1;
+      opacity: 0;
     }
-    35%,
-    92% {
-      stroke-dashoffset: 0;
+    15% {
       opacity: 1;
-    }
-    100% {
-      stroke-dashoffset: 0;
-      opacity: 0;
-    }
-  }
-  @keyframes ahead {
-    0%,
-    35% {
-      opacity: 0;
-    }
-    50%,
-    92% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes band {
-    0%,
-    50% {
-      opacity: 0;
-    }
-    65%,
-    92% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes slide-x {
-    to {
-      transform: translateX(220px);
-    }
-  }
-  @keyframes slide-y {
-    0% {
-      transform: translateY(0);
-      animation-timing-function: cubic-bezier(0.333, 0.667, 0.667, 1);
-    }
-    50% {
-      transform: translateY(-74px);
-      animation-timing-function: cubic-bezier(0.333, 0, 0.667, 0.333);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  @keyframes shift {
-    from {
-      transform: translateX(-28px);
-    }
-    to {
-      transform: translateX(14px);
-    }
-  }
-  @keyframes clump {
-    0%,
-    12% {
-      transform: translate(var(--dx), var(--dy));
-    }
-    48%,
-    84% {
-      transform: none;
-    }
-    100% {
-      transform: translate(var(--dx), var(--dy));
-    }
-  }
-  @keyframes ring {
-    0%,
-    40% {
-      opacity: 0;
     }
     55%,
-    82% {
+    100% {
+      stroke-dashoffset: 0;
       opacity: 1;
     }
-    95%,
+  }
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
     100% {
+      opacity: 0;
+    }
+  }
+  @keyframes progress {
+    0% {
+      transform: scaleX(0.08);
+    }
+    55%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes step-pulse {
+    0% {
+      transform: scale(0.7);
+      opacity: 0.5;
+    }
+    70%,
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  @keyframes step-active {
+    0%,
+    100% {
+      fill-opacity: 0.14;
+    }
+    50% {
+      fill-opacity: 0.28;
+    }
+  }
+  @keyframes pins {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+  @keyframes core {
+    0%,
+    100% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+  }
+  @keyframes layer {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    45%,
+    65% {
+      transform: translateY(-3px);
+    }
+  }
+  @keyframes layer-accent {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes shield-ring {
+    0% {
+      transform: scale(0.85);
+      opacity: 0.4;
+    }
+    70%,
+    100% {
+      transform: scale(1.35);
       opacity: 0;
     }
   }
