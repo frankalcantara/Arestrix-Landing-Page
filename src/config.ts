@@ -47,6 +47,8 @@ export const SITE = {
   contributing: "https://github.com/frankalcantara/Arestrix/blob/main/CONTRIBUTING.md",
   security: "https://github.com/frankalcantara/Arestrix/security/advisories/new",
   x: "https://x.com/frankalcantara",
+  /** Independent acknowledgement, not an Arestrix project or contact channel. */
+  opencode: "https://opencode.ai/br",
 
   beta: {
     label: "Beta 2.2",

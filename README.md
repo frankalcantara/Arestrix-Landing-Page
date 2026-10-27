@@ -34,7 +34,7 @@ Open <http://localhost:4321>.
 | Where | What |
 | --- | --- |
 | `src/config.ts` | Name, tagline, canonical URL, GitHub/X links, counters, accent and card colours, nav and CTA |
-| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, FinalCta |
+| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, FinalCta, Acknowledgement |
 | `public/media/` | The hero graph loop: WebM, MP4 and a WebP poster |
 | `src/content/services/*.md` | The six capability cards and their detail pages |
 | `src/pages/about.astro` | Project positioning, audience, principles and deliberate scope |

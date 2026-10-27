@@ -78,6 +78,8 @@ const routes = [
       "What it costs",
       "Beta 2.2",
       "Questions",
+      "OpenCode",
+      "not affiliated",
     ],
   ],
   ["/services/", ["Six", "building blocks", "Native C++20 compiler", "AI Gateway"]],
