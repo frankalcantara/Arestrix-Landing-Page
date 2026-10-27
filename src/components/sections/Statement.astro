@@ -29,7 +29,8 @@ import LiveGraph from "../LiveGraph.astro";
     position: relative;
     z-index: 1;
     padding-block: 48px 48.7px;
-    background: var(--c-bg);
+    /* Let the sticky hero show through the top edge as this block slides over it. */
+    background: linear-gradient(to bottom, transparent 0, var(--c-bg) 80px);
   }
   .statement-col {
     position: relative;
@@ -53,6 +54,7 @@ import LiveGraph from "../LiveGraph.astro";
     .statement {
       height: 1089px;
       padding-block: 0;
+      background: linear-gradient(to bottom, transparent 0, var(--c-bg) 220px);
     }
     .statement-col :global(.statement-text) {
       position: absolute;
