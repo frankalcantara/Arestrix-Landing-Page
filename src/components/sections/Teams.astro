@@ -13,21 +13,25 @@ import { SITE } from "../../config";
 const cards = [
   {
     icon: "git-branch" as const,
+    surface: "paper",
     title: "Reviewable by default",
     body: "Graphs, generated C++ and packaging metadata are text files. Version them, diff them and sign off the exact thing that runs.",
   },
   {
     icon: "key" as const,
+    surface: "ardosia",
     title: "Budgets on your server",
     body: "The on-prem AI Gateway issues virtual keys and enforces monthly budgets, rate limits and a usage ledger by key, project, user, provider and model.",
   },
   {
     icon: "package" as const,
+    surface: "paper",
     title: "Deployment IT can own",
     body: "Ship a standalone runner with an HMAC/SHA-256 manifest, then package it as MSI or MSIX for Intune/SCCM. Credentials resolve at runtime through DPAPI or Azure Key Vault.",
   },
   {
     icon: "lock" as const,
+    surface: "ardosia",
     title: "Local-first by construction",
     body: "Projects, memory, logs and databases stay on the machine or network; Git sync is opt-in. Only the model and MCP calls you configure leave it, and local models never pass through the gateway.",
   },
@@ -65,7 +69,7 @@ const cards = [
     <ul class="teams-cards">
       {
         cards.map((card, i) => (
-          <li class="teams-card reveal" style={`--i:${i}`}>
+          <li class:list={["teams-card", `teams-card-${card.surface}`, "reveal"]} style={`--i:${i}`}>
             <span class="teams-icon">
               <Icon name={card.icon} size={22} />
             </span>
@@ -151,6 +155,18 @@ const cards = [
     -webkit-mask-image: radial-gradient(110% 100% at 100% 0%, #000 5%, transparent 62%);
     mask-image: radial-gradient(110% 100% at 100% 0%, #000 5%, transparent 62%);
   }
+  .teams-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 28px;
+    right: 28px;
+    height: 2px;
+    z-index: 1;
+    pointer-events: none;
+    background: var(--accent);
+    opacity: 0.8;
+  }
   .teams-card > * {
     position: relative;
     z-index: 1;
@@ -179,6 +195,46 @@ const cards = [
     line-height: 1.55;
     color: var(--cap-card-text);
     text-wrap: pretty;
+  }
+
+  .teams-card-paper {
+    border-color: var(--c-paper-line);
+    background: var(--c-paper);
+    color: var(--card-text);
+  }
+  .teams-card-paper::before {
+    background-image:
+      linear-gradient(rgb(20 21 26 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(20 21 26 / 0.06) 1px, transparent 1px);
+  }
+  .teams-card-paper .teams-icon {
+    border-color: var(--c-paper-line);
+    color: var(--accent);
+    background: rgb(20 21 26 / 0.04);
+  }
+  .teams-card-paper h3,
+  .teams-card-paper p {
+    color: var(--card-text);
+  }
+
+  .teams-card-ardosia {
+    border-color: rgb(244 242 238 / 0.22);
+    background: var(--c-ardosia);
+    color: var(--c-white);
+  }
+  .teams-card-ardosia::before {
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.06) 1px, transparent 1px);
+  }
+  .teams-card-ardosia .teams-icon {
+    border-color: rgb(244 242 238 / 0.25);
+    color: var(--c-white);
+    background: rgb(244 242 238 / 0.06);
+  }
+  .teams-card-ardosia h3,
+  .teams-card-ardosia p {
+    color: var(--c-white);
   }
 
   @media (min-width: 751px) {

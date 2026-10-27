@@ -28,7 +28,7 @@ const facts = [
     <p class="eyebrow pricing-kicker">What it costs</p>
     <h2 id="pricing-title" class="sr-only">Arestrix is free and MIT licensed</h2>
 
-    <p class="pricing-amount" aria-hidden="true"><span class="pricing-currency">$</span>0</p>
+    <p class="pricing-amount" aria-hidden="true"><span class="pricing-currency">$</span><span class="pricing-zero">0</span></p>
     <p class="sr-only">
       Arestrix costs zero dollars. It is MIT licensed, with no per-seat fee, locked features or hosted
       subscription. Model usage is billed by the provider or endpoint you choose.
@@ -65,30 +65,32 @@ const facts = [
 </section>
 
 <style>
+  /* Papel section: a deliberate light break in the page. Grafite carries the type, Brasa is
+     reserved for the currency, the icon-sized details and the rule above the figure. */
   .pricing {
     position: relative;
     isolation: isolate;
     overflow: clip;
     padding-block: 72px;
+    border-block: 1px solid var(--c-paper-line);
+    background: var(--card);
+    color: var(--card-text);
     text-align: center;
   }
-  /* A single Brasa glow behind the figure, plus the same graph paper used on the cards. */
   .pricing-glow {
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background:
-      radial-gradient(42% 42% at 50% 46%, rgb(232 89 12 / 0.22), transparent 70%),
-      radial-gradient(70% 60% at 50% 50%, rgb(244 242 238 / 0.035), transparent 70%);
+    background: radial-gradient(42% 42% at 50% 46%, rgb(232 89 12 / 0.14), transparent 70%);
   }
   .pricing-glow::before {
     content: "";
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgb(244 242 238 / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(244 242 238 / 0.045) 1px, transparent 1px);
+      linear-gradient(rgb(20 21 26 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(20 21 26 / 0.04) 1px, transparent 1px);
     background-size: 32px 32px;
     -webkit-mask-image: radial-gradient(58% 62% at 50% 50%, #000 0%, transparent 72%);
     mask-image: radial-gradient(58% 62% at 50% 50%, #000 0%, transparent 72%);
@@ -99,41 +101,48 @@ const facts = [
     align-items: center;
   }
   .pricing-kicker {
-    color: var(--c-ink);
+    color: var(--c-ardosia);
   }
+  .pricing-kicker::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 1px;
+    margin: 12px auto 0;
+    background: var(--accent);
+  }
+  /* Solid type instead of background-clip: the zero never loses its right edge, and the
+     padding gives the glyph's side bearing room inside the element's box. */
   .pricing-amount {
+    display: inline-flex;
+    align-items: baseline;
+    max-width: 100%;
     margin-top: 8px;
-    font-size: clamp(150px, 27vw, 330px);
+    padding: 0.04em 0.08em;
+    overflow: visible;
+    font-size: clamp(140px, 25vw, 300px);
     font-weight: 700;
-    line-height: 0.8;
-    letter-spacing: -0.09em;
+    line-height: 0.9;
     font-variant-numeric: tabular-nums;
-    color: var(--c-white);
-    filter: drop-shadow(0 0 46px rgb(232 89 12 / 0.2));
-  }
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .pricing-amount {
-      background: linear-gradient(
-        180deg,
-        var(--c-white) 22%,
-        color-mix(in oklab, var(--accent) 58%, var(--c-white)) 100%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    color: var(--card-text);
+    text-shadow: 0 18px 60px rgb(232 89 12 / 0.14);
   }
   .pricing-currency {
-    font-size: 0.34em;
-    vertical-align: 0.72em;
-    letter-spacing: -0.02em;
+    font-size: 0.32em;
+    line-height: 1;
+    letter-spacing: 0;
+    vertical-align: 0.62em;
+    color: var(--accent);
+  }
+  .pricing-zero {
+    letter-spacing: -0.05em;
   }
   .pricing-note {
     max-width: 44rem;
     margin-top: 8px;
     font-size: min(5.2vw, 24px);
     line-height: 1.4;
-    color: var(--c-ink);
+    color: var(--card-text);
     text-wrap: balance;
   }
   .pricing-facts {
@@ -142,8 +151,8 @@ const facts = [
     width: 100%;
     max-width: 64rem;
     margin-top: 48px;
-    border-top: 1px solid var(--c-line);
-    border-bottom: 1px solid var(--c-line);
+    border-top: 1px solid var(--c-paper-line);
+    border-bottom: 1px solid var(--c-paper-line);
     text-align: left;
   }
   .pricing-facts li {
@@ -151,24 +160,35 @@ const facts = [
     flex-direction: column;
     gap: 6px;
     padding: 20px 0;
-    border-bottom: 1px solid var(--c-line);
+    border-bottom: 1px solid var(--c-paper-line);
   }
   .pricing-facts li:last-child {
     border-bottom: 0;
   }
   .pricing-fact-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-mono);
     font-size: 10px;
     line-height: 1.4;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--c-ardosia);
+  }
+  .pricing-fact-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
   }
   .pricing-fact-body {
     max-width: 34ch;
     font-size: 15px;
     line-height: 1.5;
-    color: var(--cap-card-text);
+    color: var(--card-text);
   }
   .pricing-actions {
     display: flex;
@@ -177,17 +197,29 @@ const facts = [
     gap: 12px;
     margin-top: 40px;
   }
+  .pricing .btn-secondary {
+    border-color: rgb(20 21 26 / 0.3);
+    color: var(--card-text);
+  }
+  .pricing .btn-secondary:hover {
+    border-color: rgb(20 21 26 / 0.6);
+    background: rgb(20 21 26 / 0.04);
+  }
   .pricing-fine {
     margin-top: 20px;
     font-size: 13px;
     line-height: 1.5;
-    color: var(--c-muted);
+    color: var(--c-paper-muted);
   }
   .pricing-fine a {
-    color: var(--accent);
+    color: var(--card-text);
     text-decoration: underline;
+    text-decoration-color: var(--accent);
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+  .pricing-fine a:hover {
+    text-decoration-thickness: 2px;
   }
   @media (min-width: 751px) {
     .pricing {
@@ -199,7 +231,7 @@ const facts = [
     .pricing-facts li {
       gap: 10px;
       padding: 24px 28px;
-      border-right: 1px solid var(--c-line);
+      border-right: 1px solid var(--c-paper-line);
       border-bottom: 0;
     }
     .pricing-facts li:first-child {

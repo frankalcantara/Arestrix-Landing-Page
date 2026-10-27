@@ -20,6 +20,10 @@
   --cap-card: #0b0c0f;
   --cap-card-text: #f4f2ee;
   --cap-card-border: rgb(244 242 238 / 0.18);
+  --c-ardosia: #4b4f5c; /* Ardósia: slate surface */
+  --c-paper: var(--card); /* Papel: light surface */
+  --c-paper-line: color-mix(in srgb, var(--card-text) 18%, transparent);
+  --c-paper-muted: var(--c-ardosia); /* Ardósia on Papel, 7.3:1 */
   --c-bg: #14151a; /* Grafite: ground */
   --c-surface: #1c1e25; /* cards, fields (a lifted Grafite) */
   --c-white: #f4f2ee; /* Papel: hero heading, stat labels */
@@ -57,6 +61,9 @@
   --color-cap-card: var(--cap-card);
   --color-cap-card-text: var(--cap-card-text);
   --color-cap-card-border: var(--cap-card-border);
+  --color-ardosia: var(--c-ardosia);
+  --color-paper: var(--c-paper);
+  --color-paper-muted: var(--c-paper-muted);
   --color-danger: var(--c-danger);
 }
 

@@ -74,16 +74,19 @@ export const SITE = {
    * One accent for highlighted words, buttons and rules. `accentText` is the text
    * colour on accent fills: Grafite on Brasa is above 4.5:1 for large/bold text.
    *
-   * Large surfaces (capability cards, the process panel and the about panel) use a
-   * near-black surface with a dark grey outline, Papel type and Papel line art.
-   * Papel (`card`) remains only for the small contact-channel icon fills. There is
-   * no blue in the brand manual; the outline does the work that the colour used to do.
+   * Large surfaces use one of the three manual surfaces: near-black (`capCard`),
+   * Ardósia (`ardosia`) or Papel (`card`). Near-black and Ardósia carry Papel
+   * type/line art; Papel carries Grafite type. Brasa stays an accent: on Papel it
+   * is limited to graphics and large/bold text (3.2:1); on Ardósia it is
+   * decorative only (2.28:1) and never carries body text. There is no blue in the
+   * brand manual.
    */
   theme: {
     accent: "#e8590c",
     accentText: "#14151a",
     card: "#f4f2ee",
     cardText: "#14151a",
+    ardosia: "#4b4f5c",
     capCard: "#0b0c0f",
     capCardText: "#f4f2ee",
     capCardBorder: "rgb(244 242 238 / 0.18)",

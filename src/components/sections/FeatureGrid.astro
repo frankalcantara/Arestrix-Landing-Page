@@ -20,7 +20,7 @@ import { SITE } from "../../config";
 
     <ul class="feature-grid">
       <li class="feature-cell feature-cell-human reveal" style="--i:0">
-        <article class="feature-card">
+        <article class="feature-card feature-card-paper">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="form" size={20} /></span>
             <span class="eyebrow">Human input</span>
@@ -42,7 +42,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell feature-cell-artifacts reveal" style="--i:1">
-        <article class="feature-card">
+        <article class="feature-card feature-card-ardosia">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="package" size={20} /></span>
             <span class="eyebrow">Deliverables</span>
@@ -89,7 +89,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell reveal" style="--i:3">
-        <article class="feature-card">
+        <article class="feature-card feature-card-paper">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="plug" size={20} /></span>
             <span class="eyebrow">Skills and MCP</span>
@@ -111,7 +111,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell reveal" style="--i:4">
-        <article class="feature-card">
+        <article class="feature-card feature-card-ardosia">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="terminal" size={20} /></span>
             <span class="eyebrow">Headless</span>
@@ -293,6 +293,97 @@ import { SITE } from "../../config";
     font-size: 14px;
     line-height: 1.55;
     color: var(--c-muted);
+  }
+
+  /* Papel and Ardósia are the two surface colours in the manual. Papel uses Grafite
+     for body and titles and Brasa only for icons/rules; Ardósia uses Papel for type and
+     keeps Brasa decorative (it does not reach 3:1 for text on the slate). */
+  .feature-card-paper {
+    border-color: var(--c-paper-line);
+    background: var(--c-paper);
+    color: var(--card-text);
+  }
+  .feature-card-paper::before {
+    background-image:
+      linear-gradient(rgb(20 21 26 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(20 21 26 / 0.06) 1px, transparent 1px);
+  }
+  .feature-card-paper .feature-icon {
+    border-color: var(--c-paper-line);
+    color: var(--accent);
+    background: rgb(20 21 26 / 0.04);
+  }
+  .feature-card-paper .eyebrow {
+    color: var(--c-paper-muted);
+  }
+  .feature-card-paper h3,
+  .feature-card-paper p,
+  .feature-card-paper code,
+  .feature-card-paper .feature-files span {
+    color: var(--card-text);
+  }
+  .feature-card-paper code {
+    border-color: var(--c-paper-line);
+    background: rgb(20 21 26 / 0.05);
+  }
+  .feature-card-paper .feature-chips span {
+    border-color: var(--c-paper-line);
+    color: var(--c-paper-muted);
+  }
+  .feature-card-paper .feature-files span {
+    border-color: var(--c-paper-line);
+  }
+  .feature-card-paper .feature-link {
+    border-bottom-color: var(--accent);
+    color: var(--card-text);
+  }
+  .feature-card-paper .feature-link:hover {
+    border-color: var(--c-paper-muted);
+    color: var(--c-paper-muted);
+  }
+
+  .feature-card-ardosia {
+    border-color: rgb(244 242 238 / 0.22);
+    background: var(--c-ardosia);
+    color: var(--c-white);
+  }
+  .feature-card-ardosia::before {
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.06) 1px, transparent 1px);
+  }
+  .feature-card-ardosia .feature-icon {
+    border-color: rgb(244 242 238 / 0.25);
+    color: var(--c-white);
+    background: rgb(244 242 238 / 0.06);
+  }
+  .feature-card-ardosia .eyebrow {
+    color: rgb(244 242 238 / 0.82);
+  }
+  .feature-card-ardosia h3,
+  .feature-card-ardosia p,
+  .feature-card-ardosia code,
+  .feature-card-ardosia .feature-chips span,
+  .feature-card-ardosia .feature-files span,
+  .feature-card-ardosia .feature-code {
+    color: var(--c-white);
+  }
+  .feature-card-ardosia code,
+  .feature-card-ardosia .feature-chips span,
+  .feature-card-ardosia .feature-files span {
+    border-color: rgb(244 242 238 / 0.28);
+  }
+  .feature-card-ardosia code,
+  .feature-card-ardosia .feature-code {
+    background: rgb(244 242 238 / 0.08);
+  }
+  .feature-card-ardosia .feature-link {
+    border-bottom-color: var(--accent);
+    color: var(--c-white);
+  }
+  .feature-card-ardosia .feature-link:hover {
+    border-color: var(--c-white);
+    color: var(--c-white);
   }
 
   @media (min-width: 751px) {

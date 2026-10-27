@@ -27,7 +27,7 @@ The Arestrix landing page is a static Astro 7 site (Tailwind CSS 4, TypeScript).
 - Palette: Grafite `#14151A`, Papel `#F4F2EE`, Brasa `#E8590C`, Ardósia `#4B4F5C`.
 - Type: Space Grotesk 500/700; IBM Plex Mono 500 for technical labels.
 - Brasa is the only accent. Use it for highlights, buttons and rules; every text pair must still pass AA.
-- Large surfaces (capability cards, process and team cards, the about panel) are near-black (`--cap-card`, `#0B0C0F`) with a dark grey outline (`--cap-card-border`) and **Papel** type, titles and line art (`--cap-card-text`). **Papel** (`--card`, `#F4F2EE`) remains only for small contact-channel icon fills. There is no blue in the brand manual; do not reintroduce yellow or an off-brand blue.
+- Large surfaces use the manual's three surfaces: near-black (`--cap-card`, `#0B0C0F`), Ardósia (`--c-ardosia`, `#4B4F5C`) and Papel (`--c-paper`, `#F4F2EE`). Near-black and Ardósia use **Papel** type and line art; Papel uses **Grafite** type. Brasa is still an accent: on Papel it is only for graphics and large/bold text (3.2:1); on Ardósia it is decorative only (2.28:1) and never for body text. There is no blue in the brand manual; do not reintroduce yellow or an off-brand blue.
 
 ## Motion rules that are easy to break
 

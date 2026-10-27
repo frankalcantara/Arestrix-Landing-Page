@@ -49,10 +49,10 @@ The palette and fonts come from `C:\Projetos\Arestrix\Manual_de_Marca`:
 | Token | Value | Use |
 | --- | --- | --- |
 | Grafite | `#14151A` | Page ground |
-| Papel | `#F4F2EE` | Text, strokes and the logo |
+| Papel | `#F4F2EE` | Light surfaces, text and the logo; Grafite type on it |
 | Brasa | `#E8590C` | Highlights, buttons and rules |
-| Ardósia | `#4B4F5C` | Decorative neutrals |
-| Large surfaces | `#0B0C0F` | Cards, process and about panels: Papel type/art, dark grey outline |
+| Ardósia | `#4B4F5C` | Slate surfaces and decorative neutrals; Papel type on it |
+| Near-black surfaces | `#0B0C0F` | Capability, process and about panels: Papel type/art, dark grey outline |
 | Icon fills | `#F4F2EE` | Small contact-channel circles |
 
 Type is **Space Grotesk** (500/700) and **IBM Plex Mono** (500), both self-hosted from Fontsource.
