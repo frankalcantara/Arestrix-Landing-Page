@@ -49,8 +49,8 @@ export const SITE = {
   x: "https://x.com/frankalcantara",
 
   beta: {
-    label: "Beta 2.1",
-    version: "2.1.0-beta.1",
+    label: "Beta 2.2",
+    version: "2.2.0-beta.1",
     platforms: "Windows and Linux",
   },
 
@@ -68,7 +68,7 @@ export const SITE = {
     { value: 100, suffix: "%", label: "MIT licensed|source" },
   ] as Stat[],
   /** Small caption under the counters. */
-  statsNote: "Beta 2.1 · 2.1.0-beta.1 · Windows and Linux",
+  statsNote: "Beta 2.2 · 2.2.0-beta.1 · Windows and Linux",
 
   /**
    * One accent for highlighted words, buttons and rules. `accentText` is the text

@@ -76,7 +76,7 @@ const routes = [
       "artifact travels",
       "Run with telemetry",
       "What it costs",
-      "Beta 2.1",
+      "Beta 2.2",
       "Questions",
     ],
   ],
