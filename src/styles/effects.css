@@ -411,14 +411,6 @@
       animation-range-start: cover 0%;
       animation-range-end: cover 50%;
     }
-    .process-panel {
-      animation-name: panel-in;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view(0px);
-      animation-range-start: cover 0%;
-      animation-range-end: cover 25%;
-    }
   }
 }
 @keyframes fill-wipe {
@@ -437,14 +429,49 @@
     transform: scale(1);
   }
 }
-@keyframes panel-in {
-  from {
-    clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
-    transform: translate(-100%, 0);
+
+/* ------------------------------------------------------------------
+   11. Process cards: each sticky card scales down and dims as the next
+   one covers it. The script in Process.astro writes --covered; the
+   default is 0, so phones, reduced motion and no-JS stay flat and lit.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) and (min-width: 1001px) {
+  .process-card {
+    scale: calc(1 - var(--covered) * 0.04);
+    filter: brightness(calc(1 - var(--covered) * 0.2));
+    transform-origin: top center;
+    transition:
+      scale 0.08s linear,
+      filter 0.08s linear;
   }
-  to {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    transform: translate(0, 0);
+}
+
+/* ------------------------------------------------------------------
+   Delegation panel: the live dots breathe. Decorative, and gone under
+   reduced motion. FAQ answers fade in when a question is opened.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .delegation-dot,
+  .delegation-pulse {
+    animation: delegation-pulse 2.6s ease-out infinite;
+  }
+  .faq-answer {
+    animation: faq-open 0.28s var(--ease-out);
+  }
+}
+@keyframes delegation-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(232 89 12 / 0.45);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px rgb(232 89 12 / 0);
+  }
+}
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
   }
 }
 

@@ -1,0 +1,224 @@
+---
+/**
+ * What it costs. Arestrix is MIT licensed; there is no per-seat price, locked tier or hosted
+ * subscription. The big zero is decorative; the plain-text answer is in the sr-only paragraph.
+ */
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const facts = [
+  {
+    label: "The software",
+    body: "MIT licensed. Commercial and academic use included.",
+  },
+  {
+    label: "The infrastructure",
+    body: "Studio, runner and gateway run where you put them.",
+  },
+  {
+    label: "The model bill",
+    body: "Billed by the provider or endpoint you choose. Local models bypass gateway budgets.",
+  },
+];
+---
+
+<section id="pricing" class="pricing scroll-mt-28" aria-labelledby="pricing-title">
+  <div class="pricing-glow" aria-hidden="true"></div>
+  <div class="container-x pricing-inner">
+    <p class="eyebrow pricing-kicker">What it costs</p>
+    <h2 id="pricing-title" class="sr-only">Arestrix is free and MIT licensed</h2>
+
+    <p class="pricing-amount" aria-hidden="true"><span class="pricing-currency">$</span>0</p>
+    <p class="sr-only">
+      Arestrix costs zero dollars. It is MIT licensed, with no per-seat fee, locked features or hosted
+      subscription. Model usage is billed by the provider or endpoint you choose.
+    </p>
+
+    <p class="pricing-note">
+      Arestrix is free. No per-seat fee. No locked features. You pay your model provider — or nothing,
+      if you run a local model.
+    </p>
+
+    <ul class="pricing-facts">
+      {
+        facts.map((fact) => (
+          <li>
+            <span class="pricing-fact-label">{fact.label}</span>
+            <span class="pricing-fact-body">{fact.body}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="pricing-actions">
+      <a href={SITE.releases} class="btn btn-primary" target="_blank" rel="noopener">
+        Get the beta <Icon name="arrow-up-right" class="icon-shift" />
+      </a>
+      <a href={SITE.license} class="btn btn-secondary" target="_blank" rel="noopener">Read the license</a>
+    </div>
+
+    <p class="pricing-fine">
+      No account, no hosted workspace and no credit card. The source is on{" "}
+      <a href={SITE.repo} target="_blank" rel="noopener">GitHub</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding-block: 72px;
+    text-align: center;
+  }
+  /* A single Brasa glow behind the figure, plus the same graph paper used on the cards. */
+  .pricing-glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(42% 42% at 50% 46%, rgb(232 89 12 / 0.22), transparent 70%),
+      radial-gradient(70% 60% at 50% 50%, rgb(244 242 238 / 0.035), transparent 70%);
+  }
+  .pricing-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(58% 62% at 50% 50%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(58% 62% at 50% 50%, #000 0%, transparent 72%);
+  }
+  .pricing-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .pricing-kicker {
+    color: var(--c-ink);
+  }
+  .pricing-amount {
+    margin-top: 8px;
+    font-size: clamp(150px, 27vw, 330px);
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -0.09em;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-white);
+    filter: drop-shadow(0 0 46px rgb(232 89 12 / 0.2));
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .pricing-amount {
+      background: linear-gradient(
+        180deg,
+        var(--c-white) 22%,
+        color-mix(in oklab, var(--accent) 58%, var(--c-white)) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+  .pricing-currency {
+    font-size: 0.34em;
+    vertical-align: 0.72em;
+    letter-spacing: -0.02em;
+  }
+  .pricing-note {
+    max-width: 44rem;
+    margin-top: 8px;
+    font-size: min(5.2vw, 24px);
+    line-height: 1.4;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+  .pricing-facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 64rem;
+    margin-top: 48px;
+    border-top: 1px solid var(--c-line);
+    border-bottom: 1px solid var(--c-line);
+    text-align: left;
+  }
+  .pricing-facts li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .pricing-facts li:last-child {
+    border-bottom: 0;
+  }
+  .pricing-fact-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pricing-fact-body {
+    max-width: 34ch;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--cap-card-text);
+  }
+  .pricing-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+  }
+  .pricing-fine {
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--c-muted);
+  }
+  .pricing-fine a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  @media (min-width: 751px) {
+    .pricing {
+      padding-block: 120px;
+    }
+    .pricing-facts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .pricing-facts li {
+      gap: 10px;
+      padding: 24px 28px;
+      border-right: 1px solid var(--c-line);
+      border-bottom: 0;
+    }
+    .pricing-facts li:first-child {
+      padding-left: 0;
+    }
+    .pricing-facts li:last-child {
+      padding-right: 0;
+      border-right: 0;
+    }
+    .pricing-fact-body {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .pricing {
+      padding-block: 160px;
+    }
+    .pricing-note {
+      font-size: 24px;
+    }
+  }
+</style>

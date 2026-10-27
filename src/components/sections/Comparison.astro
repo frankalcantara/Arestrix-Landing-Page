@@ -1,0 +1,243 @@
+---
+/**
+ * Directional comparison from docs/product/comparison.md and docs/product/positioning.md.
+ * It contrasts architectural choices, not competitors or benchmarks. No product names are used.
+ */
+import SectionHeading from "../SectionHeading.astro";
+import { SITE } from "../../config";
+
+const rows = [
+  {
+    dimension: "Execution model",
+    runtime: "An interpreted service or script, with its runtime dependencies.",
+    arestrix: "Generated C++20 and Taskflow DAGs, compiled into a native binary.",
+  },
+  {
+    dimension: "Distribution",
+    runtime: "An interpreter, a package manager and environment setup per endpoint.",
+    arestrix: "A standalone runner; optional MSI/MSIX for managed Windows deployment.",
+  },
+  {
+    dimension: "Secrets",
+    runtime: "Environment files, a shared config or vendor-held keys.",
+    arestrix: "Runtime resolution through Windows DPAPI or Azure Key Vault.",
+  },
+  {
+    dimension: "Package integrity",
+    runtime: "Depends on the deployment pipeline.",
+    arestrix: "SHA-256/HMAC manifest, with fail-closed verification at startup.",
+  },
+  {
+    dimension: "Local data",
+    runtime: "Usually server-side or hosted; prompts leave the perimeter.",
+    arestrix: "Projects, memory, logs and databases stay on the machine unless you enable Git sync.",
+  },
+  {
+    dimension: "MCP",
+    runtime: "Community nodes or custom HTTP steps.",
+    arestrix: "A native client with a persistent session per server.",
+  },
+  {
+    dimension: "License",
+    runtime: "Varies by product and edition.",
+    arestrix: "MIT, for commercial and academic use.",
+  },
+];
+---
+
+<section id="difference" class="difference scroll-mt-28" aria-labelledby="difference-title">
+  <div class="container-x">
+    <SectionHeading
+      id="difference-title"
+      title="A *binary*, not a runtime"
+      lead="The difference shows up at deployment: what you ship, what holds the keys and what can be verified before it runs."
+    />
+
+    <div class="cmp-wrap reveal">
+      <table class="cmp-table">
+        <caption class="sr-only">
+          A directional comparison between a typical runtime-based agent stack and Arestrix
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">Typical runtime stack</th>
+            <th scope="col" class="cmp-arestrix">Arestrix</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((row) => (
+              <tr>
+                <th scope="row">{row.dimension}</th>
+                <td data-label="Typical runtime stack">{row.runtime}</td>
+                <td data-label="Arestrix" class="cmp-arestrix">{row.arestrix}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="cmp-note reveal">
+      Directional summary, not a benchmark. Read the{" "}
+      <a href={SITE.comparisonDocs} target="_blank" rel="noopener">
+        full comparison
+      </a>{" "}
+      for scope and caveats.
+    </p>
+  </div>
+</section>
+
+<style>
+  .difference {
+    padding-block: 48px;
+  }
+  .cmp-wrap {
+    margin-top: 48px;
+    overflow-x: clip;
+    border-top: 1px solid var(--c-line);
+  }
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+  }
+  .cmp-table th,
+  .cmp-table td {
+    padding: 18px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .cmp-table thead th {
+    padding-block: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .cmp-table tbody th {
+    width: 21%;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--c-ink);
+  }
+  .cmp-table td {
+    width: 39.5%;
+    color: var(--c-muted);
+  }
+  .cmp-table thead .cmp-arestrix {
+    color: var(--accent);
+  }
+  .cmp-table tbody td.cmp-arestrix {
+    color: var(--cap-card-text);
+  }
+  .cmp-table tbody td.cmp-arestrix::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: 0.1em;
+  }
+  .cmp-note {
+    margin-top: 22px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--c-muted);
+  }
+  .cmp-note a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .cmp-note a:hover {
+    color: var(--c-ink);
+  }
+  @media (min-width: 751px) {
+    .difference {
+      padding-block: 96px;
+    }
+    .cmp-wrap {
+      margin-top: 64px;
+    }
+    .cmp-table th,
+    .cmp-table td {
+      padding: 20px 22px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .difference {
+      padding-block: 120px;
+    }
+  }
+  @media (max-width: 750px) {
+    .cmp-table,
+    .cmp-table tbody,
+    .cmp-table tr,
+    .cmp-table th,
+    .cmp-table td {
+      display: block;
+      width: 100%;
+    }
+    .cmp-table thead {
+      display: none;
+    }
+    .cmp-table tr {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--c-line);
+    }
+    .cmp-table tbody th,
+    .cmp-table td {
+      padding: 0;
+      border: 0;
+    }
+    .cmp-table tbody th {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+    }
+    .cmp-table tbody td {
+      margin-top: 8px;
+      font-size: 15px;
+    }
+    .cmp-table tbody td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 3px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-dim);
+    }
+    .cmp-table tbody td.cmp-arestrix::before {
+      display: block;
+      width: auto;
+      height: auto;
+      margin: 0 0 3px;
+      border-radius: 0;
+      background: none;
+      content: attr(data-label);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      vertical-align: baseline;
+    }
+  }
+</style>

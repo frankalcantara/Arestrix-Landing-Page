@@ -1,0 +1,194 @@
+---
+/**
+ * Questions. Short, factual answers drawn from README.md, docs/en/roadmap.md,
+ * docs/en/getting-started.md, docs/en/arestrix-cli.md and docs/security/governance.md.
+ */
+import SectionHeading from "../SectionHeading.astro";
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const questions = [
+  {
+    q: "Is Arestrix free?",
+    a: `Yes. Arestrix is MIT licensed, with no per-seat fee, locked features or hosted subscription. Model usage is billed by the provider or endpoint you choose. A local model costs nothing beyond your own hardware.`,
+  },
+  {
+    q: "Is it really open source?",
+    a: `Yes. The full source is public on <a href="${SITE.repo}" target="_blank" rel="noopener">GitHub</a> under the MIT license, for commercial and academic use. The landing page is open source too.`,
+  },
+  {
+    q: "Which platforms are supported?",
+    a: `The Studio runs on Windows and Linux. Programs generated from a graph currently target Windows; Linux is on the <a href="${SITE.roadmap}" target="_blank" rel="noopener">roadmap</a>. Beta 2.1 is a development pre-release, so APIs, file formats and command-line flags may still change. The Windows installer is included; clean-machine validation, the Linux package and the full test matrix are pending.`,
+  },
+  {
+    q: "Which models and providers can I use?",
+    a: `DeepSeek, OpenAI, Anthropic, Google and Mistral are configured out of the box, and any OpenAI-compatible endpoint can be added. Local servers such as Ollama, LM Studio, llama.cpp and vLLM work through the same interface. Provider, model and prompt can be set per vertex. See <a href="${SITE.gettingStarted}" target="_blank" rel="noopener">Getting started</a>.`,
+  },
+  {
+    q: "Do I need an API key to try it?",
+    a: `The scripted end-to-end examples run without one. A real agent run needs a provider key or a local model server; keys live in the OS credential store or environment, never in the project file.`,
+  },
+  {
+    q: "Does my data leave the machine?",
+    a: `Projects, pipelines, generated code, logs, databases and memory stay on the machine. Only the model and MCP calls you configure leave it; Git synchronization is opt-in. The on-prem AI Gateway keeps provider keys on the server, and local models never pass through the gateway.`,
+  },
+  {
+    q: "Can I run it in CI or on a server?",
+    a: `Yes. <code>arestrix-cli</code> is the same generator and runtime without the UI. It supports <code>gen</code>, <code>run</code>, <code>check</code>, <code>doctor</code>, batch mode, <code>--ci</code> and stable exit codes. Read the <a href="${SITE.cliDocs}" target="_blank" rel="noopener">CLI reference</a>.`,
+  },
+  {
+    q: "How are secrets handled?",
+    a: `Project files hold variable names or <code>\${NAME}</code> references, never values. The runner resolves credentials at runtime through Windows DPAPI or Azure Key Vault, scrubs secret environment variables before starting child processes, and scans for leaked key formats before export. Read the <a href="${SITE.securityGovernance}" target="_blank" rel="noopener">security and governance model</a>.`,
+  },
+  {
+    q: "Is there a hosted Arestrix?",
+    a: `No. Arestrix is a desktop studio plus an optional on-prem gateway. There are no Arestrix-managed servers and no multi-tenant workspace. A team runs it on machines it controls and shares the artifacts.`,
+  },
+  {
+    q: "What is still missing?",
+    a: `Linux code generation and packaging, the Windows/Linux CI matrix, a signed remote catalogue, HA for the gateway, an admin web console, gateway streaming and full cognitive-graph visualisation are still open. The <a href="${SITE.roadmap}" target="_blank" rel="noopener">roadmap</a> lists them with the current limitations.`,
+  },
+  {
+    q: "How do I start?",
+    a: `Download the Windows installer or the portable ZIP, open one of the twelve examples, choose a provider and press <kbd>F5</kbd>. Or build from source with <code>python CppCore/dev.py</code>. The <a href="#download">download section</a> has both paths.`,
+  },
+];
+---
+
+<section id="faq" class="faq scroll-mt-28" aria-labelledby="faq-title">
+  <div class="container-x faq-grid">
+    <aside class="faq-aside">
+      <SectionHeading
+        id="faq-title"
+        title="Questions"
+        lead="Short answers about price, platforms, providers, data and what is still in beta."
+      />
+      <a href={SITE.discussions} class="feature-link faq-contact" target="_blank" rel="noopener">
+        Ask in Discussions <Icon name="arrow-up-right" size={18} />
+      </a>
+    </aside>
+
+    <div class="faq-list">
+      {
+        questions.map((item, i) => (
+          <details class="faq-item reveal" style={`--i:${i}`}>
+            <summary>
+              <span>{item.q}</span>
+              <Icon name="chevron-down" size={20} class="faq-chevron" />
+            </summary>
+            <div class="faq-answer" set:html={item.a} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: 48px;
+  }
+  .faq-grid {
+    display: grid;
+    gap: 32px;
+  }
+  .faq-aside :global(.rule) {
+    margin-top: 32px;
+  }
+  .faq-contact {
+    margin-top: 28px;
+  }
+  .faq-list {
+    border-top: 1px solid var(--c-line);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--c-line);
+  }
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 0;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary:hover {
+    color: var(--accent);
+  }
+  .faq-chevron {
+    flex: none;
+    color: var(--c-muted);
+    transition:
+      transform 0.25s var(--ease-out),
+      color 0.2s;
+  }
+  .faq-item summary:hover .faq-chevron {
+    color: var(--accent);
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--accent);
+  }
+  .faq-answer {
+    max-width: 68ch;
+    padding: 0 40px 26px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--c-muted);
+  }
+  .faq-answer a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .faq-answer a:hover {
+    color: var(--c-ink);
+  }
+  .faq-answer code,
+  .faq-answer kbd {
+    padding: 1px 5px;
+    border: 1px solid var(--c-line);
+    border-radius: 5px;
+    background: rgb(244 242 238 / 0.045);
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    color: var(--c-white);
+  }
+  @media (min-width: 751px) {
+    .faq {
+      padding-block: 96px;
+    }
+    .faq-item summary {
+      padding-block: 26px;
+      font-size: 21px;
+    }
+    .faq-answer {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .faq {
+      padding-block: 120px;
+    }
+    .faq-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+      gap: clamp(48px, 6vw, 88px);
+    }
+    .faq-aside {
+      position: sticky;
+      top: 112px;
+    }
+  }
+</style>

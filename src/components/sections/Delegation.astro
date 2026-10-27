@@ -1,0 +1,368 @@
+---
+/**
+ * Agent-to-agent delegation, the Arestrix counterpart of a "your agents talk to each other"
+ * section. Copy and limits come from docs/en/agents-and-execution.md and
+ * docs/en/graph-and-nodes.md#call-edges-delegation.
+ */
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const points = [
+  {
+    title: "Declared targets only",
+    body: "The model sees an enum of targets from the graph. It cannot invent an agent, a URL or a tool.",
+  },
+  {
+    title: "Parallel and asynchronous",
+    body: "Several delegations in one turn run in parallel. With async: true the caller gets a callId and keeps working while call_result polls.",
+  },
+  {
+    title: "Bounded by the graph",
+    body: "maxCalls per edge, nesting depth 3 and 50 calls per process by default. A feedback loop also caps each agent at 10 runs.",
+  },
+  {
+    title: "A small prompt surface",
+    body: "The target receives the explicit input, never the caller's whole conversation. Notifications and trace.json carry IDs, status and timing, not payloads.",
+  },
+];
+---
+
+<section id="delegation" class="delegation scroll-mt-28" aria-labelledby="delegation-title">
+  <div class="container-x delegation-grid">
+    <div class="delegation-copy">
+      <p class="eyebrow">Agent-to-agent calls</p>
+      <h2 id="delegation-title" class="h-section delegation-title">
+        The graph authorizes.<br /><span class="hl">The model chooses.</span>
+      </h2>
+      <p class="lead delegation-lead">
+        A call edge declares that an agent may invoke another agent. The runtime turns that declaration into a
+        <code>call_agent</code> tool with a fixed list of targets, hard limits and a trace.
+      </p>
+
+      <ul class="delegation-points">
+        {
+          points.map((point) => (
+            <li>
+              <strong>{point.title}</strong>
+              <span>{point.body}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a href={SITE.agentDocs} class="feature-link delegation-link" target="_blank" rel="noopener">
+        Read the delegation guide <Icon name="arrow-up-right" size={18} />
+      </a>
+    </div>
+
+    <div class="delegation-visual reveal" aria-hidden="true">
+      <div class="delegation-panel">
+        <div class="delegation-head">
+          <span class="delegation-status">
+            <span class="delegation-dot"></span>
+            call tree · live
+          </span>
+          <span class="delegation-run">run 4f2a</span>
+        </div>
+
+        <div class="delegation-caller">
+          <span class="delegation-node delegation-node-caller">
+            <span class="delegation-node-label">coordinator</span>
+            <span class="delegation-node-meta">agent</span>
+          </span>
+          <span class="delegation-calltag">call_agent</span>
+        </div>
+
+        <div class="delegation-branches">
+          <div class="delegation-branch">
+            <span class="delegation-target">researcher</span>
+            <span class="delegation-state">done · 1.2s</span>
+          </div>
+          <div class="delegation-branch">
+            <span class="delegation-target">reviewer</span>
+            <span class="delegation-state">done · 0.8s</span>
+          </div>
+          <div class="delegation-branch delegation-branch-async">
+            <span class="delegation-target">subflow</span>
+            <span class="delegation-state">pending · async</span>
+          </div>
+        </div>
+
+        <div class="delegation-code">
+          <code>call_result(&#123; callId: "call_03" &#125;)</code>
+          <span class="delegation-pending"><span class="delegation-pulse"></span>pending</span>
+        </div>
+
+        <div class="delegation-foot">
+          <span>maxCalls 1</span>
+          <span>depth 3</span>
+          <span>total 50</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .delegation {
+    padding-block: 48px;
+  }
+  .delegation-grid {
+    display: grid;
+    gap: 48px;
+  }
+  .delegation-title {
+    margin-top: 12px;
+    font-size: min(8vw, 58px);
+    line-height: 1.12;
+  }
+  .delegation-lead {
+    max-width: 38rem;
+    margin-top: 24px;
+  }
+  .delegation-lead code {
+    padding: 1px 5px;
+    border: 1px solid var(--c-line);
+    border-radius: 5px;
+    background: rgb(244 242 238 / 0.045);
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--c-white);
+  }
+  .delegation-points {
+    display: grid;
+    gap: 0;
+    max-width: 38rem;
+    margin-top: 32px;
+  }
+  .delegation-points li {
+    display: grid;
+    gap: 4px;
+    padding: 16px 0;
+    border-top: 1px solid var(--c-line);
+  }
+  .delegation-points li:last-child {
+    border-bottom: 1px solid var(--c-line);
+  }
+  .delegation-points strong {
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--c-ink);
+  }
+  .delegation-points span {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--c-muted);
+    text-wrap: pretty;
+  }
+  .delegation-link {
+    margin-top: 32px;
+  }
+
+  .delegation-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    padding: 24px;
+    overflow: clip;
+    border: 1px solid var(--cap-card-border);
+    border-radius: var(--radius-media);
+    background: var(--cap-card);
+    color: var(--cap-card-text);
+    box-shadow: 0 30px 70px -50px rgb(0 0 0 / 0.9);
+  }
+  .delegation-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(120% 100% at 20% 0%, #000 8%, transparent 68%);
+    mask-image: radial-gradient(120% 100% at 20% 0%, #000 8%, transparent 68%);
+  }
+  .delegation-panel > * {
+    position: relative;
+    z-index: 1;
+  }
+  .delegation-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .delegation-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .delegation-dot {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .delegation-caller {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 26px;
+    padding: 14px 16px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 12px;
+    background: rgb(244 242 238 / 0.03);
+  }
+  .delegation-node {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .delegation-node-caller .delegation-node-label {
+    color: var(--accent);
+  }
+  .delegation-node-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--cap-card-text);
+  }
+  .delegation-node-meta,
+  .delegation-calltag,
+  .delegation-state,
+  .delegation-foot {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .delegation-calltag {
+    flex: none;
+    padding: 3px 8px;
+    border: 1px solid rgb(232 89 12 / 0.45);
+    border-radius: 999px;
+    color: var(--accent);
+  }
+  .delegation-branches {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    margin: 18px 0 0 28px;
+    padding-left: 22px;
+    border-left: 1px dashed rgb(232 89 12 / 0.45);
+  }
+  .delegation-branch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 10px;
+    background: rgb(244 242 238 / 0.025);
+  }
+  .delegation-branch::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 16px;
+    border-top: 1px dashed rgb(232 89 12 / 0.45);
+  }
+  .delegation-target {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--cap-card-text);
+  }
+  .delegation-branch-async {
+    border-color: rgb(232 89 12 / 0.45);
+  }
+  .delegation-branch-async .delegation-state {
+    color: var(--accent);
+  }
+  .delegation-code {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    margin-top: 20px;
+    padding: 12px 14px;
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    background: rgb(244 242 238 / 0.03);
+  }
+  .delegation-code code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--cap-card-text);
+    overflow-wrap: anywhere;
+  }
+  .delegation-pending {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.4;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .delegation-pulse {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .delegation-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--c-line);
+  }
+  @media (min-width: 751px) {
+    .delegation {
+      padding-block: 96px;
+    }
+    .delegation-panel {
+      padding: 32px;
+    }
+    .delegation-panel {
+      min-height: 480px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .delegation {
+      padding-block: 120px;
+    }
+    .delegation-grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      align-items: center;
+      gap: clamp(48px, 6vw, 88px);
+    }
+    .delegation-title {
+      font-size: clamp(40px, 3.7vw, 54px);
+    }
+  }
+</style>

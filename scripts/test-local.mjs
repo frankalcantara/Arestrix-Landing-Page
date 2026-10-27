@@ -64,7 +64,22 @@ if (!ready) {
 }
 
 const routes = [
-  ["/", ["Arestrix", "Agent pipelines", "compiled to C++20", "Get the beta"]],
+  [
+    "/",
+    [
+      "Arestrix",
+      "Agent pipelines",
+      "compiled to C++20",
+      "Get the beta",
+      "around the graph",
+      "Agent-to-agent calls",
+      "artifact travels",
+      "Run with telemetry",
+      "What it costs",
+      "Beta 2.1",
+      "Questions",
+    ],
+  ],
   ["/services/", ["Six", "building blocks", "Native C++20 compiler", "AI Gateway"]],
   ["/about/", ["Agent pipelines deserve", "software discipline", "What Arestrix is not"]],
   ["/contact/", ["Build it", "GitHub", ">X<", "@frankalcantara"]],

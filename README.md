@@ -34,7 +34,7 @@ Open <http://localhost:4321>.
 | Where | What |
 | --- | --- |
 | `src/config.ts` | Name, tagline, canonical URL, GitHub/X links, counters, accent and card colours, nav and CTA |
-| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Memory, Gateway, Split, Process, FinalCta |
+| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, FinalCta |
 | `public/media/` | The hero graph loop: WebM, MP4 and a WebP poster |
 | `src/content/services/*.md` | The six capability cards and their detail pages |
 | `src/pages/about.astro` | Project positioning, audience, principles and deliberate scope |
@@ -98,6 +98,12 @@ end back to the start), 1260×654, no audio.
   and view timelines then track that box.
 - Write `view(0px)`, not `view()`. The default inset is the page's `scroll-padding`.
 - Entrances (`[data-enter]`) stay paused until `src/scripts/enter.ts` adds `.is-in` at 15% visible.
+- `Process.astro` is a stack of sticky cards (the reference's `#teams` effect). Its inline script only
+  writes `--covered` and the active progress item; the scale/dim CSS lives in `src/styles/effects.css`
+  inside the same media query. Phones, reduced motion
+  and no-JS get flat, fully lit cards.
+- The header has four nav links. Keep the `clamp()` gap in `Header.astro` so it never collides with
+  the CTA around 1024 px.
 - No animation libraries. The canvas scenes in `src/scripts/scenes.ts` are dependency-free.
 
 ## Local testing before deploy

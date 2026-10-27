@@ -1,0 +1,218 @@
+---
+/**
+ * Arestrix for teams. This is the honest counterpart of a "managed service" pitch: there are no
+ * Arestrix-managed servers and no per-seat license. A team shares reviewable artifacts, a budget
+ * policy and deployment tooling, while the data stays on machines it controls.
+ *
+ * Sources: docs/product/positioning.md, docs/product/comparison.md,
+ * docs/en/agents-and-execution.md (governance), CppCore/gateway/README.md.
+ */
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const cards = [
+  {
+    icon: "git-branch" as const,
+    title: "Reviewable by default",
+    body: "Graphs, generated C++ and packaging metadata are text files. Version them, diff them and sign off the exact thing that runs.",
+  },
+  {
+    icon: "key" as const,
+    title: "Budgets on your server",
+    body: "The on-prem AI Gateway issues virtual keys and enforces monthly budgets, rate limits and a usage ledger by key, project, user, provider and model.",
+  },
+  {
+    icon: "package" as const,
+    title: "Deployment IT can own",
+    body: "Ship a standalone runner with an HMAC/SHA-256 manifest, then package it as MSI or MSIX for Intune/SCCM. Credentials resolve at runtime through DPAPI or Azure Key Vault.",
+  },
+  {
+    icon: "lock" as const,
+    title: "Local-first by construction",
+    body: "Projects, memory, logs and databases stay on the machine or network; Git sync is opt-in. Only the model and MCP calls you configure leave it, and local models never pass through the gateway.",
+  },
+];
+---
+
+<section id="teams" class="teams scroll-mt-28" aria-labelledby="teams-title">
+  <div class="container-x teams-grid">
+    <div class="teams-copy">
+      <p class="eyebrow">Arestrix for teams</p>
+      <h2 id="teams-title" class="h-section teams-title">
+        The artifact travels.<br /><span class="hl">The data stays.</span>
+      </h2>
+      <p class="lead teams-lead">
+        Arestrix is not a hosted automation service. It is software your team runs on machines you control, with
+        artifacts you can review and a policy layer for the spend.
+      </p>
+
+      <ul class="teams-points">
+        <li>No per-seat license and no locked tier.</li>
+        <li>No Arestrix-managed servers or multi-tenant workspace.</li>
+        <li>MIT licensed for commercial and academic use.</li>
+      </ul>
+
+      <div class="teams-actions">
+        <a href="/about/" class="btn btn-secondary">
+          Read the positioning <Icon name="arrow-right" class="icon-shift" />
+        </a>
+        <a href={SITE.securityGovernance} class="feature-link" target="_blank" rel="noopener">
+          Security model <Icon name="arrow-up-right" size={18} />
+        </a>
+      </div>
+    </div>
+
+    <ul class="teams-cards">
+      {
+        cards.map((card, i) => (
+          <li class="teams-card reveal" style={`--i:${i}`}>
+            <span class="teams-icon">
+              <Icon name={card.icon} size={22} />
+            </span>
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .teams {
+    padding-block: 48px;
+  }
+  .teams-grid {
+    display: grid;
+    gap: 48px;
+  }
+  .teams-title {
+    margin-top: 12px;
+    font-size: min(8vw, 58px);
+    line-height: 1.12;
+  }
+  .teams-lead {
+    max-width: 38rem;
+    margin-top: 24px;
+  }
+  .teams-points {
+    display: grid;
+    gap: 8px;
+    max-width: 34rem;
+    margin-top: 28px;
+    color: var(--c-muted);
+  }
+  .teams-points li {
+    position: relative;
+    padding-left: 18px;
+    line-height: 1.55;
+  }
+  .teams-points li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .teams-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 28px;
+    margin-top: 36px;
+  }
+  .teams-cards {
+    display: grid;
+    gap: 20px;
+  }
+  .teams-card {
+    position: relative;
+    min-width: 0;
+    padding: 28px;
+    overflow: clip;
+    border: 1px solid var(--cap-card-border);
+    border-radius: var(--radius-media);
+    background: var(--cap-card);
+    color: var(--cap-card-text);
+  }
+  .teams-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(110% 100% at 100% 0%, #000 5%, transparent 62%);
+    mask-image: radial-gradient(110% 100% at 100% 0%, #000 5%, transparent 62%);
+  }
+  .teams-card > * {
+    position: relative;
+    z-index: 1;
+  }
+  .teams-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 10px;
+    color: var(--accent);
+    background: rgb(244 242 238 / 0.03);
+  }
+  .teams-card h3 {
+    margin-top: 22px;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .teams-card p {
+    margin-top: 12px;
+    max-width: 38ch;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--cap-card-text);
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 751px) {
+    .teams {
+      padding-block: 96px;
+    }
+    .teams-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .teams-card {
+      padding: 32px;
+    }
+    .teams-card h3 {
+      font-size: 24px;
+    }
+    .teams-card p {
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .teams {
+      padding-block: 120px;
+    }
+    .teams-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+      gap: clamp(48px, 6vw, 88px);
+    }
+    .teams-copy {
+      position: sticky;
+      top: 112px;
+    }
+    .teams-title {
+      font-size: 58px;
+    }
+  }
+</style>

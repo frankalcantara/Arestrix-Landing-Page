@@ -25,8 +25,22 @@ export const SITE = {
   /** The only contact channels used by the site. */
   repo: "https://github.com/frankalcantara/Arestrix",
   docs: "https://github.com/frankalcantara/Arestrix/tree/main/docs",
+  gettingStarted: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/getting-started.md",
+  architectureDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/architecture.md",
+  graphDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/graph-and-nodes.md",
+  agentDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/agents-and-execution.md",
+  cliDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/arestrix-cli.md",
+  workspacesDocs:
+    "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/workspaces-memory-skills-mcp.md",
   memoryDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/how-memory-works.md",
   gatewayDocs: "https://github.com/frankalcantara/Arestrix/blob/main/CppCore/gateway/README.md",
+  comparisonDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/product/comparison.md",
+  securityGovernance:
+    "https://github.com/frankalcantara/Arestrix/blob/main/docs/security/governance.md",
+  roadmap: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/roadmap.md",
+  examples: "https://github.com/frankalcantara/Arestrix/tree/main/examples",
+  changelog: "https://github.com/frankalcantara/Arestrix/blob/main/CHANGELOG.md",
+  license: "https://github.com/frankalcantara/Arestrix/blob/main/LICENSE",
   releases: "https://github.com/frankalcantara/Arestrix/releases/tag/latest",
   discussions: "https://github.com/frankalcantara/Arestrix/discussions",
   issues: "https://github.com/frankalcantara/Arestrix/issues",
@@ -35,8 +49,8 @@ export const SITE = {
   x: "https://x.com/frankalcantara",
 
   beta: {
-    label: "Beta 2",
-    version: "2.0.0-beta.1",
+    label: "Beta 2.1",
+    version: "2.1.0-beta.1",
     platforms: "Windows and Linux",
   },
 
@@ -54,7 +68,7 @@ export const SITE = {
     { value: 100, suffix: "%", label: "MIT licensed|source" },
   ] as Stat[],
   /** Small caption under the counters. */
-  statsNote: "Beta 2 · 2.0.0-beta.1 · Windows and Linux",
+  statsNote: "Beta 2.1 · 2.1.0-beta.1 · Windows and Linux",
 
   /**
    * One accent for highlighted words, buttons and rules. `accentText` is the text
@@ -77,8 +91,15 @@ export const SITE = {
 
   nav: [
     { label: "capabilities", href: "/services/" },
+    { label: "how it works", href: "/#process" },
+    { label: "for teams", href: "/#teams" },
+    { label: "questions", href: "/#faq" },
+  ],
+  /** Secondary links, shown in the footer and the mobile menu. */
+  navMore: [
     { label: "project", href: "/about/" },
     { label: "community", href: "/contact/" },
+    { label: "download", href: "/#download" },
   ],
   /** The accent button in the header and footer. */
   cta: { label: "Get the beta", href: "https://github.com/frankalcantara/Arestrix/releases/tag/latest" },

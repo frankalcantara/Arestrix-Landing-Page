@@ -54,7 +54,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
       <ul class="border-t border-line">
         <li><a href="/" class="mobile-link" aria-current={path === "/" ? "page" : undefined}>home</a></li>
         {
-          SITE.nav.map((item) => (
+          [...SITE.nav, ...SITE.navMore].map((item) => (
             <li>
               <a href={item.href} class="mobile-link" aria-current={isCurrent(item.href) ? "page" : undefined}>
                 {item.label}
@@ -132,7 +132,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
   }
   .main-nav ul {
     display: flex;
-    gap: 48px;
+    gap: clamp(18px, 2.4vw, 36px);
   }
   .nav-link {
     display: block;

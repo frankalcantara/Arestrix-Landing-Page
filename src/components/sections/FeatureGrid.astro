@@ -1,0 +1,333 @@
+---
+/**
+ * Supporting capabilities that sit between the canvas and a production run. The six large
+ * pillars live in Services.astro; this grid covers delegation, human input, artifacts,
+ * sandboxes, skills/MCP and headless execution. Copy comes from docs/en/agents-and-execution.md,
+ * docs/en/graph-and-nodes.md and docs/en/arestrix-cli.md.
+ */
+import SectionHeading from "../SectionHeading.astro";
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+---
+
+<section id="features" class="features scroll-mt-28" aria-labelledby="features-title">
+  <div class="container-x">
+    <SectionHeading
+      id="features-title"
+      title="Everything *around the graph*"
+      lead="The canvas is the beginning. These are the parts that turn a drawing into a pipeline a team can run, inspect and hand to IT."
+    />
+
+    <ul class="feature-grid">
+      <li class="feature-cell feature-cell-human reveal" style="--i:0">
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="feature-icon"><Icon name="form" size={20} /></span>
+            <span class="eyebrow">Human input</span>
+          </div>
+          <div class="feature-copy">
+            <h3>Ask a person, safely</h3>
+            <p>
+              Interaction vertices ask for input through a declarative schema. The runtime builds the form from
+              declared field types and never executes model-written HTML or JavaScript.
+            </p>
+            <div class="feature-chips">
+              <span>text</span><span>choice</span><span>multi-choice</span><span>date</span><span>audited</span>
+            </div>
+          </div>
+          <a href={SITE.agentDocs} class="feature-link" target="_blank" rel="noopener">
+            Interaction vertices <Icon name="arrow-up-right" size={18} />
+          </a>
+        </article>
+      </li>
+
+      <li class="feature-cell feature-cell-artifacts reveal" style="--i:1">
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="feature-icon"><Icon name="package" size={20} /></span>
+            <span class="eyebrow">Deliverables</span>
+          </div>
+          <div class="feature-copy">
+            <h3>Artifacts, not just logs</h3>
+            <p>
+              Output vertices copy deliverables to <code>exports/</code> and open them in the Artifacts tab: SVG,
+              CSV/TSV/XLSX, Markdown, PDF and JSON.
+            </p>
+            <div class="feature-files">
+              <span>scene.svg</span>
+              <span>report.md</span>
+              <span>data.xlsx</span>
+              <span>trace.json</span>
+            </div>
+          </div>
+          <a href={SITE.agentDocs} class="feature-link" target="_blank" rel="noopener">
+            Output nodes <Icon name="arrow-up-right" size={18} />
+          </a>
+        </article>
+      </li>
+
+      <li class="feature-cell reveal" style="--i:2">
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="feature-icon"><Icon name="sandbox" size={20} /></span>
+            <span class="eyebrow">Isolation</span>
+          </div>
+          <div class="feature-copy">
+            <h3>Sandboxes that fail closed</h3>
+            <p>
+              Run tools on the host, in Docker or in WSL2. Network policy is set per vertex, and an unavailable
+              isolation level fails closed instead of silently falling back.
+            </p>
+            <div class="feature-chips">
+              <span>host_direct</span><span>container</span><span>microvm</span><span>offline</span>
+            </div>
+          </div>
+          <a href={SITE.securityGovernance} class="feature-link" target="_blank" rel="noopener">
+            Security model <Icon name="arrow-up-right" size={18} />
+          </a>
+        </article>
+      </li>
+
+      <li class="feature-cell reveal" style="--i:3">
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="feature-icon"><Icon name="plug" size={20} /></span>
+            <span class="eyebrow">Skills and MCP</span>
+          </div>
+          <div class="feature-copy">
+            <h3>Skills, MCP and native tools</h3>
+            <p>
+              Bind local skills to a vertex, connect MCP servers over stdio or HTTP, and use native tools for files,
+              HTTP, data, Git, SQLite, memory and time without installing a server.
+            </p>
+            <div class="feature-chips">
+              <span>SKILL.md</span><span>stdio</span><span>HTTP</span><span>SQLite</span><span>Git</span>
+            </div>
+          </div>
+          <a href={SITE.workspacesDocs} class="feature-link" target="_blank" rel="noopener">
+            Workspaces and MCP <Icon name="arrow-up-right" size={18} />
+          </a>
+        </article>
+      </li>
+
+      <li class="feature-cell reveal" style="--i:4">
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="feature-icon"><Icon name="terminal" size={20} /></span>
+            <span class="eyebrow">Headless</span>
+          </div>
+          <div class="feature-copy">
+            <h3>The same engine, headless</h3>
+            <p>
+              <code>arestrix-cli</code> generates, compiles and runs the same graph without the Studio. Built for CI,
+              servers and batch jobs, with stable exit codes and native memory reports.
+            </p>
+            <pre class="feature-code"><code>arestrix-cli run graph.json --ci</code></pre>
+          </div>
+          <a href={SITE.cliDocs} class="feature-link" target="_blank" rel="noopener">
+            CLI reference <Icon name="arrow-up-right" size={18} />
+          </a>
+        </article>
+      </li>
+    </ul>
+
+    <p class="features-note reveal">
+      <Icon name="globe" size={18} class="shrink-0 text-accent" />
+      <span>Bilingual by design: the Studio and the documentation ship in English and Portuguese.</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .features {
+    padding-block: 48px;
+  }
+  .feature-grid {
+    display: grid;
+    gap: 20px;
+    margin-top: 48px;
+  }
+  .feature-cell {
+    min-width: 0;
+  }
+  .feature-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    min-height: 290px;
+    padding: 28px;
+    overflow: clip;
+    border: 1px solid var(--cap-card-border);
+    border-radius: var(--radius-media);
+    background: var(--cap-card);
+    color: var(--cap-card-text);
+  }
+  /* Faint graph paper, masked to the top-right corner. Keeps the surface near-black. */
+  .feature-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgb(244 242 238 / 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 242 238 / 0.055) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(120% 100% at 88% 8%, #000 8%, transparent 68%);
+    mask-image: radial-gradient(120% 100% at 88% 8%, #000 8%, transparent 68%);
+  }
+  .feature-card > * {
+    position: relative;
+    z-index: 1;
+  }
+  .feature-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .feature-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 10px;
+    color: var(--accent);
+    background: rgb(244 242 238 / 0.03);
+  }
+  .feature-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .feature-card h3 {
+    font-size: 27px;
+    line-height: 1.15;
+    letter-spacing: -0.045em;
+    color: var(--accent);
+    text-wrap: balance;
+  }
+  .feature-card p {
+    max-width: 42ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--cap-card-text);
+    text-wrap: pretty;
+  }
+  .feature-card code {
+    padding: 1px 5px;
+    border: 1px solid var(--c-line);
+    border-radius: 5px;
+    background: rgb(244 242 238 / 0.05);
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    line-height: 1.4;
+    color: var(--c-white);
+  }
+  .feature-card .feature-link {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .feature-chips,
+  .feature-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .feature-chips span,
+  .feature-files span {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: var(--c-muted);
+    white-space: nowrap;
+  }
+  .feature-files span {
+    border-radius: 6px;
+    color: var(--cap-card-text);
+  }
+  .feature-files span::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-right: 7px;
+    border: 1px solid var(--accent);
+    border-radius: 1px;
+  }
+  .feature-code {
+    max-width: 100%;
+    margin-top: 2px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    background: rgb(244 242 238 / 0.04);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--cap-card-text);
+    white-space: nowrap;
+  }
+  .feature-code code {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: inherit;
+  }
+  .features-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 46rem;
+    margin-top: 28px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--c-muted);
+  }
+
+  @media (min-width: 751px) {
+    .features {
+      padding-block: 96px;
+    }
+    .feature-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 64px;
+    }
+    .feature-cell {
+      grid-column: span 6;
+    }
+    .feature-cell:last-child {
+      grid-column: span 12;
+    }
+    .feature-card {
+      padding: 32px;
+    }
+    .feature-card h3 {
+      font-size: 30px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .features {
+      padding-block: 120px;
+    }
+    .feature-cell,
+    .feature-cell:last-child {
+      grid-column: span 4;
+    }
+    .feature-cell-human,
+    .feature-cell-artifacts {
+      grid-column: span 6;
+    }
+  }
+</style>
