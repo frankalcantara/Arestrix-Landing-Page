@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import Graph3D from "../components/Graph3D.astro";
+import StudioShot from "../components/StudioShot.astro";
 import Icon from "../components/Icon.astro";
 import { SITE } from "../config";
 
@@ -61,7 +61,15 @@ const notFor = [
           title="Built for the people who *run it*"
           lead="The Studio is for the person who designs the graph. The runner is for the person who has to operate it."
         />
-        <div class="mt-16 hidden max-w-xs lg:block"><Graph3D /></div>
+        <div class="mt-16 hidden max-w-xs lg:block">
+          <StudioShot
+            src="/media/studio-graph.webp"
+            alt="Arestrix Studio graph canvas with agent, task, condition and output vertices"
+            width={1320}
+            height={760}
+            label="Studio · graph"
+          />
+        </div>
       </div>
       <ul class="stagger divide-y divide-line border-y border-line lg:col-span-7">
         {

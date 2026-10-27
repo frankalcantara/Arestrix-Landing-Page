@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Graph3D from "../components/Graph3D.astro";
+import StudioShot from "../components/StudioShot.astro";
 import Icon from "../components/Icon.astro";
 ---
 
@@ -16,6 +16,14 @@ import Icon from "../components/Icon.astro";
         <a href="/contact/" class="btn btn-secondary btn-lg">Community</a>
       </div>
     </div>
-    <Graph3D class="mx-auto max-w-sm" />
+    <StudioShot
+      src="/media/studio-graph.webp"
+      alt="Arestrix Studio graph canvas"
+      width={1320}
+      height={760}
+      label="Graph · 404"
+      loading="eager"
+      class="mx-auto w-full max-w-sm"
+    />
   </section>
 </BaseLayout>

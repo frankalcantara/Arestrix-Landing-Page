@@ -1,10 +1,10 @@
 ---
 /**
- * 5. Statement that fills line by line on scroll, and 6. the 3D graph beside a paragraph.
+ * 5. Statement that fills line by line on scroll, and 6. a real Studio screenshot beside a paragraph.
  * On wide screens this block slides up over the sticky hero (see .hero-wrap in index.astro).
  */
 import FillLines from "../FillLines.astro";
-import Graph3D from "../Graph3D.astro";
+import StudioShot from "../StudioShot.astro";
 ---
 
 <section class="statement" aria-label="What Arestrix does">
@@ -14,7 +14,14 @@ import Graph3D from "../Graph3D.astro";
       lines={["Draw the graph.", "Compile it to *C++20*.", "Ship a *native runner*."]}
     />
     <div class="statement-body">
-      <Graph3D class="statement-graph" />
+      <StudioShot
+        src="/media/studio-graph.webp"
+        alt="Arestrix Studio graph canvas with agent, task, condition and output vertices"
+        width={1320}
+        height={760}
+        label="Studio · graph"
+        class="statement-shot"
+      />
       <p class="t-big statement-para">
         Arestrix validates the graph, generates C++20 source and compiles it with Taskflow into parallel task DAGs.
         Projects, memory and logs stay on your machine; only model and MCP calls leave it, plus the Git sync you opt into.
@@ -42,11 +49,11 @@ import Graph3D from "../Graph3D.astro";
     display: block;
   }
   .statement-para {
-    margin-top: 47.3px;
+    margin-top: 28px;
     line-height: 1.3;
   }
-  .statement :global(.statement-graph) {
-    display: none;
+  .statement :global(.statement-shot) {
+    margin-top: 32px;
   }
   /* Desktop (the reference at 1440 × 727): a 1089px block; graph left, paragraph in the right half. */
   @media (min-width: 1001px) {
@@ -75,11 +82,10 @@ import Graph3D from "../Graph3D.astro";
       grid-template-columns: 1fr 1fr;
       align-items: center;
     }
-    .statement :global(.statement-graph) {
-      display: block;
-      width: 480px;
-      height: 471px;
-      margin-left: -90px;
+    .statement :global(.statement-shot) {
+      width: 100%;
+      max-width: 600px;
+      margin: 0;
     }
     .statement-para {
       margin: 0;

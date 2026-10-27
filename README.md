@@ -35,7 +35,7 @@ Open <http://localhost:4321>.
 | --- | --- |
 | `src/config.ts` | Name, tagline, canonical URL, GitHub/X links, counters, accent and card colours, nav and CTA |
 | `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, FinalCta |
-| `public/media/` | The hero graph loop: WebM, MP4 and a WebP poster |
+| `public/media/` | The hero graph loop (WebM, MP4, poster) and the cropped Studio screenshots used by `StudioShot.astro` |
 | `src/content/services/*.md` | The six capability cards and their detail pages |
 | `src/pages/about.astro` | Project positioning, audience, principles and deliberate scope |
 | `src/pages/contact.astro` | Community page: GitHub and X only |
@@ -102,6 +102,9 @@ end back to the start), 1260×654, no audio.
   writes `--covered` and the active progress item; the scale/dim CSS lives in `src/styles/effects.css`
   inside the same media query. Phones, reduced motion
   and no-JS get flat, fully lit cards.
+- Product art is real: `StudioShot.astro` and the Process cards use crops of
+  `docs/assets/screenshots`, saved as `public/media/studio-*.webp`. Do not draw a replacement graph.
+- Screenshots use a slow `studio-pan` on a view timeline; the final frame is the default.
 - The header has four nav links. Keep the `clamp()` gap in `Header.astro` so it never collides with
   the CTA around 1024 px.
 - No animation libraries. The canvas scenes in `src/scripts/scenes.ts` are dependency-free.
@@ -151,7 +154,7 @@ src/
 ├── components/
 │   ├── sections/       Home page sections
 │   ├── FillLines.astro Line-by-line fill
-│   ├── Graph3D.astro   Stylised graph with pointer-driven 3D turn
+│   ├── StudioShot.astro Real Studio screenshot in a window frame
 │   ├── Ridgelines.astro Build-time chart
 │   ├── ServiceCard.astro, ServiceArt.astro
 │   ├── Head.astro      Meta, Open Graph, JSON-LD
