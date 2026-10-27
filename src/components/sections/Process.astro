@@ -4,9 +4,10 @@
  * (openbot.run/#teams): each card sticks below the previous one, scales down and dims as the
  * next card covers it, while the aside tracks the active step.
  *
- * The cards stay near-black with Papel type. Each card carries a cropped, real Studio
- * screenshot from public/media, so the section shows the product instead of a drawing.
+ * The cards stay near-black with Papel type and line art, as the brand manual requires. The
+ * card art is ServiceArt (graph, code, runner, shield), so the existing line animations apply.
  */
+import ServiceArt from "../ServiceArt.astro";
 import Icon from "../Icon.astro";
 import { SITE } from "../../config";
 
@@ -14,11 +15,7 @@ const steps = [
   {
     label: "Design",
     title: "Draw the graph",
-    image: "/media/studio-graph.webp",
-    imageWidth: 1320,
-    imageHeight: 760,
-    tag: "Canvas",
-    alt: "Arestrix Studio graph canvas with agent, task, condition and output vertices",
+    art: "graph",
     body: "Start from a template or an empty canvas. Add agents, tools, decisions, switches, subflows and feedback loops, then validate the graph before a model call. Missing models, unresolved variables and unreachable vertices are reported on the canvas.",
     href: SITE.graphDocs,
     linkLabel: "Graph and nodes",
@@ -26,11 +23,7 @@ const steps = [
   {
     label: "Compile",
     title: "Inspect the code",
-    image: "/media/studio-code.webp",
-    imageWidth: 1400,
-    imageHeight: 646,
-    tag: "C++20",
-    alt: "Generated C++20 Taskflow code in the Monaco editor",
+    art: "code",
     body: "Arestrix generates C++20 and opens it in Monaco. Parallel branches become Taskflow tasks; condition and switch vertices become branches; loops become Taskflow loops. An unchanged graph reuses the previous binary.",
     href: SITE.architectureDocs,
     linkLabel: "How compilation works",
@@ -38,11 +31,7 @@ const steps = [
   {
     label: "Run",
     title: "Run with telemetry",
-    image: "/media/studio-run.webp",
-    imageWidth: 1300,
-    imageHeight: 825,
-    tag: "Telemetry",
-    alt: "Runner diagnostics with token, tool and retry telemetry",
+    art: "runner",
     body: "Press F5. Live thinking streams, node latency, token throughput, tool arguments and 429 retries arrive on the canvas and in the console. Batch runs checkpoint each item and resume from the last completed vertex.",
     href: SITE.agentDocs,
     linkLabel: "Agents and execution",
@@ -50,11 +39,7 @@ const steps = [
   {
     label: "Ship",
     title: "Export and package",
-    image: "/media/studio-export.webp",
-    imageWidth: 1300,
-    imageHeight: 825,
-    tag: "Package",
-    alt: "Runner export and governance settings",
+    art: "shield",
     body: "Ship a standalone runner with a focused progress screen, or package it as MSI/MSIX for managed Windows deployment. The package carries an HMAC/SHA-256 manifest; credentials resolve at runtime through DPAPI or Azure Key Vault.",
     href: SITE.agentDocs,
     linkLabel: "Standalone runner",
@@ -102,17 +87,7 @@ const steps = [
               </span>
             </div>
 
-            <div class="process-shot">
-              <img
-                src={step.image}
-                alt={step.alt}
-                width={step.imageWidth}
-                height={step.imageHeight}
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="process-shot-tag" aria-hidden="true">{step.tag}</span>
-            </div>
+            <ServiceArt kind={step.art} class="process-art" />
 
             <div class="process-card-copy">
               <h3>{step.title}</h3>
@@ -180,8 +155,26 @@ const steps = [
 
 <style>
   .process {
+    position: relative;
     padding-block: 48px;
     overflow-x: clip;
+  }
+  /* The section starts with a transparent-to-line gradient instead of a hard rule. */
+  .process::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-line) 18%,
+      var(--c-line) 82%,
+      transparent 100%
+    );
   }
   .process-grid {
     display: grid;
@@ -256,10 +249,28 @@ const steps = [
     padding: 28px;
     overflow: clip;
     border: 1px solid var(--cap-card-border);
+    border-top-color: transparent;
     border-radius: 24px;
     background: var(--cap-card);
     color: var(--cap-card-text);
     box-shadow: 0 -20px 40px -28px rgb(0 0 0 / 0.7);
+  }
+  .process-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--cap-card-border) 12%,
+      var(--cap-card-border) 88%,
+      transparent 100%
+    );
   }
   .process-card::before {
     content: "";
@@ -274,7 +285,7 @@ const steps = [
     -webkit-mask-image: radial-gradient(120% 100% at 86% 18%, #000 10%, transparent 70%);
     mask-image: radial-gradient(120% 100% at 86% 18%, #000 10%, transparent 70%);
   }
-  .process-card > *:not(.process-shot) {
+  .process-card > * {
     position: relative;
     z-index: 1;
   }
@@ -296,41 +307,13 @@ const steps = [
   .process-card-number {
     color: var(--accent);
   }
-  .process-shot {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 720px;
-    aspect-ratio: 16 / 10;
-    margin: 20px auto 0;
-    overflow: clip;
-    border: 1px solid var(--cap-card-border);
-    border-radius: 10px;
-    background: #0b0c0f;
-    box-shadow: 0 16px 34px -26px rgb(0 0 0 / 0.9);
-  }
-  .process-shot img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-  .process-shot-tag {
-    position: absolute;
-    left: 8px;
-    bottom: 8px;
-    z-index: 1;
-    padding: 3px 7px;
-    border: 1px solid rgb(244 242 238 / 0.2);
-    border-radius: 999px;
-    background: rgb(11 12 15 / 0.82);
-    font-family: var(--font-mono);
-    font-size: 9px;
-    line-height: 1.4;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--c-white);
+  .process-card :global(.process-art) {
+    width: 190px;
+    max-width: 56%;
+    margin-top: 20px;
+    margin-left: auto;
+    color: var(--cap-card-text);
+    opacity: 0.9;
   }
   .process-card-copy {
     align-self: end;
@@ -369,13 +352,13 @@ const steps = [
       padding: 32px;
       border-radius: 28px;
     }
-    .process-card > .process-shot {
+    .process-card :global(.process-art) {
       position: absolute;
       top: 92px;
       right: 32px;
-      width: min(32%, 280px);
-      aspect-ratio: 16 / 10;
+      width: min(30%, 260px);
       margin: 0;
+      opacity: 0.85;
     }
     .process-card-copy {
       margin-top: auto;

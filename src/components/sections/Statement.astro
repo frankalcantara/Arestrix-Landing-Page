@@ -1,10 +1,10 @@
 ---
 /**
- * 5. Statement that fills line by line on scroll, and 6. a real Studio screenshot beside a paragraph.
+ * 5. Statement that fills line by line on scroll, and 6. the live plexus graph beside a paragraph.
  * On wide screens this block slides up over the sticky hero (see .hero-wrap in index.astro).
  */
 import FillLines from "../FillLines.astro";
-import StudioShot from "../StudioShot.astro";
+import LiveGraph from "../LiveGraph.astro";
 ---
 
 <section class="statement" aria-label="What Arestrix does">
@@ -14,14 +14,7 @@ import StudioShot from "../StudioShot.astro";
       lines={["Draw the graph.", "Compile it to *C++20*.", "Ship a *native runner*."]}
     />
     <div class="statement-body">
-      <StudioShot
-        src="/media/studio-graph.webp"
-        alt="Arestrix Studio graph canvas with agent, task, condition and output vertices"
-        width={1320}
-        height={760}
-        label="Studio · graph"
-        class="statement-shot"
-      />
+      <LiveGraph label="Graph · live" class="statement-live" />
       <p class="t-big statement-para">
         Arestrix validates the graph, generates C++20 source and compiles it with Taskflow into parallel task DAGs.
         Projects, memory and logs stay on your machine; only model and MCP calls leave it, plus the Git sync you opt into.
@@ -52,7 +45,7 @@ import StudioShot from "../StudioShot.astro";
     margin-top: 28px;
     line-height: 1.3;
   }
-  .statement :global(.statement-shot) {
+  .statement :global(.statement-live) {
     margin-top: 32px;
   }
   /* Desktop (the reference at 1440 × 727): a 1089px block; graph left, paragraph in the right half. */
@@ -82,7 +75,7 @@ import StudioShot from "../StudioShot.astro";
       grid-template-columns: 1fr 1fr;
       align-items: center;
     }
-    .statement :global(.statement-shot) {
+    .statement :global(.statement-live) {
       width: 100%;
       max-width: 600px;
       margin: 0;

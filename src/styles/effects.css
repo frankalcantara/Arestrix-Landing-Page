@@ -399,32 +399,6 @@
 }
 
 /* ------------------------------------------------------------------
-   Studio screenshots: a slow camera move as the frame enters the
-   screen. The default is the final, unzoomed frame; phones and
-   reduced-motion visitors never get the transform.
------------------------------------------------------------------- */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 751px) {
-    .studio-shot img {
-      animation-name: studio-pan;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view(0px);
-      animation-range: entry 0% cover 45%;
-      transform-origin: center;
-    }
-  }
-}
-@keyframes studio-pan {
-  from {
-    transform: scale(1.055) translate3d(-0.8%, 0.8%, 0);
-  }
-  to {
-    transform: none;
-  }
-}
-
-/* ------------------------------------------------------------------
    11. Process cards: each sticky card scales down and dims as the next
    one covers it. The script in Process.astro writes --covered; the
    default is 0, so phones, reduced motion and no-JS stay flat and lit.
@@ -446,7 +420,8 @@
 ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {
   .delegation-dot,
-  .delegation-pulse {
+  .delegation-pulse,
+  .live-graph-dot {
     animation: delegation-pulse 2.6s ease-out infinite;
   }
   .faq-answer {

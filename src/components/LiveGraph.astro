@@ -1,0 +1,91 @@
+---
+/**
+ * A framed live graph: the existing `plexus` canvas scene from src/scripts/scenes.ts.
+ * It is the same dependency-free animation used by the hero, reused here instead of a
+ * static screenshot or a drawn graph. The label is decorative; the surrounding copy carries
+ * the meaning.
+ */
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = "Graph · live", class: className } = Astro.props;
+---
+
+<figure class:list={["live-graph", className]}>
+  <div class="live-graph-frame">
+    <canvas data-scene="plexus" aria-hidden="true"></canvas>
+    <span class="live-graph-label" aria-hidden="true">
+      <span class="live-graph-dot"></span>
+      {label}
+    </span>
+  </div>
+  <slot />
+</figure>
+
+<style>
+  .live-graph {
+    display: block;
+    margin: 0;
+  }
+  .live-graph-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: clip;
+    border: 1px solid var(--cap-card-border);
+    border-radius: 14px;
+    background:
+      radial-gradient(80% 90% at 62% 45%, rgb(244 242 238 / 0.055), transparent 62%),
+      var(--cap-card);
+    box-shadow: 0 30px 70px -50px rgb(0 0 0 / 0.9);
+  }
+  .live-graph-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 rgb(244 242 238 / 0.1);
+  }
+  .live-graph canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* scenes.ts reads these two values from the canvas. */
+    color: var(--c-muted);
+  }
+  .live-graph-label {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 8px;
+    border: 1px solid rgb(244 242 238 / 0.2);
+    border-radius: 999px;
+    background: rgb(11 12 15 / 0.82);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-white);
+    white-space: nowrap;
+  }
+  .live-graph-dot {
+    width: 5px;
+    height: 5px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .live-graph :global(figcaption) {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--c-muted);
+  }
+</style>
