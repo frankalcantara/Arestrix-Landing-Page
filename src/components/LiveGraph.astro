@@ -1,6 +1,6 @@
 ---
 /**
- * A framed live graph: the existing `plexus` canvas scene from src/scripts/scenes.ts.
+ * A live graph: the existing `plexus` canvas scene from src/scripts/scenes.ts.
  * It is the same dependency-free animation used by the hero, reused here instead of a
  * static screenshot or a drawn graph. The label is decorative; the surrounding copy carries
  * the meaning.
@@ -29,24 +29,12 @@ const { label = "Graph · live", class: className } = Astro.props;
     display: block;
     margin: 0;
   }
+  /* No frame, border or panel: the network sits directly on the page ground. */
   .live-graph-frame {
     position: relative;
     aspect-ratio: 16 / 10;
     overflow: clip;
-    border: 1px solid var(--cap-card-border);
-    border-radius: 14px;
-    background:
-      radial-gradient(80% 90% at 62% 45%, rgb(244 242 238 / 0.055), transparent 62%),
-      var(--cap-card);
-    box-shadow: 0 30px 70px -50px rgb(0 0 0 / 0.9);
-  }
-  .live-graph-frame::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    box-shadow: inset 0 1px 0 rgb(244 242 238 / 0.1);
+    background: transparent;
   }
   .live-graph canvas {
     position: absolute;

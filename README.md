@@ -154,7 +154,7 @@ src/
 ├── components/
 │   ├── sections/       Home page sections
 │   ├── FillLines.astro Line-by-line fill
-│   ├── LiveGraph.astro  Framed plexus canvas (existing scene)
+│   ├── LiveGraph.astro  Live plexus canvas (existing scene)
 │   ├── Ridgelines.astro Build-time chart
 │   ├── ServiceCard.astro, ServiceArt.astro
 │   ├── Head.astro      Meta, Open Graph, JSON-LD
