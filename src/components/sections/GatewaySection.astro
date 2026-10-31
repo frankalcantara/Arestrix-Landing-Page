@@ -23,7 +23,7 @@ const keys = [
 
 <section id="gateway" class="gateway scroll-mt-28" aria-labelledby="gateway-title">
   <div class="container-x gateway-grid">
-    <div class="gateway-visual reveal" aria-hidden="true">
+    <div class="gateway-visual" data-enter="panel" aria-hidden="true">
       <div class="gateway-panel">
         <div class="gateway-head">
           <span class="gateway-status"><span class="gateway-dot" /> healthy</span>
@@ -45,7 +45,7 @@ const keys = [
         <div class="gateway-keys">
           {
             keys.map((key, i) => (
-              <div class="gateway-key reveal" style={`--i:${i}`}>
+              <div class="gateway-key" data-enter="row" style={`--i:${i}`}>
                 <span class="gateway-key-name">{key.name}</span>
                 <span class="gateway-key-meta">{key.meta}</span>
                 <span class:list={["gateway-amount", key.value === 0 && "text-muted"]}>{key.amount}</span>

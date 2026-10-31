@@ -75,7 +75,7 @@ const questions = [
     <div class="faq-list">
       {
         questions.map((item, i) => (
-          <details class="faq-item reveal" style={`--i:${i}`}>
+          <details class="faq-item" data-enter="row" style={`--i:${i}`}>
             <summary>
               <span>{item.q}</span>
               <Icon name="chevron-down" size={20} class="faq-chevron" />

@@ -53,7 +53,7 @@ const rows = [
       lead="The difference shows up at deployment: what you ship, what holds the keys and what can be verified before it runs."
     />
 
-    <div class="cmp-wrap reveal">
+    <div class="cmp-wrap" data-enter="panel">
       <table class="cmp-table">
         <caption class="sr-only">
           A directional comparison between a typical runtime-based agent stack and Arestrix
@@ -65,7 +65,7 @@ const rows = [
             <th scope="col" class="cmp-arestrix">Arestrix</th>
           </tr>
         </thead>
-        <tbody class="cmp-rows">
+        <tbody data-enter="rows">
           {
             rows.map((row, i) => (
               <tr style={`--i:${i}`}>
@@ -79,7 +79,7 @@ const rows = [
       </table>
     </div>
 
-    <p class="cmp-note reveal">
+    <p class="cmp-note" data-enter="row">
       Directional summary, not a benchmark. Read the{" "}
       <a href={SITE.comparisonDocs} target="_blank" rel="noopener">
         full comparison

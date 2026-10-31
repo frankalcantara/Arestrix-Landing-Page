@@ -18,9 +18,9 @@ import { SITE } from "../../config";
       lead="The canvas is the beginning. These are the parts that turn a drawing into a pipeline a team can run, inspect and hand to IT."
     />
 
-    <ul class="feature-grid stagger">
+    <ul class="feature-grid">
       <li class="feature-cell feature-cell-human" style="--i:0">
-        <article class="feature-card feature-card-paper">
+        <article class="feature-card feature-card-paper" data-enter="card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="form" size={20} /></span>
             <span class="eyebrow">Human input</span>
@@ -42,7 +42,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell feature-cell-artifacts" style="--i:1">
-        <article class="feature-card feature-card-ardosia">
+        <article class="feature-card feature-card-ardosia" data-enter="card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="package" size={20} /></span>
             <span class="eyebrow">Deliverables</span>
@@ -67,7 +67,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell" style="--i:2">
-        <article class="feature-card">
+        <article class="feature-card" data-enter="card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="sandbox" size={20} /></span>
             <span class="eyebrow">Isolation</span>
@@ -89,7 +89,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell" style="--i:3">
-        <article class="feature-card feature-card-paper">
+        <article class="feature-card feature-card-paper" data-enter="card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="plug" size={20} /></span>
             <span class="eyebrow">Skills and MCP</span>
@@ -111,7 +111,7 @@ import { SITE } from "../../config";
       </li>
 
       <li class="feature-cell" style="--i:4">
-        <article class="feature-card feature-card-ardosia">
+        <article class="feature-card feature-card-ardosia" data-enter="card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="terminal" size={20} /></span>
             <span class="eyebrow">Headless</span>
@@ -131,7 +131,7 @@ import { SITE } from "../../config";
       </li>
     </ul>
 
-    <p class="features-note reveal">
+    <p class="features-note" data-enter="row">
       <Icon name="globe" size={18} class="shrink-0 text-accent" />
       <span>Bilingual by design: the Studio and the documentation ship in English and Portuguese.</span>
     </p>

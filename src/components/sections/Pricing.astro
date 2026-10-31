@@ -39,10 +39,10 @@ const facts = [
       if you run a local model.
     </p>
 
-    <ul class="pricing-facts stagger">
+    <ul class="pricing-facts">
       {
         facts.map((fact, i) => (
-          <li style={`--i:${i}`}>
+          <li data-enter="row" style={`--i:${i}`}>
             <span class="pricing-fact-label">{fact.label}</span>
             <span class="pricing-fact-body">{fact.body}</span>
           </li>

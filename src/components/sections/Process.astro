@@ -77,7 +77,7 @@ const steps = [
     <ol class="process-stack" data-process-stack>
       {
         steps.map((step, i) => (
-          <li class="process-card" data-process-card style={`--i:${i}`}>
+          <li class="process-card" data-process-card data-enter="panel" style={`--i:${i}`}>
             <div class="process-card-top">
               <span class="process-label">
                 {String(i + 1).padStart(2, "0")} / 04 · {step.label}

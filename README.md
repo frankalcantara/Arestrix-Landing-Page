@@ -97,11 +97,16 @@ end back to the start), 1260×654, no audio.
 - Use `overflow: clip`, not `hidden`, around animated content. `hidden` creates a scroll container
   and view timelines then track that box.
 - Write `view(0px)`, not `view()`. The default inset is the page's `scroll-padding`.
-- Entrances (`[data-enter]`) stay paused until `src/scripts/enter.ts` adds `.is-in` at 15% visible.
+- Entrances (`[data-enter]`) stay paused until `src/scripts/enter.ts` adds `.is-in`. Text and rows
+  start at 15% visible; cards and panels wait for 40% (18% when the element is taller than half the
+  viewport), so the entrance plays on screen instead of below the fold.
+- Cards (`data-enter="card"`), panels (`panel`), rows (`row`) and table bodies (`rows`) use the
+  time-based entrances: the box rises and fades in, then its accent hairline draws. They move the
+  box instead of masking it — a clip or mask on the observed element reports a zero intersection
+  ratio, so the observer would never start the animation.
 - Section copy uses `.mask-rise` (a clip mask plus an 18px rise) for headings, leads and the price
-  figure. Cards and rows cascade through `.reveal` / `.stagger` with `--i`, capped at five steps so a
-  long list never lags behind the scroll. The thin `.rule` and the accent hairline on each card draw
-  left to right (`draw-x`).
+  figure. Any remaining list cascades through `.reveal` / `.stagger` with `--i`, capped at five
+  steps. The thin `.rule` draws left to right (`draw-x`).
 - The download console prints its four commands through `[data-enter="print"]`. The clip sits on the
   inner `.d-print`, because a clipped observed element reports a zero intersection ratio, and the
   console is a scroll container, where `view()` timelines do not progress. Use the scroll-timeline

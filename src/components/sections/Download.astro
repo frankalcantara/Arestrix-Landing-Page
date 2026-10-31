@@ -65,10 +65,10 @@ const paths = [
       </p>
     </div>
 
-    <ul class="download-grid stagger">
+    <ul class="download-grid">
       {
         paths.map((path, i) => (
-          <li class="download-card" style={`--i:${i}`}>
+          <li class="download-card" data-enter="card" style={`--i:${i}`}>
             <div class="download-card-top">
               <span class="download-icon">
                 <Icon name={path.icon} size={22} />
@@ -85,7 +85,7 @@ const paths = [
       }
     </ul>
 
-    <div class="download-run reveal">
+    <div class="download-run" data-enter="panel">
       <div class="download-run-copy">
         <p class="eyebrow">From source</p>
         <h3>Four commands to the Studio</h3>
@@ -112,7 +112,7 @@ const paths = [
       </div>
     </div>
 
-    <p class="download-integrity reveal">
+    <p class="download-integrity" data-enter="row">
       <Icon name="shield-check" size={18} class="shrink-0 text-accent" />
       <span>
         Every build ships <code>SHA256SUMS</code>, <code>SBOM.json</code> and a per-file{" "}

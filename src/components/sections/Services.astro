@@ -40,7 +40,7 @@ const height = (cols: number) => place(services.length - 1, cols).t + 270;
       <ol class="svc-index" aria-label="The six parts">
         {
           services.map((service, i) => (
-            <li class="svc-index-item reveal" style={`--i:${i}`}>
+            <li class="svc-index-item" data-enter="row" style={`--i:${i}`}>
               <span class="svc-index-num">{String(i + 1).padStart(2, "0")}</span>
               <span class="svc-index-label">{service.data.label}</span>
               <span class="svc-index-title">{service.data.title}</span>

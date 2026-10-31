@@ -66,10 +66,10 @@ const cards = [
       </div>
     </div>
 
-    <ul class="teams-cards stagger">
+    <ul class="teams-cards">
       {
         cards.map((card, i) => (
-          <li class:list={["teams-card", `teams-card-${card.surface}`]} style={`--i:${i}`}>
+          <li class:list={["teams-card", `teams-card-${card.surface}`]} data-enter="card" style={`--i:${i}`}>
             <span class="teams-icon">
               <Icon name={card.icon} size={22} />
             </span>

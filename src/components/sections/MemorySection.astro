@@ -71,7 +71,7 @@ const rows = [
       >How memory works <Icon name="arrow-up-right" size={18} /></a>
     </div>
 
-    <div class="memory-visual reveal" aria-hidden="true">
+    <div class="memory-visual" data-enter="panel" aria-hidden="true">
       <div class="memory-panel">
         <div class="memory-panel-head">
           <span class="font-mono text-xs tracking-[0.08em] text-muted">memory_search</span>
@@ -86,7 +86,7 @@ const rows = [
         <ol class="memory-stack">
           {
             rows.map((row, i) => (
-              <li class="memory-row reveal" style={`--i:${i}`}>
+              <li class="memory-row" data-enter="row" style={`--i:${i}`}>
                 <span class="memory-node" />
                 <span class="memory-row-copy">
                   <span class="memory-type">{row.type}</span>
