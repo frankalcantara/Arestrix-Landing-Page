@@ -1,18 +1,20 @@
 ---
 /**
- * Project memory (AMG): a split section with the product claims on the left and a
- * small memory-ledger panel on the right. The ledger is decorative; the copy carries
- * the meaning for screen readers.
+ * Project memory: a split section with the product claims on the left and a small
+ * memory-ledger panel on the right. Copy follows docs/en/how-memory-works.md (Arestrix
+ * 2.5): memory is opt-in, chosen per vertex as off, consult or learn, and lessons enter
+ * as proposals that wait for approval. The ledger is decorative; the copy carries the
+ * meaning for screen readers.
  */
 import SectionHeading from "../SectionHeading.astro";
 import Icon from "../Icon.astro";
 import { SITE } from "../../config";
 
 const points = [
-  "A local SQLite temporal multigraph, not a cloud memory service",
-  "memory_search and memory_record_lesson as first-class tools",
-  "Evidence-backed promotion and deterministic consolidation",
-  "A token-budgeted brief at the start of every run",
+  "Opt-in: each vertex is off, consult or learn",
+  "Lessons enter as proposals until you approve them",
+  "A token-budgeted brief at the start of the run",
+  "Knowledge in the project's SQLite, telemetry kept apart",
 ];
 
 const rows = [
@@ -22,19 +24,19 @@ const rows = [
     chip: "recorded",
   },
   {
-    type: "Lesson",
+    type: "Lesson proposal",
     text: "retry with backoff before the second tool",
-    chip: "promoted",
+    chip: "pending",
   },
   {
     type: "Playbook",
-    text: "remote MCP recovery, now reusable",
-    chip: "procedural",
+    text: "remote MCP recovery, validator-approved",
+    chip: "active",
   },
   {
-    type: "Blackboard",
-    text: "shared by three agents in the same run",
-    chip: "1 run",
+    type: "State key",
+    text: "cursor · project scope · schema-checked",
+    chip: "cas v3",
   },
 ];
 ---
@@ -42,12 +44,12 @@ const rows = [
 <section id="memory" class="memory scroll-mt-28" aria-labelledby="memory-title">
   <div class="container-x memory-grid">
     <div class="memory-copy">
-      <p class="eyebrow">Project memory · AMG</p>
+      <p class="eyebrow">Project memory · opt-in</p>
       <SectionHeading
         id="memory-title"
         class="mt-3"
         title="Memory that stays *with the project*"
-        lead="Arestrix keeps what a run learned: episodes, lessons, playbooks and the shared Blackboard. Agents search it before they act and record it when they finish."
+        lead="Arestrix keeps what a run learned in the project's own SQLite database. An agent reads a token-budgeted brief before it acts, and new lessons wait as proposals until you approve them."
       />
 
       <ul class="stagger mt-8 grid gap-3 sm:grid-cols-2">
@@ -84,7 +86,7 @@ const rows = [
         <ol class="memory-stack">
           {
             rows.map((row, i) => (
-              <li class="memory-row" style={`--i:${i}`}>
+              <li class="memory-row reveal" style={`--i:${i}`}>
                 <span class="memory-node" />
                 <span class="memory-row-copy">
                   <span class="memory-type">{row.type}</span>
@@ -97,7 +99,7 @@ const rows = [
         </ol>
 
         <div class="memory-brief">
-          <span class="memory-brief-label">token-budgeted brief</span>
+          <span class="memory-brief-label">consult · token-budgeted brief</span>
           <p>3 lessons · 1 playbook · 1.2k tokens</p>
         </div>
       </div>

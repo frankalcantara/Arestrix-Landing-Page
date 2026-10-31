@@ -18,8 +18,8 @@ import { SITE } from "../../config";
       lead="The canvas is the beginning. These are the parts that turn a drawing into a pipeline a team can run, inspect and hand to IT."
     />
 
-    <ul class="feature-grid">
-      <li class="feature-cell feature-cell-human reveal" style="--i:0">
+    <ul class="feature-grid stagger">
+      <li class="feature-cell feature-cell-human" style="--i:0">
         <article class="feature-card feature-card-paper">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="form" size={20} /></span>
@@ -41,7 +41,7 @@ import { SITE } from "../../config";
         </article>
       </li>
 
-      <li class="feature-cell feature-cell-artifacts reveal" style="--i:1">
+      <li class="feature-cell feature-cell-artifacts" style="--i:1">
         <article class="feature-card feature-card-ardosia">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="package" size={20} /></span>
@@ -66,7 +66,7 @@ import { SITE } from "../../config";
         </article>
       </li>
 
-      <li class="feature-cell reveal" style="--i:2">
+      <li class="feature-cell" style="--i:2">
         <article class="feature-card">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="sandbox" size={20} /></span>
@@ -88,7 +88,7 @@ import { SITE } from "../../config";
         </article>
       </li>
 
-      <li class="feature-cell reveal" style="--i:3">
+      <li class="feature-cell" style="--i:3">
         <article class="feature-card feature-card-paper">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="plug" size={20} /></span>
@@ -110,7 +110,7 @@ import { SITE } from "../../config";
         </article>
       </li>
 
-      <li class="feature-cell reveal" style="--i:4">
+      <li class="feature-cell" style="--i:4">
         <article class="feature-card feature-card-ardosia">
           <div class="feature-top">
             <span class="feature-icon"><Icon name="terminal" size={20} /></span>
@@ -181,6 +181,20 @@ import { SITE } from "../../config";
   .feature-card > * {
     position: relative;
     z-index: 1;
+  }
+  /* Accent hairline across the top edge: the brand's single accent, used as a rule. */
+  .feature-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 28px;
+    right: 28px;
+    height: 2px;
+    z-index: 2;
+    pointer-events: none;
+    background: var(--accent);
+    transform-origin: left center;
+    opacity: 0.85;
   }
   .feature-top {
     display: flex;

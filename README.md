@@ -98,6 +98,14 @@ end back to the start), 1260×654, no audio.
   and view timelines then track that box.
 - Write `view(0px)`, not `view()`. The default inset is the page's `scroll-padding`.
 - Entrances (`[data-enter]`) stay paused until `src/scripts/enter.ts` adds `.is-in` at 15% visible.
+- Section copy uses `.mask-rise` (a clip mask plus an 18px rise) for headings, leads and the price
+  figure. Cards and rows cascade through `.reveal` / `.stagger` with `--i`, capped at five steps so a
+  long list never lags behind the scroll. The thin `.rule` and the accent hairline on each card draw
+  left to right (`draw-x`).
+- The download console prints its four commands through `[data-enter="print"]`. The clip sits on the
+  inner `.d-print`, because a clipped observed element reports a zero intersection ratio, and the
+  console is a scroll container, where `view()` timelines do not progress. Use the scroll-timeline
+  effect only outside scroll containers.
 - `Process.astro` is a stack of sticky cards (the reference's `#teams` effect). Its inline script only
   writes `--covered` and the active progress item; the scale/dim CSS lives in `src/styles/effects.css`
   inside the same media query. Phones, reduced motion

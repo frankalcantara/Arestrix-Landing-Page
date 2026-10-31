@@ -18,7 +18,7 @@ const questions = [
   },
   {
     q: "Which platforms are supported?",
-    a: `The Studio runs on Windows and Linux. Programs generated from a graph currently target Windows; Linux is on the <a href="${SITE.roadmap}" target="_blank" rel="noopener">roadmap</a>. Beta 2.2 is a development pre-release, so APIs, file formats and command-line flags may still change. The Windows installer is included; clean-machine validation, the Linux package and the full test matrix are pending.`,
+    a: `The Studio runs on Windows and Linux. Programs generated from a graph currently target Windows; Linux is on the <a href="${SITE.roadmap}" target="_blank" rel="noopener">roadmap</a>. Beta 2.5 is a development pre-release, so APIs, file formats and command-line flags may still change. The Windows installer is included; clean-machine validation, the Linux package and the full test matrix are pending.`,
   },
   {
     q: "Which models and providers can I use?",
@@ -31,6 +31,10 @@ const questions = [
   {
     q: "Does my data leave the machine?",
     a: `Projects, pipelines, generated code, logs, databases and memory stay on the machine. Only the model and MCP calls you configure leave it; Git synchronization is opt-in. The on-prem AI Gateway keeps provider keys on the server, and local models never pass through the gateway.`,
+  },
+  {
+    q: "How does project memory work?",
+    a: `Memory is opt-in and local. Each vertex is set to <code>off</code>, <code>consult</code> or <code>learn</code>: a consult run reads a token-budgeted brief, and a learn run also records an episode and may propose a lesson. Nothing becomes knowledge on its own, because proposals wait for approval in the Project Memory panel. Knowledge lives in the project's SQLite database and telemetry in a separate one. Read <a href="${SITE.memoryDocs}" target="_blank" rel="noopener">how memory works</a>.`,
   },
   {
     q: "Can I run it in CI or on a server?",
@@ -50,7 +54,7 @@ const questions = [
   },
   {
     q: "How do I start?",
-    a: `Download the Windows installer or the portable ZIP, open one of the twelve examples, choose a provider and press <kbd>F5</kbd>. Or build from source with <code>python CppCore/dev.py</code>. The <a href="#download">download section</a> has both paths.`,
+    a: `Download the Windows installer or the portable ZIP, open one of the fourteen examples, choose a provider and press <kbd>F5</kbd>. Or build from source with <code>python CppCore/dev.py</code>. The <a href="#download">download section</a> has both paths.`,
   },
 ];
 ---

@@ -11,7 +11,7 @@ import { SITE } from "../../config";
   <div class="container-x">
     <div class="ack-panel reveal">
       <p class="eyebrow ack-eyebrow">Acknowledgement · independent</p>
-      <h2 id="ack-title" class="ack-title">Thank you, <span class="ack-name">OpenCode</span>.</h2>
+      <h2 id="ack-title" class="ack-title mask-rise" style="--i:0">Thank you, <span class="ack-name">OpenCode</span>.</h2>
       <p class="ack-lead">
         OpenCode is an excellent open-source AI coding agent. It runs in the terminal, IDE or desktop,
         works with free models or any provider, and is private by design.
@@ -47,9 +47,21 @@ import { SITE } from "../../config";
     border-radius: var(--radius-media);
     background: var(--c-ardosia);
     color: var(--c-white);
-    box-shadow:
-      0 30px 70px -50px rgb(0 0 0 / 0.9),
-      inset 0 2px 0 rgb(232 89 12 / 0.75);
+    box-shadow: 0 30px 70px -50px rgb(0 0 0 / 0.9);
+  }
+  /* Accent hairline across the top edge, drawn in on scroll (effects.css). */
+  .ack-panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 30px;
+    right: 30px;
+    height: 2px;
+    z-index: 2;
+    pointer-events: none;
+    background: var(--accent);
+    transform-origin: left center;
+    opacity: 0.85;
   }
   .ack-panel::before {
     content: "";
@@ -79,11 +91,20 @@ import { SITE } from "../../config";
     color: var(--c-white);
   }
   .ack-name {
+    position: relative;
+    display: inline-block;
     color: var(--c-white);
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.08em;
+  }
+  /* The accent underline is drawn in, not typed. */
+  .ack-name::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.02em;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left center;
   }
   .ack-lead {
     max-width: 52rem;

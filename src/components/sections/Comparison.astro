@@ -65,10 +65,10 @@ const rows = [
             <th scope="col" class="cmp-arestrix">Arestrix</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="cmp-rows">
           {
-            rows.map((row) => (
-              <tr>
+            rows.map((row, i) => (
+              <tr style={`--i:${i}`}>
                 <th scope="row">{row.dimension}</th>
                 <td data-label="Typical runtime stack">{row.runtime}</td>
                 <td data-label="Arestrix" class="cmp-arestrix">{row.arestrix}</td>

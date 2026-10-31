@@ -31,15 +31,15 @@ const points = [
   <div class="container-x delegation-grid">
     <div class="delegation-copy">
       <p class="eyebrow">Agent-to-agent calls</p>
-      <h2 id="delegation-title" class="h-section delegation-title">
+      <h2 id="delegation-title" class="h-section delegation-title mask-rise" style="--i:0">
         The graph authorizes.<br /><span class="hl">The model chooses.</span>
       </h2>
-      <p class="lead delegation-lead">
+      <p class="lead delegation-lead mask-rise" style="--i:1">
         A call edge declares that an agent may invoke another agent. The runtime turns that declaration into a
         <code>call_agent</code> tool with a fixed list of targets, hard limits and a trace.
       </p>
 
-      <ul class="delegation-points">
+      <ul class="delegation-points stagger">
         {
           points.map((point) => (
             <li>

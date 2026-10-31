@@ -44,8 +44,8 @@ const keys = [
 
         <div class="gateway-keys">
           {
-            keys.map((key) => (
-              <div class="gateway-key">
+            keys.map((key, i) => (
+              <div class="gateway-key reveal" style={`--i:${i}`}>
                 <span class="gateway-key-name">{key.name}</span>
                 <span class="gateway-key-meta">{key.meta}</span>
                 <span class:list={["gateway-amount", key.value === 0 && "text-muted"]}>{key.amount}</span>

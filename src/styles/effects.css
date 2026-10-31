@@ -285,7 +285,9 @@
 }
 
 /* ------------------------------------------------------------------
-   Plain reveal for inner pages: slides up out of a mask as it scrolls in.
+   Reveal for the sections below the fold: text rises out of a mask,
+   cards arrive in reading order and the thin accent rules draw. Every
+   rule here is scroll-linked and its default style is the final one.
 ------------------------------------------------------------------ */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -295,10 +297,7 @@
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: view(0px);
-      animation-range: entry 0px entry 140px;
-    }
-    .stagger > * {
-      animation-range: entry calc(var(--i, 0) * 36px) entry calc(140px + var(--i, 0) * 36px);
+      animation-range: entry calc(min(var(--i, 0), 5) * 36px) entry calc(140px + min(var(--i, 0), 5) * 36px);
     }
   }
 }
@@ -311,6 +310,73 @@
   to {
     clip-path: inset(-2rem);
     transform: none;
+  }
+}
+
+/* Headings, leads and the giant price figure rise out of a mask a beat after the
+   band above them, staggered by --i. Without support, reduced motion or a phone
+   they are simply there. */
+@keyframes mask-rise {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(18px);
+  }
+  to {
+    clip-path: inset(-0.4em);
+    transform: none;
+  }
+}
+/* Hairlines are drawn left to right, the way a redline is marked up. */
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+/* Terminal lines are printed from the left edge. */
+@keyframes print-line {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 -0.2em 0 0);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 751px) {
+    .mask-rise {
+      animation-name: mask-rise;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(0px);
+      animation-range: entry calc(min(var(--i, 0), 3) * 40px) entry calc(130px + min(var(--i, 0), 3) * 40px);
+    }
+    .rule {
+      animation-name: draw-x;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(0px);
+      animation-range: entry 8% entry 32%;
+    }
+    /* The accent hairline on a card draws as the card settles. */
+    .teams-card::after,
+    .feature-card::after,
+    .download-card::after,
+    .ack-panel::after,
+    .ack-name::after {
+      animation-name: draw-x;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(0px);
+      animation-range: entry 12% entry 46%;
+    }
+    /* Comparison rows arrive like a ledger being written, top to bottom. */
+    .cmp-rows > tr > * {
+      animation-name: reveal-up;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(0px);
+      animation-range: entry calc(min(var(--i, 0), 5) * 28px) entry calc(120px + min(var(--i, 0), 5) * 28px);
+    }
   }
 }
 
@@ -350,6 +416,21 @@
     animation-name: e-wipe-up;
     animation-duration: 1.2s;
     animation-timing-function: var(--e-in-out-cubic);
+  }
+  /* Terminal lines print in, one after the other (the download console). The clip
+     lives on .d-print, so the observed .d-line keeps its real box. */
+  .js-enter [data-enter="print"] {
+    animation-name: none;
+  }
+  .js-enter [data-enter="print"] > .d-print {
+    animation-name: print-line;
+    animation-duration: 0.5s;
+    animation-delay: calc(var(--i, 0) * 130ms);
+    animation-timing-function: var(--e-out-cubic);
+    animation-fill-mode: backwards;
+  }
+  .js-enter [data-enter="print"]:not(.is-in) > .d-print {
+    animation-play-state: paused;
   }
 }
 

@@ -7,6 +7,13 @@
 import Icon from "../Icon.astro";
 import { SITE } from "../../config";
 
+const commands = [
+  "git clone --recurse-submodules https://github.com/frankalcantara/Arestrix.git",
+  "cd Arestrix",
+  "npm ci",
+  "python CppCore/dev.py",
+];
+
 const paths = [
   {
     icon: "download" as const,
@@ -47,21 +54,21 @@ const paths = [
   <div class="container-x">
     <div class="download-head">
       <div>
-        <p class="eyebrow">Beta 2.2 · 2.2.0-beta.1</p>
-        <h2 id="download-title" class="h-section download-title">
-          Get <span class="hl">Beta 2.2</span>
+        <p class="eyebrow">{SITE.beta.label} · {SITE.beta.version}</p>
+        <h2 id="download-title" class="h-section download-title mask-rise" style="--i:0">
+          Get <span class="hl">{SITE.beta.label}</span>
         </h2>
       </div>
-      <p class="lead download-lead">
+      <p class="lead download-lead mask-rise" style="--i:1">
         Start with the Windows build, build from source on Windows or Linux, or run the same engine headless in CI.
         No account and no hosted workspace.
       </p>
     </div>
 
-    <ul class="download-grid">
+    <ul class="download-grid stagger">
       {
         paths.map((path, i) => (
-          <li class="download-card reveal" style={`--i:${i}`}>
+          <li class="download-card" style={`--i:${i}`}>
             <div class="download-card-top">
               <span class="download-icon">
                 <Icon name={path.icon} size={22} />
@@ -101,10 +108,7 @@ const paths = [
           <span class="download-console-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>terminal</span>
         </div>
-        <pre><code><span class="d-prompt">$</span> git clone --recurse-submodules https://github.com/frankalcantara/Arestrix.git
-<span class="d-prompt">$</span> cd Arestrix
-<span class="d-prompt">$</span> npm ci
-<span class="d-prompt">$</span> python CppCore/dev.py</code></pre>
+        <pre><code>{commands.map((command, i) => (<span class="d-line" data-enter="print" style={`--i:${i}`}><span class="d-print"><span class="d-prompt">$</span> {command}</span></span>))}</code></pre>
       </div>
     </div>
 
@@ -141,6 +145,8 @@ const paths = [
     margin-top: 48px;
   }
   .download-card {
+    position: relative;
+    overflow: clip;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -150,7 +156,19 @@ const paths = [
     border-radius: var(--radius-media);
     background: var(--c-paper);
     color: var(--card-text);
-    box-shadow: inset 0 2px 0 rgb(232 89 12 / 0.7);
+  }
+  /* Accent hairline across the top edge, drawn in on scroll (effects.css). */
+  .download-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 26px;
+    right: 26px;
+    height: 2px;
+    pointer-events: none;
+    background: var(--accent);
+    transform-origin: left center;
+    opacity: 0.85;
   }
   .download-card-top {
     display: flex;
@@ -269,7 +287,7 @@ const paths = [
   }
   .download-console pre {
     padding: 18px 16px 20px;
-    overflow-x: auto;
+    overflow-x: clip;
     font-family: var(--font-mono);
     font-size: 11.5px;
     line-height: 1.8;
@@ -277,6 +295,10 @@ const paths = [
   }
   .download-console code {
     white-space: pre;
+  }
+  /* Each command is its own line so it can be printed in on scroll. */
+  .d-line {
+    display: block;
   }
   .d-prompt {
     color: var(--accent);
@@ -305,6 +327,10 @@ const paths = [
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+  .d-line {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   @media (max-width: 750px) {
     .download-console code {

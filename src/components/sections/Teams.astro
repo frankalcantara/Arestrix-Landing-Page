@@ -42,15 +42,15 @@ const cards = [
   <div class="container-x teams-grid">
     <div class="teams-copy">
       <p class="eyebrow">Arestrix for teams</p>
-      <h2 id="teams-title" class="h-section teams-title">
+      <h2 id="teams-title" class="h-section teams-title mask-rise" style="--i:0">
         The artifact travels.<br /><span class="hl">The data stays.</span>
       </h2>
-      <p class="lead teams-lead">
+      <p class="lead teams-lead mask-rise" style="--i:1">
         Arestrix is not a hosted automation service. It is software your team runs on machines you control, with
         artifacts you can review and a policy layer for the spend.
       </p>
 
-      <ul class="teams-points">
+      <ul class="teams-points stagger">
         <li>No per-seat license and no locked tier.</li>
         <li>No Arestrix-managed servers or multi-tenant workspace.</li>
         <li>MIT licensed for commercial and academic use.</li>
@@ -66,10 +66,10 @@ const cards = [
       </div>
     </div>
 
-    <ul class="teams-cards">
+    <ul class="teams-cards stagger">
       {
         cards.map((card, i) => (
-          <li class:list={["teams-card", `teams-card-${card.surface}`, "reveal"]} style={`--i:${i}`}>
+          <li class:list={["teams-card", `teams-card-${card.surface}`]} style={`--i:${i}`}>
             <span class="teams-icon">
               <Icon name={card.icon} size={22} />
             </span>
@@ -165,7 +165,8 @@ const cards = [
     z-index: 1;
     pointer-events: none;
     background: var(--accent);
-    opacity: 0.8;
+    opacity: 0.85;
+    transform-origin: left center;
   }
   .teams-card > * {
     position: relative;

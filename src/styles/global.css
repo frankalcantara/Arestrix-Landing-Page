@@ -157,12 +157,13 @@
     text-transform: uppercase;
     color: var(--c-muted);
   }
-  /* Short thin accent rule under leads. */
+  /* Short thin accent rule under leads. It is drawn in on scroll (effects.css). */
   .rule {
     display: block;
     width: 128px;
     height: 1px;
     background: var(--accent-half, rgba(232, 89, 12, 0.5));
+    transform-origin: left center;
   }
 
   /* Buttons: Brasa block, 150 × 70, bold Grafite label. */

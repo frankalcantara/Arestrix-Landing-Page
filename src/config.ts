@@ -51,8 +51,8 @@ export const SITE = {
   opencode: "https://opencode.ai/br",
 
   beta: {
-    label: "Beta 2.2",
-    version: "2.2.0-beta.1",
+    label: "Beta 2.5",
+    version: "2.5.0",
     platforms: "Windows and Linux",
   },
 
@@ -65,12 +65,12 @@ export const SITE = {
   /** The counters in the hero. A "|" in a label is where its line breaks. */
   stats: [
     { value: 20, label: "C++|standard" },
-    { value: 12, label: "runnable|examples" },
+    { value: 14, label: "runnable|examples" },
     { value: 2, label: "interface|languages" },
     { value: 100, suffix: "%", label: "MIT licensed|source" },
   ] as Stat[],
   /** Small caption under the counters. */
-  statsNote: "Beta 2.2 · 2.2.0-beta.1 · Windows and Linux",
+  statsNote: "Beta 2.5 · 2.5.0 · Windows and Linux",
 
   /**
    * One accent for highlighted words, buttons and rules. `accentText` is the text

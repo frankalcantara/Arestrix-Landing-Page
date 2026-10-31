@@ -14,7 +14,7 @@ const services = defineCollection({
     order: z.number().default(100),
     /** The card's line animation (see src/components/ServiceArt.astro). */
     art: z.enum(["graph", "code", "runner", "chip", "layers", "shield"]),
-    /** Optional short label shown on the capabilities page, e.g. "Beta 2". */
+    /** Optional short label: the step name on the capabilities page and in the home page index. */
     label: z.string().optional(),
     /** What the client keeps at the end. */
     deliverables: z.array(z.string()).default([]),
