@@ -33,6 +33,9 @@ export const SITE = {
   workspacesDocs:
     "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/workspaces-memory-skills-mcp.md",
   memoryDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/en/how-memory-works.md",
+  memoryRelease: "https://github.com/frankalcantara/Arestrix/releases/tag/memory-v1.0.1",
+  memoryTestStrategy:
+    "https://github.com/frankalcantara/Arestrix/blob/main/docs/quality/memory-v1-test-strategy.md",
   gatewayDocs: "https://github.com/frankalcantara/Arestrix/blob/main/CppCore/gateway/README.md",
   comparisonDocs: "https://github.com/frankalcantara/Arestrix/blob/main/docs/product/comparison.md",
   securityGovernance:

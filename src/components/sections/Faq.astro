@@ -34,7 +34,7 @@ const questions = [
   },
   {
     q: "How does project memory work?",
-    a: `Memory is opt-in and local. Each vertex is set to <code>off</code>, <code>consult</code> or <code>learn</code>: a consult run reads a token-budgeted brief, and a learn run also records an episode and may propose a lesson. Nothing becomes knowledge on its own, because proposals wait for approval in the Project Memory panel. Knowledge lives in the project's SQLite database and telemetry in a separate one. Read <a href="${SITE.memoryDocs}" target="_blank" rel="noopener">how memory works</a>.`,
+    a: `Memory is an opt-in local knowledge graph. Each vertex is set to <code>off</code>, <code>consult</code> or <code>learn</code>: a consult run reads a token-budgeted brief, and a learn run also records an episode and may propose lessons, claims or playbooks. Nothing becomes knowledge on its own; proposals and paths wait for validation and approval, and knowledge lives in a separate SQLite database from telemetry. In controlled DeepSeek tests, memory retrieved an answer the OFF arm missed and reduced static prompt tokens by 87% in the context-substitution run. Read <a href="${SITE.memoryDocs}" target="_blank" rel="noopener">how memory works</a> and the <a href="${SITE.memoryRelease}" target="_blank" rel="noopener">memory v1.0.1 notes</a>.`,
   },
   {
     q: "Can I run it in CI or on a server?",
