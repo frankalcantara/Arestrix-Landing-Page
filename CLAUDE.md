@@ -13,7 +13,7 @@ The Arestrix landing page is a static Astro 7 site (Tailwind CSS 4, TypeScript).
 ## Where things live
 
 - Rebranding: `src/config.ts` only. Don't hard-code the project name, URLs or social links in components.
-- Contact channels: GitHub and X only. There is no contact form, email address or phone number. Do not add one unless the owner asks.
+- Contact channels: GitHub and X only, plus the privacy mailbox `contact@arestrix.com` shown in the privacy section. There is no contact form or phone number. Do not add another email unless the owner asks.
 - The OpenCode acknowledgement at the end of the home page is an independent recommendation. Keep the explicit "not affiliated / not endorsed" disclaimer; do not imply a partnership.
 - Content: `src/content/services/*.md` (schema in `src/content.config.ts`); home page sections in `src/components/sections/`.
 - The supporting sections (Delegation, FeatureGrid, Teams, Comparison, Pricing, Faq, Download) must stay factual. Their copy comes from the Arestrix docs in `C:\Projetos\Arestrix\docs` and `README.md`: no hosted service, managed servers, paid support tier, email or phone number. Do not invent capabilities or date commitments.

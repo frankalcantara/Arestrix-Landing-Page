@@ -48,6 +48,9 @@ export const SITE = {
   discussions: "https://github.com/frankalcantara/Arestrix/discussions",
   issues: "https://github.com/frankalcantara/Arestrix/issues",
   contributing: "https://github.com/frankalcantara/Arestrix/blob/main/CONTRIBUTING.md",
+  privacy: "https://github.com/frankalcantara/Arestrix/blob/main/PRIVACY.md",
+  /** Owner-approved privacy mailbox. The rest of the site still contacts through GitHub and X. */
+  email: "contact@arestrix.com",
   security: "https://github.com/frankalcantara/Arestrix/security/advisories/new",
   x: "https://x.com/frankalcantara",
   /** Independent acknowledgement, not an Arestrix project or contact channel. */

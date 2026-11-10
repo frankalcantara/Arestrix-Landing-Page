@@ -51,7 +51,11 @@ const isExternal = (href: string) => href.startsWith("http");
 
     <div class="f-legal">
       <p>&copy; {year} {SITE.name}. Released under the MIT License.</p>
-      <p class="f-small">Static site built with Astro. Arestrix {SITE.beta.label} · {SITE.beta.version}.</p>
+      <p class="f-small f-legal-links">
+        <a href={SITE.privacy} class="f-link" target="_blank" rel="noopener">Privacy policy</a>
+        <span aria-hidden="true"> · </span>
+        Static site built with Astro. Arestrix {SITE.beta.label} · {SITE.beta.version}.
+      </p>
     </div>
     <ul class="f-social">
       {
@@ -148,6 +152,11 @@ const isExternal = (href: string) => href.startsWith("http");
   .f-small {
     font-size: 14px;
     color: var(--c-muted);
+  }
+  .f-legal-links .f-link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
   .f-social {
     grid-column: 1 / -1;

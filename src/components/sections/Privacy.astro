@@ -1,0 +1,172 @@
+---
+/**
+ * Privacy. The summary is drawn from PRIVACY.md in the Arestrix repository:
+ * local-first storage, no telemetry, and outbound calls only when configured.
+ * The full policy is linked in the repository, which stays the source of truth.
+ */
+import Icon from "../Icon.astro";
+import { SITE } from "../../config";
+
+const facts = [
+  {
+    label: "no telemetry",
+    body: "No analytics, advertising SDKs or automatic uploads of crash reports, prompts, project files, memories or logs.",
+  },
+  {
+    label: "you choose",
+    body: "Provider calls, MCP servers, Git remotes, downloads and interaction channels send data only when you configure them.",
+  },
+  {
+    label: "this site",
+    body: "The page is static. Its hosting provider may process technical request data such as IP address and requested pages under its own policy.",
+  },
+];
+---
+
+<section id="privacy" class="privacy scroll-mt-28" aria-labelledby="privacy-title">
+  <div class="container-x privacy-grid">
+    <div class="privacy-head">
+      <p class="eyebrow privacy-eyebrow">privacy</p>
+      <h2 id="privacy-title" class="privacy-title mask-rise">Local by <span class="hl">default</span>.</h2>
+      <span class="rule privacy-rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="privacy-body">
+      <p class="privacy-lead mask-rise" style="--i:1">
+        Your projects, pipelines, generated code, memory and logs stay on your machine. Arestrix does not
+        run a cloud service that stores them.
+      </p>
+
+      <ul class="privacy-list">
+        {
+          facts.map((fact, i) => (
+            <li data-enter="row" style={`--i:${i}`}>
+              <span class="privacy-label">{fact.label}</span>
+              <span class="privacy-copy">{fact.body}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="privacy-actions">
+        <a href={SITE.privacy} class="btn btn-secondary" target="_blank" rel="noopener">
+          Read the privacy policy <Icon name="arrow-up-right" class="icon-shift" />
+        </a>
+        <p class="privacy-note">
+          The full policy lives in the repository. Questions about privacy? Write to{" "}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .privacy {
+    padding-block: 48px;
+  }
+  .privacy-grid {
+    display: grid;
+    gap: 32px;
+  }
+  .privacy-eyebrow {
+    color: var(--c-muted);
+  }
+  .privacy-title {
+    margin-top: 12px;
+    font-size: clamp(32px, 4.6vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+    color: var(--c-ink);
+  }
+  .privacy-rule {
+    margin-top: 28px;
+  }
+  .privacy-lead {
+    max-width: 58ch;
+    font-size: clamp(18px, 2.2vw, 22px);
+    line-height: 1.45;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+  .privacy-list {
+    display: grid;
+    margin-top: 28px;
+    border-top: 1px solid var(--c-line);
+  }
+  .privacy-list li {
+    display: grid;
+    gap: 6px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .privacy-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-dim);
+  }
+  .privacy-copy {
+    max-width: 62ch;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--c-muted);
+    text-wrap: pretty;
+  }
+  .privacy-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .privacy-note {
+    max-width: 42ch;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--c-muted);
+  }
+  .privacy-note a {
+    color: var(--c-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .privacy-note a:hover {
+    color: var(--accent);
+  }
+  @media (min-width: 751px) {
+    .privacy {
+      padding-block: 96px;
+    }
+    .privacy-list li {
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 24px;
+      padding-block: 18px;
+      align-items: baseline;
+    }
+    .privacy-copy {
+      max-width: 52ch;
+      font-size: 16px;
+    }
+  }
+  @media (min-width: 1001px) {
+    .privacy {
+      padding-block: 120px;
+    }
+    .privacy-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+      gap: clamp(48px, 6vw, 88px);
+    }
+    .privacy-head {
+      position: sticky;
+      top: 112px;
+    }
+  }
+</style>

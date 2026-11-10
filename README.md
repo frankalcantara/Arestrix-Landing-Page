@@ -34,7 +34,7 @@ Open <http://localhost:4321>.
 | Where | What |
 | --- | --- |
 | `src/config.ts` | Name, tagline, canonical URL, GitHub/X links, counters, accent and card colours, nav and CTA |
-| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, FinalCta, Acknowledgement |
+| `src/components/sections/` | The home page, in order: Hero, Statement, MediaPanel, Services, Delegation, FeatureGrid, Memory, Gateway, Teams, Split, Process, Comparison, Pricing, Faq, Download, Privacy, FinalCta, Acknowledgement |
 | `public/media/` | The hero graph loop: WebM, MP4 and a WebP poster |
 | `src/content/services/*.md` | The six capability cards and their detail pages |
 | `src/pages/about.astro` | Project positioning, audience, principles and deliberate scope |
@@ -61,13 +61,15 @@ The negative logo, favicon, web manifest and Open Graph image are copied from th
 
 ## Contact channels
 
-The site only contacts through **GitHub** and **X**:
+The site contacts through **GitHub** and **X**, plus the owner-approved privacy mailbox:
 
 - GitHub: <https://github.com/frankalcantara/Arestrix>
 - X: <https://x.com/frankalcantara>
+- Privacy: <contact@arestrix.com>
 
-There is no contact form, no email address and no phone number. The community page links to the
-repository, discussions, issues, releases and documentation. Change the URLs in `src/config.ts`.
+There is no contact form and no phone number. Outside the privacy section, the community page links
+to the repository, discussions, issues, releases and documentation. Change the URLs in
+`src/config.ts`.
 
 ## Hero video
 
